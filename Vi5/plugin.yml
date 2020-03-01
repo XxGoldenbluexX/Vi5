@@ -1,0 +1,6 @@
+name: Vi5
+version: 1.0
+authors: [Hyez,XxGoldenbluexX]
+main: fr.vi5team.vi5.Vi5Main
+api-version: 1.15
+commands: 
