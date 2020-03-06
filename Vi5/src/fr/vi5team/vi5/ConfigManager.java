@@ -70,4 +70,5 @@ public class ConfigManager {
 		}
 		return getMapConfig(mapname);
 	}
+	
 }
