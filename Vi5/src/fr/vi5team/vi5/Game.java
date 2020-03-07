@@ -1,8 +1,12 @@
 package fr.vi5team.vi5;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,8 +16,11 @@ public class Game implements Listener {
 	
 	private Vi5Main mainref;
 	private String name="Vi5Game";
+	private String mapname="SolarIndustries";
 	private ConfigManager cfgManager;
 	private boolean started=false;
+	private ArrayList<Location> gardeSpawns=new ArrayList<Location>();
+	private ArrayList<Location> voleurMinimapSpawns=new ArrayList<Location>();
 	
 	HashMap<Player,PlayerWrapper> playersInGame = new HashMap<Player,PlayerWrapper>();//Liste des joueurs présents dans la partie et de leur wrapper
 	
@@ -45,6 +52,9 @@ public class Game implements Listener {
 		}else {
 			return false;
 		}
+	}
+	public String getName() {
+		return name;
 	}
 	
 	public boolean hasPlayer(Player player) {
@@ -109,5 +119,43 @@ public class Game implements Listener {
 	
 	public void start() {
 		//lancement de la partie, que les joueurs soient prêts ou non;
+		if (!loadMap()) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
+			return;
+		}
 	};
+	
+	public boolean loadMap() {
+		YamlConfiguration mapcfg = cfgManager.getMapConfig("");
+		Location loc;//variable utilisée pour les maneuvres
+		int i=0;
+		//récolter les spawns des gardes
+		gardeSpawns.clear();
+		int nbValues = mapcfg.getInt("gardeSpawns.number",-1);
+		if (nbValues==-1) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> gardeSpawns.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+mapname);
+			return false;
+		}
+		for (i=0;i<nbValues;i++) {
+			loc = mapcfg.getLocation("gardeSpawns."+i);
+			if (!loc.equals(null)) {
+				gardeSpawns.add(loc);
+			}
+		}
+		//récolter les spawns a la minimap des voleurs
+		voleurMinimapSpawns.clear();
+		nbValues=-1;
+		nbValues = mapcfg.getInt("voleurMinimapSpawns.number",-1);
+		if (nbValues==-1) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> voleurMinimapSpawns.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+mapname);
+			return false;
+		}
+		for (i=0;i<nbValues;i++) {
+			loc = mapcfg.getLocation("voleurMinimapSpawns."+i);
+			if (!loc.equals(null)) {
+				voleurMinimapSpawns.add(loc);
+			}
+		}
+		return false;
+	}
 }
