@@ -6,6 +6,7 @@ public class PlayerWrapper implements Listener {
 	
 	
 	Game game = null;//référence a la game ou le joueur appartient, null si il n'en a pas
+	boolean ready=false;
 	
 	
 	public Game getGame() {
@@ -15,5 +16,13 @@ public class PlayerWrapper implements Listener {
 	public boolean is_ingame() {
 		//permet de savoir si le joueur a rejoin une partie (/!\ NE DIT PAS SI LA PARTIE EST EN COURS)
 		return !(game.equals(null));
+	}
+	
+	public boolean is_ready() {
+		return ready;
+	}
+	
+	public void setReady(boolean r) {
+		ready=r;
 	}
 }
