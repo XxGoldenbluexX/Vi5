@@ -44,6 +44,10 @@ public class Game implements Listener {
 		}
 	}
 	
+	public PlayerWrapper getPlayerWrapper(Player player) {
+		return playersInGame.get(player);
+	}
+	
 	public boolean removePlayer(Player player) {
 		if (playersInGame.containsKey(player)) {
 			playersInGame.remove(player);

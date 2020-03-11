@@ -47,6 +47,16 @@ public class Vi5Main extends JavaPlugin implements Listener {
 		return a;
 	}
 	
+	public PlayerWrapper getPlayerWrapper(Player player) {
+		for (final Game game : gamesList) {
+			PlayerWrapper wrap = game.getPlayerWrapper(player);
+			if (wrap!=null) {
+				return wrap;
+			}
+		}
+		return null;
+	}
+	
 	@EventHandler
 	public void PlayerDamagedEvent(EntityDamageByEntityEvent event) {
 		Entity ent = event.getEntity();
