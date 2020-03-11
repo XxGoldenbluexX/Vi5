@@ -3,6 +3,7 @@ version: 1.0
 authors: [Hyez,XxGoldenbluexX]
 main: fr.vi5team.vi5.Vi5Main
 api-version: 1.15
+depend: [ProtocolLib]
 commands:
   vi5:
     description: Vi5 main command, /vi5 help for more informations.

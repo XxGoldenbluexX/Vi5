@@ -1,5 +1,6 @@
 package fr.vi5team.vi5;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
@@ -11,6 +12,14 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
+import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
+
 import fr.vi5team.vi5.commands.Vi5BaseCommand;
 import fr.vi5team.vi5.enums.DieCancelType;
 import fr.vi5team.vi5.events.PlayerKillEvent;
@@ -20,13 +29,15 @@ public class Vi5Main extends JavaPlugin implements Listener {
 	private ConfigManager cfgmanager;
 	private ArrayList<Game> gamesList= new ArrayList<Game>();
 	private PluginManager pmanager;
+	private ProtocolManager protocolManager;
 	
 	@Override
 	public void onEnable() {
 		super.onEnable();
 		pmanager=Bukkit.getPluginManager();
+		protocolManager = ProtocolLibrary.getProtocolManager();
 		cfgmanager = new ConfigManager(this);
-		getCommand("vi5").setExecutor(new Vi5BaseCommand());
+		getCommand("vi5").setExecutor(new Vi5BaseCommand(this));
 	}
 	
 	public ConfigManager getCfgmanager() {
@@ -81,5 +92,26 @@ public class Vi5Main extends JavaPlugin implements Listener {
 				}
 			}
 		}
+	}
+	
+	public boolean packetGlowPlayer(Player player,Player glowed) {
+		PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.ENTITY_METADATA);
+	     packet.getIntegers().write(0, glowed.getEntityId()); //Set packet's entity id
+	     WrappedDataWatcher watcher = new WrappedDataWatcher(); //Create data watcher, the Entity Metadata packet requires this
+	     Serializer serializer = Registry.get(Byte.class); //Found this through google, needed for some stupid reason
+	     watcher.setEntity(player); //Set the new data watcher's target
+	     watcher.setObject(0, serializer, (byte) (0x40)); //Set status to glowing, found on protocol page
+	     packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects()); //Make the packet's datawatcher the one we created
+	     try {
+	    	 protocolManager.sendServerPacket(player, packet);
+	         return true;
+	     } catch (InvocationTargetException e) {
+	         e.printStackTrace();
+	         return false;
+	     }
+	     //MERCI INTERNET PUTAIN
+	}
+	public ProtocolManager getProtocolManager() {
+		return protocolManager;
 	}
 }
