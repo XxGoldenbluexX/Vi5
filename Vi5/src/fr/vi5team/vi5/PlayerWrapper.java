@@ -4,7 +4,6 @@ import org.bukkit.event.Listener;
 
 public class PlayerWrapper implements Listener {
 	
-	
 	Game game = null;//référence a la game ou le joueur appartient, null si il n'en a pas
 	boolean ready=false;
 	
