@@ -4,11 +4,20 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Minecart;
+import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Vehicle;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,6 +47,7 @@ public class Vi5Main extends JavaPlugin implements Listener {
 		protocolManager = ProtocolLibrary.getProtocolManager();
 		cfgmanager = new ConfigManager(this);
 		getCommand("vi5").setExecutor(new Vi5BaseCommand(this));
+		pmanager.registerEvents(this,this);
 	}
 	
 	public ConfigManager getCfgmanager() {
@@ -111,7 +121,41 @@ public class Vi5Main extends JavaPlugin implements Listener {
 	     }
 	     //MERCI INTERNET PUTAIN
 	}
+	
 	public ProtocolManager getProtocolManager() {
 		return protocolManager;
+	}
+	
+	@EventHandler
+	public void HangingBreakEvent(HangingBreakByEntityEvent event) {
+		Entity ent = event.getEntity();
+		Entity destroyer = event.getRemover();
+		if ((ent instanceof Painting || ent instanceof ItemFrame)&&(destroyer instanceof Player)) {
+			if (((Player)event.getRemover()).getGameMode()==GameMode.ADVENTURE) {
+				event.setCancelled(true);
+				return;
+			}
+		}
+		return;
+	}
+	
+	@EventHandler
+	public void vehicleDestroyEvent(VehicleDestroyEvent event) {
+		Vehicle v = event.getVehicle();
+		Entity ent = event.getAttacker();
+		if (ent instanceof Player) {
+			if (((Player)ent).getGameMode()==GameMode.ADVENTURE && v instanceof Minecart) {
+				event.setCancelled(true);
+				return;
+			}
+		}
+	}
+	
+	@EventHandler
+	public void primeExplostionEvent(ExplosionPrimeEvent event) {
+		if (event.getEntity() instanceof EnderCrystal) {
+			event.setCancelled(true);
+			return;
+		}
 	}
 }
