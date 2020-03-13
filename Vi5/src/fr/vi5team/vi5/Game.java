@@ -70,6 +70,9 @@ public class Game implements Listener {
 			p.sendMessage(ChatColor.AQUA+"["+name+"]"+message);
 		}
 	}
+	public void messageGardes(String message) {
+		
+	}
 	
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent event) {
