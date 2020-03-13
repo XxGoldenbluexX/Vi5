@@ -3,6 +3,7 @@ package fr.vi5team.vi5;
 
 import java.util.Arrays;
 import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
@@ -14,6 +15,7 @@ public class MapObject implements Listener {
 	private Player player;
 	private String object_name;
 	private ConfigManager ConfigManager = new ConfigManager(null);
+	private Game gameref;
 	
 	@SuppressWarnings("unused")
 	public List<Object> playerInObjectRange(String mapname) {
@@ -28,7 +30,8 @@ public class MapObject implements Listener {
 	public void pointCapture() {	
 		
 	}
-	public MapObject(Location _position, Location _blockPosition,BlockData _blockData,Material _blocType,short sizex,short sizey,short sizez) {
+	public MapObject(Game game, Location _position, Location _blockPosition,BlockData _blockData,Material _blocType,int sizex,int sizey,int sizez) {
+		gameref = game;
 		
 	}
 }

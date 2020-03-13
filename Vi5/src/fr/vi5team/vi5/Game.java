@@ -6,6 +6,8 @@ import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +23,7 @@ public class Game implements Listener {
 	private boolean started=false;
 	private ArrayList<Location> gardeSpawns=new ArrayList<Location>();
 	private ArrayList<Location> voleurMinimapSpawns=new ArrayList<Location>();
+	private ArrayList<MapObject> mapObjects=new ArrayList<MapObject>();
 	
 	HashMap<Player,PlayerWrapper> playersInGame = new HashMap<Player,PlayerWrapper>();//Liste des joueurs présents dans la partie et de leur wrapper
 	
@@ -128,21 +131,25 @@ public class Game implements Listener {
 	
 	public void start() {
 		//lancement de la partie, que les joueurs soient prêts ou non;
-		if (!loadMap()) {
+		if (!loadMap(mapname)) {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
 			return;
 		}
 	};
 	
-	public boolean loadMap() {
-		YamlConfiguration mapcfg = cfgManager.getMapConfig("");
+	public boolean loadMap(String map_name) {
+		YamlConfiguration mapcfg = cfgManager.getMapConfig(map_name);
+		if (mapcfg.equals(null)){
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> impossible de charger le fichier config pour "+ChatColor.ITALIC+map_name);
+			return false;
+		}
 		Location loc;//variable utilisée pour les maneuvres
 		int i=0;
 		//récolter les spawns des gardes
 		gardeSpawns.clear();
 		int nbValues = mapcfg.getInt("gardeSpawns.number",-1);
 		if (nbValues==-1) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> gardeSpawns.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+mapname);
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> gardeSpawns.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 			return false;
 		}
 		for (i=0;i<nbValues;i++) {
@@ -156,7 +163,7 @@ public class Game implements Listener {
 		nbValues=-1;
 		nbValues = mapcfg.getInt("voleurMinimapSpawns.number",-1);
 		if (nbValues==-1) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> voleurMinimapSpawns.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+mapname);
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> voleurMinimapSpawns.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 			return false;
 		}
 		for (i=0;i<nbValues;i++) {
@@ -165,6 +172,61 @@ public class Game implements Listener {
 				voleurMinimapSpawns.add(loc);
 			}
 		}
+		//recolter les maps objects
+		mapObjects.clear();
+		nbValues=-1;
+		nbValues = mapcfg.getInt("mapObjects.number",-1);
+		if (nbValues==-1) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+			return false;
+		}
+		for (i=0;i<nbValues;i++) {
+			Location _position = mapcfg.getLocation("mapObjects."+i+"location");
+			Location _blockPosition = mapcfg.getLocation("mapObjects."+i+"blockPosition");
+			BlockData _blockData = Bukkit.createBlockData(mapcfg.getString("mapObjects."+i+"blockData")); //le blockdata est enregistré sous forme de string dans le config puis transformé en blockdata ici
+			Material _blockType = Material.valueOf(mapcfg.getString("mapObjects."+i+"blockType"));
+			int sizex = mapcfg.getInt("mapObjects."+i+"sizeX",-1);
+			int sizey = mapcfg.getInt("mapObjects."+i+"sizeY",-1);
+			int sizez = mapcfg.getInt("mapObjects."+i+"sizeZ",-1);
+			if (_position.equals(null)) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".location n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				return false;
+			}
+			if (_blockPosition.equals(null)) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".blockPosition n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				return false;
+			}
+			if (_blockData.equals(null)) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".blockData n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				return false;
+			}
+			if (_blockType.equals(null)) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".blockType n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				return false;
+			}
+			if (sizex==-1) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".sizeX n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				return false;
+			}
+			if (sizey==-1) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".sizeY n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				return false;
+			}
+			if (sizez==-1) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".sizeZ n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				return false;
+			}
+			mapObjects.add(new MapObject(this, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez));
+		}
+		 //Location _position, Location _blockPosition,BlockData _blockData,Material _blocType,short sizex,short sizey,short sizez
 		return false;
+	}
+
+	public ArrayList<MapObject> getMapObjects() {
+		return mapObjects;
+	}
+
+	public void setMapObjects(ArrayList<MapObject> mapObjects) {
+		this.mapObjects = mapObjects;
 	}
 }
