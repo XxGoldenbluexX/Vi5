@@ -71,7 +71,9 @@ public class Game implements Listener {
 		}
 	}
 	public void messageGardes(String message) {
-		
+		for (Player p : playersInGame.keySet()) {
+			p.sendMessage(ChatColor.AQUA+"["+name+"]"+message);
+		}
 	}
 	
 	@EventHandler
