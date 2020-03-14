@@ -14,6 +14,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import fr.vi5team.vi5.enums.Vi5Team;
+
 public class Game implements Listener {
 	
 	private Vi5Main mainref;
@@ -73,9 +75,11 @@ public class Game implements Listener {
 			p.sendMessage(ChatColor.AQUA+"["+name+"]"+message);
 		}
 	}
-	public void messageGardes(String message) {
+	public void messageTeam(Vi5Team team ,String message) {
 		for (Player p : playersInGame.keySet()) {
-			p.sendMessage(ChatColor.AQUA+"["+name+"]"+message);
+			if(mainref.getPlayerWrapper(p).getTeam()==team) {
+				p.sendMessage(ChatColor.AQUA+"["+name+"]"+message);
+			}
 		}
 	}
 	
@@ -134,6 +138,8 @@ public class Game implements Listener {
 		if (!loadMap(mapname)) {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
 			return;
+		}else {
+			//TODO lancer la game
 		}
 	};
 	
@@ -181,6 +187,7 @@ public class Game implements Listener {
 			return false;
 		}
 		for (i=0;i<nbValues;i++) {
+			String _name=mapcfg.getString("mapObjects."+i+"name","DefaultObject");
 			Location _position = mapcfg.getLocation("mapObjects."+i+"location");
 			Location _blockPosition = mapcfg.getLocation("mapObjects."+i+"blockPosition");
 			BlockData _blockData = Bukkit.createBlockData(mapcfg.getString("mapObjects."+i+"blockData")); //le blockdata est enregistré sous forme de string dans le config puis transformé en blockdata ici
@@ -188,6 +195,10 @@ public class Game implements Listener {
 			int sizex = mapcfg.getInt("mapObjects."+i+"sizeX",-1);
 			int sizey = mapcfg.getInt("mapObjects."+i+"sizeY",-1);
 			int sizez = mapcfg.getInt("mapObjects."+i+"sizeZ",-1);
+			if (_name.equals(null)) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".name n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				return false;
+			}
 			if (_position.equals(null)) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".location n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
@@ -216,10 +227,9 @@ public class Game implements Listener {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".sizeZ n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
-			mapObjects.add(new MapObject(this, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez));
+			mapObjects.add(new MapObject(this,_name, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez));
 		}
-		 //Location _position, Location _blockPosition,BlockData _blockData,Material _blocType,short sizex,short sizey,short sizez
-		return false;
+		return true;
 	}
 
 	public ArrayList<MapObject> getMapObjects() {

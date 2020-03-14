@@ -10,6 +10,7 @@ public class PlayerWrapper implements Listener {
 	private BaseRune primaire;
 	private BaseRune secondaire;
 	private BaseRune tertiaire;
+	private short nbItemStealed=0;
 	
 	Game game = null;//référence a la game ou le joueur appartient, null si il n'en a pas
 	boolean ready=false;
@@ -62,5 +63,17 @@ public class PlayerWrapper implements Listener {
 
 	public void setRuneTertiaire(BaseRune tertiaire) {
 		this.tertiaire = tertiaire;
+	}
+
+	public short getNbItemStealed() {
+		return nbItemStealed;
+	}
+
+	public void setNbItemStealed(short nbItemStealed) {
+		this.nbItemStealed = nbItemStealed;
+	}
+	
+	public void addItemStealed() {
+		nbItemStealed++;
 	}
 }
