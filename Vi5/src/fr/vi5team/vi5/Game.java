@@ -140,6 +140,7 @@ public class Game implements Listener {
 			return;
 		}else {
 			//TODO lancer la game
+			//creer un runnable qui tick les MapObjects et autres
 		}
 	};
 	
