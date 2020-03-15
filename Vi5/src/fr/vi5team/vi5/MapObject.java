@@ -3,6 +3,8 @@ package fr.vi5team.vi5;
 
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -46,7 +48,16 @@ public class MapObject implements Listener {
 		boolean yy = ( position.getBlockY()+ysize > playery && playery > position.getBlockY()-ysize);
 		boolean zz = ( position.getBlockZ()+zsize > playerz && playerz > position.getBlockZ()-zsize);
 		return (xx && yy && zz);//la ligne de code de 80m me stressait
-	}	
+	}
+	public boolean isGuardOnPoint() {
+		for(Player p:playersOnObject) {
+			PlayerWrapper wrap = gameref.getPlayerWrapper(p);
+			if (wrap.getTeam()==Vi5Team.GARDE) {
+				return true;
+			}
+		}
+	return false;
+	}
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
 		Location playerNewLocation = event.getTo();
@@ -59,23 +70,40 @@ public class MapObject implements Listener {
 		}
 		return;
 	}
-
-	public void pointCapture() {
-		
-	}
 	public void Tick() {
-		for (Player p : playersOnObject) {
-			PlayerWrapper wrap = gameref.getPlayerWrapper(p);
-			if (wrap!=null) {
-				if (wrap.getTeam()==Vi5Team.VOLEUR) {
+			for (Player p : playersOnObject) {
+				PlayerWrapper wrap = gameref.getPlayerWrapper(p);
+				if (wrap!=null) {
+					if (wrap.getTeam()==Vi5Team.VOLEUR) {
+						if (captureState.equals(CaptureState.STEALABLE)) {
+							if (playersOnObject.contains(p)&&captureLevel<MAX_CAPTURE_LEVEL&&!isGuardOnPoint()){
+								if(!captureCooldown){
+									captureLevel++;
+									p.sendTitle("", ChatColor.GREEN+"Capturing "+ChatColor.RED+ChatColor.UNDERLINE+getObjectName()+" :"+ChatColor.GOLD+captureLevel+"/"+MAX_CAPTURE_LEVEL, 10, 70, 20);
+									if (captureLevel==MAX_CAPTURE_LEVEL) {
+										captureState=CaptureState.CARRIED;
+										removeBlock();
+										
+										//Message aux voleurs
+										//Message aux gardes
+									}
+								}
+								else {
+									p.sendTitle("", ChatColor.RED+"Capture on cooldown", 10, 70, 20);
+								}
+							}
+						}
+					}
+					else if (wrap.getTeam()==Vi5Team.GARDE) {
 					
-				}else if (wrap.getTeam()==Vi5Team.GARDE) {
-					
-				}
-			}
-		}
-	}
-	
+					}				
+				}		
+			}				
+		}					
+								
+				
+		
+		
 	public MapObject(Game game, String _objectName, Location _position, Location _blockPosition,BlockData _blockData,Material _blockType,int sizex,int sizey,int sizez) {
 		blockData = _blockData;
 		blockPosition = _blockPosition;
