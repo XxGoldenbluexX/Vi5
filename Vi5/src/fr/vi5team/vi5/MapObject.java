@@ -71,38 +71,29 @@ public class MapObject implements Listener {
 		return;
 	}
 	public void Tick() {
+		if (captureState==CaptureState.STEALABLE && !captureCooldown) {
 			for (Player p : playersOnObject) {
 				PlayerWrapper wrap = gameref.getPlayerWrapper(p);
 				if (wrap!=null) {
 					if (wrap.getTeam()==Vi5Team.VOLEUR) {
-						if (captureState.equals(CaptureState.STEALABLE)) {
-							if (playersOnObject.contains(p)&&captureLevel<MAX_CAPTURE_LEVEL&&!isGuardOnPoint()){
-								if(!captureCooldown){
-									captureLevel++;
-									p.sendTitle("", ChatColor.GREEN+"Capturing "+ChatColor.RED+ChatColor.UNDERLINE+getObjectName()+" :"+ChatColor.GOLD+captureLevel+"/"+MAX_CAPTURE_LEVEL, 10, 70, 20);
-									if (captureLevel==MAX_CAPTURE_LEVEL) {
-										captureState=CaptureState.CARRIED;
-										removeBlock();
-										
-										//Message aux voleurs
-										//Message aux gardes
-									}
-								}
-								else {
-									p.sendTitle("", ChatColor.RED+"Capture on cooldown", 10, 70, 20);
-								}
-							}
+						if (captureLevel<MAX_CAPTURE_LEVEL) {
+							captureLevel++;
+							int percent = (captureLevel/MAX_CAPTURE_LEVEL)*100;
+							p.sendTitle("", ChatColor.GREEN+"Capturing "+ChatColor.RED+ChatColor.UNDERLINE+objectName+" :"+percent+"%", 0, 1, 0);
+						}else {
+							capture();
 						}
 					}
-					else if (wrap.getTeam()==Vi5Team.GARDE) {
-					
-					}				
-				}		
-			}				
-		}					
-								
-				
-		
+				}
+			}
+		}	
+	}
+	
+	public void capture() {
+		//called when this point is captured
+		captureState=CaptureState.CARRIED;
+		removeBlock();
+	}
 		
 	public MapObject(Game game, String _objectName, Location _position, Location _blockPosition,BlockData _blockData,Material _blockType,int sizex,int sizey,int sizez) {
 		blockData = _blockData;
