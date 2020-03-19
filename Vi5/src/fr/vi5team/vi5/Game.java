@@ -83,6 +83,14 @@ public class Game implements Listener {
 		}
 	}
 	
+	public void titleTeam(Vi5Team team ,String title,String subtitle,int fadein,int stay,int fadeout) {
+		for (Player p : playersInGame.keySet()) {
+			if(mainref.getPlayerWrapper(p).getTeam()==team) {
+				p.sendTitle(title, subtitle, fadein, stay, fadeout);
+			}
+		}
+	}
+	
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent event) {
 		Player player = event.getPlayer();

@@ -52,8 +52,10 @@ public class MapObject implements Listener {
 	public boolean isGuardOnPoint() {
 		for(Player p:playersOnObject) {
 			PlayerWrapper wrap = gameref.getPlayerWrapper(p);
-			if (wrap.getTeam()==Vi5Team.GARDE) {
-				return true;
+			if (wrap!=null) {
+				if (wrap.getTeam()==Vi5Team.GARDE) {
+					return true;
+				}
 			}
 		}
 	return false;
@@ -77,11 +79,15 @@ public class MapObject implements Listener {
 				if (wrap!=null) {
 					if (wrap.getTeam()==Vi5Team.VOLEUR) {
 						if (captureLevel<MAX_CAPTURE_LEVEL) {
+							if (isGuardOnPoint()) {
+								p.sendTitle("", ChatColor.RED+"Capture paused (a guard is near)", 0, 1, 0);
+								return;
+							}
 							captureLevel++;
 							int percent = (captureLevel/MAX_CAPTURE_LEVEL)*100;
-							p.sendTitle("", ChatColor.GREEN+"Capturing "+ChatColor.RED+ChatColor.UNDERLINE+objectName+" :"+percent+"%", 0, 1, 0);
+							p.sendTitle("", ChatColor.DARK_GREEN+"Capturing "+ChatColor.RED+ChatColor.UNDERLINE+objectName+" :"+percent+"%", 0, 1, 0);
 						}else {
-							capture();
+							capture(p,wrap);
 						}
 					}
 				}
@@ -89,10 +95,15 @@ public class MapObject implements Listener {
 		}	
 	}
 	
-	public void capture() {
+	public void capture(Player player,PlayerWrapper wrap) {
 		//called when this point is captured
 		captureState=CaptureState.CARRIED;
+		wrap.addItemStealed();
 		removeBlock();
+		gameref.messageTeam(Vi5Team.GARDE, ChatColor.RED+"An object has been stolen");
+		gameref.messageTeam(Vi5Team.VOLEUR, ChatColor.GOLD+player.getName()+ChatColor.AQUA+" stole "+ChatColor.RED+ChatColor.UNDERLINE+objectName);
+		gameref.titleTeam(Vi5Team.GARDE, ChatColor.RED+"An object has been stolen", "", 5, 20, 20);
+		gameref.titleTeam(Vi5Team.VOLEUR, ChatColor.RED+objectName+ChatColor.GOLD+" stole", ChatColor.GOLD+"by "+ChatColor.AQUA+player.getName(), 5, 20, 20);
 	}
 		
 	public MapObject(Game game, String _objectName, Location _position, Location _blockPosition,BlockData _blockData,Material _blockType,int sizex,int sizey,int sizez) {
