@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
-public class MapLeavePlate implements Listener {
+public class MapLeaveZone implements Listener {
 	
 	private final Location loc;
 	private final Vector size;
@@ -29,7 +29,7 @@ public class MapLeavePlate implements Listener {
 			return;
 		}
 	}
-	public MapLeavePlate(Game _game,Location _loc, Vector _size) {
+	public MapLeaveZone(Game _game,Location _loc, Vector _size) {
 		loc=_loc;
 		size=_size;
 		game=_game;
