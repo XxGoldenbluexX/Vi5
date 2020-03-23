@@ -46,10 +46,10 @@ public class Vi5Interfaces implements Listener{
 		/*RUNE CHECK HERE*/
 		listLore.add(ChatColor.DARK_GREEN+"OWNED");
 		meta.addEnchant(Enchantment.DURABILITY, 3, true);
-		}
-		for (String i : lore) {
-			listLore.add(i);
-		}
+	}
+	for (String i : lore) {
+		listLore.add(i);
+	}
 		meta.setLore(listLore);
 		item.setItemMeta(meta);
 		return item;
@@ -57,5 +57,12 @@ public class Vi5Interfaces implements Listener{
 	
 	public void openMainInterface(Player player, Inventory maingui) {
 		player.openInventory(maingui);
+	}
+	
+	public void openGuardInterface(Player player, Inventory guardgui) {
+		
+	}
+	public void openThiefInterface(Player player, Inventory thiefgui) {
+		
 	}
 }

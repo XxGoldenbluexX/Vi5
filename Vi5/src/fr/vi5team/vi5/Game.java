@@ -14,8 +14,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Team;
 
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
@@ -79,6 +81,19 @@ public class Game implements Listener {
 				if (nbVoleurAlive<=0) {
 					endGame();
 				}
+			}
+		}
+	}
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		Player player = event.getEntity();
+		PlayerWrapper wrap = playersInGame.get(player);
+		if(wrap.getTeam()==Vi5Team.VOLEUR) {
+			messagePlayersInGame(ChatColor.RED+player.getName()+" died with "+ChatColor.GREEN+wrap.getNbItemStealed()+ChatColor.GOLD+" object(s)!");
+			player.setGameMode(GameMode.SPECTATOR);
+			nbVoleurAlive--;
+			if (nbVoleurAlive<=0) {
+				endGame();
 			}
 		}
 	}
