@@ -1,8 +1,10 @@
 package fr.vi5team.vi5;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import fr.vi5team.vi5.enums.Vi5Team;
+import fr.vi5team.vi5.enums.VoleurStatus;
 
 public class PlayerWrapper implements Listener {
 	
@@ -11,10 +13,16 @@ public class PlayerWrapper implements Listener {
 	private BaseRune secondaire;
 	private BaseRune tertiaire;
 	private short nbItemStealed=0;
+	private VoleurStatus currentStatus=VoleurStatus.OUTSIDE;
 	
-	Game game = null;//référence a la game ou le joueur appartient, null si il n'en a pas
+	private final Game game;//référence a la game ou le joueur appartient, null si il n'en a pas
 	boolean ready=false;
+	private final Player player;
 	
+	public PlayerWrapper(Game game, Player player) {
+		this.player=player;
+		this.game=game;
+	}
 	
 	public Game getGame() {
 		return game;
@@ -75,5 +83,17 @@ public class PlayerWrapper implements Listener {
 	
 	public void addItemStealed() {
 		nbItemStealed++;
+	}
+
+	public VoleurStatus getCurrentStatus() {
+		return currentStatus;
+	}
+
+	public void setCurrentStatus(VoleurStatus currentStatus) {
+		this.currentStatus = currentStatus;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 }

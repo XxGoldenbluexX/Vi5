@@ -2,9 +2,11 @@ package fr.vi5team.vi5;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
@@ -13,8 +15,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.vi5team.vi5.enums.Vi5Team;
+import fr.vi5team.vi5.enums.VoleurStatus;
 
 public class Game implements Listener {
 	
@@ -23,15 +27,27 @@ public class Game implements Listener {
 	private String mapname="SolarIndustries";
 	private ConfigManager cfgManager;
 	private boolean started=false;
+	private short nbVoleurAlive=0;
+	private short totalObjVolés=0;
 	private ArrayList<Location> gardeSpawns=new ArrayList<Location>();
 	private ArrayList<Location> voleurMinimapSpawns=new ArrayList<Location>();
 	private ArrayList<MapObject> mapObjects=new ArrayList<MapObject>();
+	private BukkitRunnable gameTick;
 	
 	HashMap<Player,PlayerWrapper> playersInGame = new HashMap<Player,PlayerWrapper>();//Liste des joueurs présents dans la partie et de leur wrapper
 	
 	public Game(Vi5Main main,ConfigManager cfgm) {
 		mainref=main;
 		cfgManager=cfgm;
+	}
+	public void endGame() {
+		started=false;
+		gameTick.cancel();
+		for (Player p : playersInGame.keySet()) {
+			p.setGameMode(GameMode.SPECTATOR);
+		}
+		messagePlayersInGame(ChatColor.GOLD+"La partie est terminée!");
+		messagePlayersInGame(ChatColor.GOLD+"Les voleurs se sont enfuit avec "+ChatColor.AQUA+totalObjVolés);
 	}
 	
 	public boolean addPlayer(Player player) {
@@ -41,7 +57,7 @@ public class Game implements Listener {
 			if (mainref.isPlayerIngame(player)) {
 				return false;
 			}else {
-				PlayerWrapper wrap = new PlayerWrapper();
+				PlayerWrapper wrap = new PlayerWrapper(this,player);
 				playersInGame.put(player, wrap);
 				messagePlayersInGame(ChatColor.GOLD+player.getName()+ChatColor.DARK_GREEN+" joined this vi5");
 				return true;
@@ -52,9 +68,29 @@ public class Game implements Listener {
 	public PlayerWrapper getPlayerWrapper(Player player) {
 		return playersInGame.get(player);
 	}
+	public void playerLeaveMap(Player player) {
+		if (hasPlayer(player)) {
+			PlayerWrapper wrap = playersInGame.get(player);
+			if (wrap.getTeam()==Vi5Team.VOLEUR && wrap.getCurrentStatus()==VoleurStatus.INSIDE) {
+				messagePlayersInGame(ChatColor.RED+player.getName()+ChatColor.GOLD+" leaved the place with "+ChatColor.AQUA+wrap.getNbItemStealed()+ChatColor.GOLD+" objects!");
+				player.setGameMode(GameMode.SPECTATOR);
+				totalObjVolés+=wrap.getNbItemStealed();
+				nbVoleurAlive--;
+				if (nbVoleurAlive<=0) {
+					endGame();
+				}
+			}
+		}
+	}
 	
 	public boolean removePlayer(Player player) {
 		if (playersInGame.containsKey(player)) {
+			if (started && playersInGame.get(player).getTeam()==Vi5Team.VOLEUR) {
+				nbVoleurAlive--;
+				if (nbVoleurAlive<=0) {
+					endGame();
+				}
+			}
 			playersInGame.remove(player);
 			messagePlayersInGame(ChatColor.GOLD+player.getName()+ChatColor.RED+" leaved this game");
 			return false;
@@ -140,6 +176,11 @@ public class Game implements Listener {
 			return false;
 		}
 	}
+	public void tickMapObjects() {
+		for (MapObject obj : mapObjects) {
+			obj.Tick();
+		}
+	}
 	
 	public void start() {
 		//lancement de la partie, que les joueurs soient prêts ou non;
@@ -148,7 +189,23 @@ public class Game implements Listener {
 			return;
 		}else {
 			//TODO lancer la game
+			for (Player p : playersInGame.keySet()) {
+				PlayerWrapper wrap = playersInGame.get(p);
+				if (wrap.getTeam()==Vi5Team.GARDE) {
+					int random =new  Random().nextInt();
+					p.teleport(gardeSpawns.get(random));
+				}else if (wrap.getTeam()==Vi5Team.VOLEUR) {
+					
+				}
+			}
 			//creer un runnable qui tick les MapObjects et autres
+			gameTick=new BukkitRunnable() {
+				@Override
+				public void run() {
+					tickMapObjects();
+				}
+			};
+			gameTick.runTaskTimer(mainref, 0, 1);
 		}
 	};
 	
@@ -247,5 +304,17 @@ public class Game implements Listener {
 
 	public void setMapObjects(ArrayList<MapObject> mapObjects) {
 		this.mapObjects = mapObjects;
+	}
+	public short getNbVoleurAlive() {
+		return nbVoleurAlive;
+	}
+	public void setNbVoleurAlive(short nbVoleurAlive) {
+		this.nbVoleurAlive = nbVoleurAlive;
+	}
+	public short getTotalObjVolés() {
+		return totalObjVolés;
+	}
+	public void setTotalObjVolés(short totalObjVolés) {
+		this.totalObjVolés = totalObjVolés;
 	}
 }
