@@ -2,6 +2,7 @@ package fr.vi5team.vi5;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -39,6 +40,16 @@ public class ConfigManager {
 			return config;
 		}
 		return null;
+	}
+	public ArrayList<String> getMapList() {
+		String[] list = mapFolder.list();
+		ArrayList<String> finalList=new ArrayList<String>();
+		for (String s : list) {
+			if (s.contains(".yml")) {
+				finalList.add(s.replace(".yml", ""));
+			}
+		}
+		return finalList;
 	}
 	
 	public boolean saveMapConfig(String mapname, YamlConfiguration config) {

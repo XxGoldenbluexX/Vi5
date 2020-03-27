@@ -67,12 +67,24 @@ public class Vi5Main extends JavaPlugin implements Listener {
 		}
 		return a;
 	}
-	
+	public Game createGame(String name) {
+		Game g=new Game(this,cfgmanager,name);
+		gamesList.add(g);
+		return g;
+	}
 	public PlayerWrapper getPlayerWrapper(Player player) {
 		for (final Game game : gamesList) {
 			PlayerWrapper wrap = game.getPlayerWrapper(player);
 			if (wrap!=null) {
 				return wrap;
+			}
+		}
+		return null;
+	}
+	public Game getGame(String name) {
+		for (Game g : gamesList) {
+			if (g.getName().equalsIgnoreCase(name)) {
+				return g;
 			}
 		}
 		return null;

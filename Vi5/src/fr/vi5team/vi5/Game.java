@@ -17,8 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Team;
-
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
 
@@ -31,16 +29,17 @@ public class Game implements Listener {
 	private boolean started=false;
 	private short nbVoleurAlive=0;
 	private short totalObjVolés=0;
-	private ArrayList<Location> gardeSpawns=new ArrayList<Location>();
-	private ArrayList<Location> voleurMinimapSpawns=new ArrayList<Location>();
+	private Location gardeSpawn;
+	private Location voleurMinimapSpawn;
 	private ArrayList<MapObject> mapObjects=new ArrayList<MapObject>();
 	private BukkitRunnable gameTick;
 	
 	HashMap<Player,PlayerWrapper> playersInGame = new HashMap<Player,PlayerWrapper>();//Liste des joueurs présents dans la partie et de leur wrapper
 	
-	public Game(Vi5Main main,ConfigManager cfgm) {
+	public Game(Vi5Main main,ConfigManager cfgm,String _name) {
 		mainref=main;
 		cfgManager=cfgm;
+		name=_name;
 	}
 	public void endGame() {
 		started=false;
@@ -61,7 +60,7 @@ public class Game implements Listener {
 			}else {
 				PlayerWrapper wrap = new PlayerWrapper(this,player);
 				playersInGame.put(player, wrap);
-				messagePlayersInGame(ChatColor.GOLD+player.getName()+ChatColor.DARK_GREEN+" joined this vi5");
+				messagePlayersInGame(ChatColor.GOLD+player.getName()+ChatColor.DARK_GREEN+" joined this vi5 game!");
 				return true;
 			}
 		}
@@ -132,13 +131,13 @@ public class Game implements Listener {
 	
 	public void messagePlayersInGame(String message) {
 		for (Player p : playersInGame.keySet()) {
-			p.sendMessage(ChatColor.AQUA+"["+name+"]"+message);
+			p.sendMessage(ChatColor.AQUA+"["+name+"] "+message);
 		}
 	}
 	public void messageTeam(Vi5Team team ,String message) {
 		for (Player p : playersInGame.keySet()) {
 			if(mainref.getPlayerWrapper(p).getTeam()==team) {
-				p.sendMessage(ChatColor.AQUA+"["+name+"]"+message);
+				p.sendMessage(ChatColor.AQUA+"["+name+"] "+message);
 			}
 		}
 	}
@@ -212,21 +211,14 @@ public class Game implements Listener {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
 			return;
 		}else {
-			//TODO lancer la game
 			for (Player p : playersInGame.keySet()) {
 				PlayerWrapper wrap = playersInGame.get(p);
 				if (wrap.getTeam()==Vi5Team.GARDE) {
-					int random =new  Random().nextInt(((gardeSpawns.size()-0) + 1) + 0);
-					if (random>gardeSpawns.size()) {
-						random=gardeSpawns.size();
-					}else if (random<0) {
-						random=0;
-					}
-					p.teleport(gardeSpawns.get(random));
+					p.teleport(gardeSpawn);
 				}else if (wrap.getTeam()==Vi5Team.VOLEUR) {
-					int random =new  Random().nextInt(((voleurMinimapSpawns.size()-0) + 1) + 0);
-					p.teleport(voleurMinimapSpawns.get(random));
+					p.teleport(voleurMinimapSpawn);
 					hideVoleur(p);
+					wrap.setCurrentStatus(VoleurStatus.OUTSIDE);
 				}
 			}
 			//creer un runnable qui tick les MapObjects et autres
@@ -262,42 +254,26 @@ public class Game implements Listener {
 	
 	public boolean loadMap(String map_name) {
 		YamlConfiguration mapcfg = cfgManager.getMapConfig(map_name);
-		if (mapcfg.equals(null)){
+		if (mapcfg==null){
 			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> impossible de charger le fichier config pour "+ChatColor.ITALIC+map_name);
 			return false;
 		}
-		Location loc;//variable utilisée pour les maneuvres
-		int i=0;
-		//récolter les spawns des gardes
-		gardeSpawns.clear();
-		int nbValues = mapcfg.getInt("gardeSpawns.number",-1);
-		if (nbValues==-1) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> gardeSpawns.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+		int i=0;//variable utilisée pour les maneuvres
+		//récolter le spawn des gardes
+		gardeSpawn = mapcfg.getLocation("gardeSpawn");
+		if (gardeSpawn==null) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> gardeSpawn n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 			return false;
-		}
-		for (i=0;i<nbValues;i++) {
-			loc = mapcfg.getLocation("gardeSpawns."+i);
-			if (!loc.equals(null)) {
-				gardeSpawns.add(loc);
-			}
 		}
 		//récolter les spawns a la minimap des voleurs
-		voleurMinimapSpawns.clear();
-		nbValues=-1;
-		nbValues = mapcfg.getInt("voleurMinimapSpawns.number",-1);
-		if (nbValues==-1) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> voleurMinimapSpawns.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+		voleurMinimapSpawn = mapcfg.getLocation("voleurMinimapSpawn");
+		if (voleurMinimapSpawn==null) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> voleurMinimapSpawn n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 			return false;
-		}
-		for (i=0;i<nbValues;i++) {
-			loc = mapcfg.getLocation("voleurMinimapSpawns."+i);
-			if (!loc.equals(null)) {
-				voleurMinimapSpawns.add(loc);
-			}
 		}
 		//recolter les maps objects
 		mapObjects.clear();
-		nbValues=-1;
+		int nbValues=-1;
 		nbValues = mapcfg.getInt("mapObjects.number",-1);
 		if (nbValues==-1) {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
@@ -367,5 +343,11 @@ public class Game implements Listener {
 	}
 	public void setTotalObjVolés(short totalObjVolés) {
 		this.totalObjVolés = totalObjVolés;
+	}
+	public String getMapName() {
+		return mapname;
+	}
+	public void setMapName(String mapname) {
+		this.mapname = mapname;
 	}
 }
