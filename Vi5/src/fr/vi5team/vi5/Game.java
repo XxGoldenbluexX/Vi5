@@ -84,6 +84,15 @@ public class Game implements Listener {
 			}
 		}
 	}
+	public void playerEnterMap(Player player) {
+		if (hasPlayer(player)) {
+			PlayerWrapper wrap = playersInGame.get(player);
+			if (wrap.getTeam()==Vi5Team.VOLEUR && wrap.getCurrentStatus()==VoleurStatus.OUTSIDE) {
+				showPlayer(player);
+				player.sendMessage(ChatColor.GOLD+"You entered the complex");
+			}
+		}
+	}
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
@@ -207,10 +216,17 @@ public class Game implements Listener {
 			for (Player p : playersInGame.keySet()) {
 				PlayerWrapper wrap = playersInGame.get(p);
 				if (wrap.getTeam()==Vi5Team.GARDE) {
-					int random =new  Random().nextInt();
+					int random =new  Random().nextInt(((gardeSpawns.size()-0) + 1) + 0);
+					if (random>gardeSpawns.size()) {
+						random=gardeSpawns.size();
+					}else if (random<0) {
+						random=0;
+					}
 					p.teleport(gardeSpawns.get(random));
 				}else if (wrap.getTeam()==Vi5Team.VOLEUR) {
-					
+					int random =new  Random().nextInt(((voleurMinimapSpawns.size()-0) + 1) + 0);
+					p.teleport(voleurMinimapSpawns.get(random));
+					hideVoleur(p);
 				}
 			}
 			//creer un runnable qui tick les MapObjects et autres
@@ -223,6 +239,26 @@ public class Game implements Listener {
 			gameTick.runTaskTimer(mainref, 0, 1);
 		}
 	};
+	public void hideVoleur(Player player) {
+		//cache un voleur a tout les gardes
+		if (hasPlayer(player)) {
+			PlayerWrapper wrap = getPlayerWrapper(player);
+			if (wrap.getTeam()==Vi5Team.VOLEUR) {
+				for (Player p : playersInGame.keySet()) {
+					PlayerWrapper w = getPlayerWrapper(p);
+					if (w.getTeam()==Vi5Team.GARDE) {
+						p.hidePlayer(mainref, player);
+					}
+				}
+			}
+		}
+	}
+	public void showPlayer(Player player) {
+		//remet un joueur visible pour tout les joueurs
+		for (Player p : playersInGame.keySet()) {
+			p.showPlayer(mainref, player);
+		}
+	}
 	
 	public boolean loadMap(String map_name) {
 		YamlConfiguration mapcfg = cfgManager.getMapConfig(map_name);

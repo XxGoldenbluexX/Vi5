@@ -14,6 +14,7 @@ public class PlayerWrapper implements Listener {
 	private BaseRune tertiaire;
 	private short nbItemStealed=0;
 	private VoleurStatus currentStatus=VoleurStatus.OUTSIDE;
+	private boolean enterStealCooldown=true;
 	
 	private final Game game;//référence a la game ou le joueur appartient, null si il n'en a pas
 	boolean ready=false;
@@ -95,5 +96,13 @@ public class PlayerWrapper implements Listener {
 
 	public Player getPlayer() {
 		return player;
+	}
+
+	public boolean isEnterStealCooldown() {
+		return enterStealCooldown;
+	}
+
+	public void setEnterStealCooldown(boolean enterStealCooldown) {
+		this.enterStealCooldown = enterStealCooldown;
 	}
 }
