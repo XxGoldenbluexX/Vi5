@@ -140,7 +140,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 		}
 		switch (args[1]) {
 		case "create":
-			if (args.length>3) {
+			if (args.length>2) {
 				mainref.getCfgmanager().createMapConfig(args[2]);
 				sender.sendMessage(ChatColor.DARK_GREEN+"Map created (except if it was already created)");
 				return true;
@@ -149,7 +149,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setGuardSpawn":
-			if (args.length>3) {
+			if (args.length>2) {
 				if (sender instanceof Player) {
 					Player p = (Player)sender;
 					YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
@@ -169,7 +169,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setVoleurMinimapSpawn":
-			if (args.length>3) {
+			if (args.length>2) {
 				if (sender instanceof Player) {
 					Player p = (Player)sender;
 					YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
