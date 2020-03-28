@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import fr.vi5team.vi5.Game;
 import fr.vi5team.vi5.Vi5Main;
+import fr.vi5team.vi5.enums.Vi5Team;
 public class Vi5BaseCommand implements CommandExecutor {
 
 	private final Vi5Main mainref;
@@ -27,6 +28,8 @@ public class Vi5BaseCommand implements CommandExecutor {
 			 return gameCommand(sender,args);
 		case "map":
 			return mapCommand(sender,args);
+		case "team":
+			return teamCommand(sender,args);
 		case "glow":
 			if (sender instanceof Player) {
 				Player player = (Player)sender;
@@ -198,5 +201,85 @@ public class Vi5BaseCommand implements CommandExecutor {
 			break;
 		}
 		return false;
+	}
+	public boolean teamCommand(CommandSender sender,String[] args) {
+		if (args.length<2) {
+			sender.sendMessage("usage: /vi5 team <guard/thief/spectator> [PlayerName]");
+			return true;
+		}else {
+			if (sender instanceof Player) {
+				Player player = (Player)sender;
+				if (mainref.isPlayerIngame(player)) {
+					switch (args[1]) {
+					case "guard":
+						if (args.length>2) {
+							Player p = mainref.getServer().getPlayer(args[2]);
+							if (p==null) {
+								sender.sendMessage(ChatColor.RED+"This player is not online");
+								return true;
+							}else {
+								if (mainref.isPlayerIngame(p)) {
+									mainref.getPlayerWrapper(p).setTeam(Vi5Team.GARDE);
+									return true;
+								}else {
+									sender.sendMessage(ChatColor.RED+"This player is not in a game");
+									return true;
+								}
+							}
+						}else {
+							mainref.getPlayerWrapper(player).setTeam(Vi5Team.GARDE);
+							return true;
+						}
+					case "thief":
+						if (args.length>2) {
+							Player p = mainref.getServer().getPlayer(args[2]);
+							if (p==null) {
+								sender.sendMessage(ChatColor.RED+"This player is not online");
+								return true;
+							}else {
+								if (mainref.isPlayerIngame(p)) {
+									mainref.getPlayerWrapper(p).setTeam(Vi5Team.VOLEUR);
+									return true;
+								}else {
+									sender.sendMessage(ChatColor.RED+"This player is not in a game");
+									return true;
+								}
+							}
+						}else {
+							mainref.getPlayerWrapper(player).setTeam(Vi5Team.VOLEUR);
+							return true;
+						}
+					case "spectator":
+						if (args.length>2) {
+							Player p = mainref.getServer().getPlayer(args[2]);
+							if (p==null) {
+								sender.sendMessage(ChatColor.RED+"This player is not online");
+								return true;
+							}else {
+								if (mainref.isPlayerIngame(p)) {
+									mainref.getPlayerWrapper(p).setTeam(Vi5Team.SPECTATEUR);
+									return true;
+								}else {
+									sender.sendMessage(ChatColor.RED+"This player is not in a game");
+									return true;
+								}
+							}
+						}else {
+							mainref.getPlayerWrapper(player).setTeam(Vi5Team.SPECTATEUR);
+							return true;
+						}
+					default:
+						sender.sendMessage(ChatColor.RED+"Only thief/guard/spectator are valid teams");
+						return true;
+					}
+				}else {
+					sender.sendMessage(ChatColor.RED+"You need to be in game to use this command");
+					return true;
+				}
+			}else {
+				sender.sendMessage(ChatColor.RED+"You need to be a player to use this command");
+				return true;
+			}
+		}
 	}
 }
