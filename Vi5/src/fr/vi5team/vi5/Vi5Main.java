@@ -2,7 +2,6 @@ package fr.vi5team.vi5;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.EnderCrystal;
@@ -20,7 +19,6 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
@@ -28,7 +26,6 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
-
 import fr.vi5team.vi5.commands.Vi5BaseCommand;
 import fr.vi5team.vi5.enums.DieCancelType;
 import fr.vi5team.vi5.events.PlayerKillEvent;

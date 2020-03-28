@@ -11,9 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+
 import fr.vi5team.vi5.enums.Vi5Team;
 
-public class MapObject implements Listener {
+
+public class MapObject implements Listener{
 	
 	public enum CaptureState{
 		STEALABLE,//l'objet peut etre volé
@@ -103,9 +105,9 @@ public class MapObject implements Listener {
 		gameref.titleTeam(Vi5Team.VOLEUR, ChatColor.RED+objectName+ChatColor.GOLD+" stole", ChatColor.GOLD+"by "+ChatColor.AQUA+player.getName(), 5, 20, 20);
 	}
 		
-	public MapObject(Game game, String _objectName, Location _position, Location _blockPosition,BlockData _blockData,Material _blockType,int sizex,int sizey,int sizez) {
-		blockData = _blockData;
+	public MapObject(Game game, String _objectName, Location _position, Location _blockPosition,BlockData bdata,Material _blockType,int sizex,int sizey,int sizez) {
 		blockPosition = _blockPosition;
+		blockData=bdata;
 		blockType = _blockType;
 		position = _position;
 		xsize = sizex;
@@ -120,21 +122,28 @@ public class MapObject implements Listener {
 	public Material getBlockType() {
 		return blockType;
 	}
-	public BlockData getBlockData() {
-		return blockData;
-	}
 	public Location getBlockPosition() {
 		return blockPosition;
 	}
 	public void setBlock() {
 		Block block = blockPosition.getWorld().getBlockAt(blockPosition);
 		block.setType(getBlockType());
-		block.setBlockData(getBlockData());
 	}
 	public void removeBlock() {
 		Block block = blockPosition.getWorld().getBlockAt(blockPosition);
 		block.setType(Material.AIR);
-		block.setBlockData(null);
+	}
+	public Location getPosition() {
+		return position;
+	}
+	public int getXsize() {
+		return xsize;
+	}
+	public int getYsize() {
+		return ysize;
+	}
+	public int getZsize() {
+		return zsize;
 	}
 }
 
