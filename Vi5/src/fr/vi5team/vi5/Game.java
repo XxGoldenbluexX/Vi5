@@ -15,6 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
 
@@ -30,6 +32,8 @@ public class Game implements Listener {
 	private Location gardeSpawn;
 	private Location voleurMinimapSpawn;
 	private ArrayList<MapObject> mapObjects=new ArrayList<MapObject>();
+	private ArrayList<MapEnterZone> mapEnterZones=new ArrayList<MapEnterZone>();
+	private ArrayList<MapLeaveZone> mapLeaveZones=new ArrayList<MapLeaveZone>();
 	private BukkitRunnable gameTick;
 	
 	HashMap<Player,PlayerWrapper> playersInGame = new HashMap<Player,PlayerWrapper>();//Liste des joueurs présents dans la partie et de leur wrapper
@@ -249,6 +253,19 @@ public class Game implements Listener {
 			p.showPlayer(mainref, player);
 		}
 	}
+	public void launchCaptureDelay() {
+		for (MapObject o : mapObjects) {
+			o.setCaptureCooldown(true);
+		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				for (MapObject o : mapObjects) {
+					o.setCaptureCooldown(false);
+				}
+			}
+		}.runTaskLater(mainref, 600);
+	}
 	
 	public boolean loadMap(String map_name) {
 		YamlConfiguration mapcfg = cfgManager.getMapConfig(map_name);
@@ -286,23 +303,23 @@ public class Game implements Listener {
 			int sizex = mapcfg.getInt("mapObjects."+i+"sizeX",-1);
 			int sizey = mapcfg.getInt("mapObjects."+i+"sizeY",-1);
 			int sizez = mapcfg.getInt("mapObjects."+i+"sizeZ",-1);
-			if (_name.equals(null)) {
+			if (_name==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".name n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
-			if (_position.equals(null)) {
+			if (_position==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".location n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
-			if (_blockPosition.equals(null)) {
+			if (_blockPosition==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".blockPosition n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
-			if (_blockData.equals(null)) {
+			if (_blockData==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".blockData n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
-			if (_blockType.equals(null)) {
+			if (_blockType==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".blockType n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
@@ -320,7 +337,72 @@ public class Game implements Listener {
 			}
 			mapObjects.add(new MapObject(this,_name, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez));
 		}
+		mapEnterZones.clear();
+		nbValues=-1;
+		nbValues = mapcfg.getInt("mapEnterZones.number",-1);
+		if (nbValues==-1) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapEnterZones.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+			return false;
+		}
+		for (i=0;i<nbValues;i++) {
+			MapEnterZone m = getMapEnterZone(mapcfg , "mapEnterZones."+i,map_name);
+			if (m!=null) {
+				mapEnterZones.add(m);
+			}
+		}
+		if (mapEnterZones.size()<=0) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> aucunes mapEnterZones valides pour la map "+ChatColor.ITALIC+map_name);
+			return false;
+		}
+		mapLeaveZones.clear();
+		nbValues=-1;
+		nbValues = mapcfg.getInt("mapLeaveZones.number",-1);
+		if (nbValues==-1) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapLeaveZones.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+			return false;
+		}
+		for (i=0;i<nbValues;i++) {
+			MapLeaveZone m = getMapLeaveZone(mapcfg , "mapLeaveZones."+i,map_name);
+			if (m!=null) {
+				mapLeaveZones.add(m);
+			}
+		}
+		if (mapLeaveZones.size()<=0) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> aucunes mapLeaveZones valides pour la map "+ChatColor.ITALIC+map_name);
+			return false;
+		}
 		return true;
+	}
+	
+	public MapEnterZone getMapEnterZone(YamlConfiguration cfg ,String path,String map_name) {
+		Location loc;
+		Vector size;
+		loc = cfg.getLocation(path+".location");
+		if (loc==null) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapEnterZone."+path+".location n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+			return null;
+		}
+		size = cfg.getVector(path+".size");
+		if (size==null) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapEnterZone."+path+".size n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+			return null;
+		}
+		return new MapEnterZone(this, loc, size);
+	}
+	public MapLeaveZone getMapLeaveZone(YamlConfiguration cfg ,String path,String map_name) {
+		Location loc;
+		Vector size;
+		loc = cfg.getLocation(path+".location");
+		if (loc==null) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapLeaveZone."+path+".location n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+			return null;
+		}
+		size = cfg.getVector(path+".size");
+		if (size==null) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapLeaveZone."+path+".size n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+			return null;
+		}
+		return new MapLeaveZone(this, loc, size);
 	}
 
 	public ArrayList<MapObject> getMapObjects() {
@@ -347,5 +429,17 @@ public class Game implements Listener {
 	}
 	public void setMapName(String mapname) {
 		this.mapname = mapname;
+	}
+	public ArrayList<MapEnterZone> getMapEnterZones() {
+		return mapEnterZones;
+	}
+	public void setMapEnterZones(ArrayList<MapEnterZone> mapEnterZones) {
+		this.mapEnterZones = mapEnterZones;
+	}
+	public ArrayList<MapLeaveZone> getMapLeaveZones() {
+		return mapLeaveZones;
+	}
+	public void setMapLeaveZones(ArrayList<MapLeaveZone> mapLeaveZones) {
+		this.mapLeaveZones = mapLeaveZones;
 	}
 }

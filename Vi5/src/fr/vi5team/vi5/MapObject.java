@@ -103,6 +103,7 @@ public class MapObject implements Listener{
 		gameref.messageTeam(Vi5Team.VOLEUR, ChatColor.GOLD+player.getName()+ChatColor.AQUA+" stole "+ChatColor.RED+ChatColor.UNDERLINE+objectName);
 		gameref.titleTeam(Vi5Team.GARDE, ChatColor.RED+"An object has been stolen", "", 5, 20, 20);
 		gameref.titleTeam(Vi5Team.VOLEUR, ChatColor.RED+objectName+ChatColor.GOLD+" stole", ChatColor.GOLD+"by "+ChatColor.AQUA+player.getName(), 5, 20, 20);
+		gameref.launchCaptureDelay();
 	}
 		
 	public MapObject(Game game, String _objectName, Location _position, Location _blockPosition,BlockData bdata,Material _blockType,int sizex,int sizey,int sizez) {
@@ -128,10 +129,12 @@ public class MapObject implements Listener{
 	public void setBlock() {
 		Block block = blockPosition.getWorld().getBlockAt(blockPosition);
 		block.setType(getBlockType());
+		block.setBlockData(blockData);
 	}
 	public void removeBlock() {
 		Block block = blockPosition.getWorld().getBlockAt(blockPosition);
 		block.setType(Material.AIR);
+		block.setBlockData(null);
 	}
 	public Location getPosition() {
 		return position;
@@ -144,6 +147,15 @@ public class MapObject implements Listener{
 	}
 	public int getZsize() {
 		return zsize;
+	}
+	public BlockData getBlockData() {
+		return blockData;
+	}
+	public boolean isCaptureCooldown() {
+		return captureCooldown;
+	}
+	public void setCaptureCooldown(boolean captureCooldown) {
+		this.captureCooldown = captureCooldown;
 	}
 }
 
