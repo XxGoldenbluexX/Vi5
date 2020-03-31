@@ -81,5 +81,16 @@ public class ConfigManager {
 		}
 		return getMapConfig(mapname);
 	}
+	public void renameMapConfig(String mapname, String newName){
+		File oldf = new File(mapFolder,mapname+".yml");
+		if (oldf.exists()) {
+			File newf = new File(mapFolder,newName+".yml");
+			oldf.renameTo(newf);
+			Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN+mapname+ChatColor.BLUE+" has been renamed to: "+ChatColor.GREEN+newName);
+		}
+		else {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"Impossible d'enregistrer les modifications faites sur la map "+ChatColor.AQUA+mapname+ChatColor.RED+" car elle n'existe pas.");
+		}
+	}
 	
 }
