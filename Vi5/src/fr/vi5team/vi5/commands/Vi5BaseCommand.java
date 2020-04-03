@@ -1,23 +1,18 @@
 package fr.vi5team.vi5.commands;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.data.BlockData;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
 import fr.vi5team.vi5.Game;
-import fr.vi5team.vi5.MapLeaveZone;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
+
 public class Vi5BaseCommand implements CommandExecutor {
 
 	private final Vi5Main mainref;
@@ -146,7 +141,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 	
 	public boolean mapCommand(CommandSender sender,String[] args) {
 		if (args.length<2) {
-			sender.sendMessage("usage: /vi5 map create/list/setGuardSpawn/setVoleurMinimapSpawn/rename/addMapObject/addMapEntrance/addMapEscape/removeMapObject/removeMapEntrance/removeMapEscape");
+			sender.sendMessage("usage: /vi5 map create/list/setGuardSpawn/setVoleurMinimapSpawn/rename/addMapObject/setObjLoc/setObjBlock/setObjSize/objectList");
 			return true;
 		}
 		switch (args[1]) {
@@ -207,29 +202,127 @@ public class Vi5BaseCommand implements CommandExecutor {
 			return true;
 		case "rename":
 			if (args.length>2) {
-				mainref.getCfgmanager().renameMapConfig(args[2], args[3]);
+				if (mainref.getCfgmanager().renameMapConfig(args[2], args[3])) {
+					sender.sendMessage(ChatColor.GREEN+"Success!");
+				}else {
+					sender.sendMessage(ChatColor.DARK_RED+"Unable to rename this");
+				}
 				return true;
 			}else {
 				sender.sendMessage("usage: /vi5 map rename <MapName> <NewName>");
 				return true;
 			}
-		case "addMapObject":
-			if(args.length==10) {
+		case "addMapObject":/*map=0;addMapObject=1;mapname=2;objName=3*/
+			List<String> l = mainref.getCfgmanager().getObjectNamesList(args[2]);
+			if(args.length>=4) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
 					return true;
 				}
-				String[] numberArray = (cfg.getStringList("mapObjects")).toArray(new String[0]);
-				List<String> objectInfo = Arrays.asList(args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10]);
-				cfg.set("mapObjects."+(numberArray.length), objectInfo);
-				return true;
+				if (l.contains(args[3])) {
+					sender.sendMessage(ChatColor.RED+"This object already exist for this map");
+					return true;
+				}else {
+					l.add(args[3]);
+					mainref.getCfgmanager().setObjectNamesList(args[2], l);
+					return true;
+				}
 			}else {
-				sender.sendMessage("usage: /vi5 map addMapObject <MapName> <ObjectName> <Position(Corner)> <BlockPosition> <BlockData> <BlockType> <SizeX> <SizeY> <SizeZ>");
+				sender.sendMessage("usage: /vi5 map addMapObject <MapName> <ObjectName>");
 				return true;
 			}
-		case "addMapEntrance":
-			break;
+		case "objectList":
+			if(args.length>=4) {
+				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
+				if (cfg==null) {
+					sender.sendMessage(ChatColor.RED+"There is no map with this name");
+					return true;
+				}
+				sender.sendMessage(ChatColor.DARK_GREEN+"Objects for map "+args[2]+" :");
+				for (String s : mainref.getCfgmanager().getObjectNamesList(args[2])) {
+					sender.sendMessage(ChatColor.AQUA+"- "+s);
+				}
+				return true;
+			}else {
+				sender.sendMessage("usage: /vi5 map addMapObject <MapName> <ObjectName>");
+				return true;
+			}
+		case "setObjLoc":
+			if(args.length>=3) {
+				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
+				if (cfg==null) {
+					sender.sendMessage(ChatColor.RED+"There is no map with this name");
+					return true;
+				}
+				if (mainref.getCfgmanager().getObjectNamesList(args[2]).contains(args[3])) {
+					if (sender instanceof Player) {
+						Player p = (Player)sender;
+						cfg.set("mapObjects."+args[3]+"centerLocation", p.getLocation());
+						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+						sender.sendMessage(ChatColor.GREEN+"Object's center location set!");
+						return true;
+					}else {
+						sender.sendMessage(ChatColor.RED+"You need to be a player to use this command");
+						return true;
+					}
+				}else {
+					sender.sendMessage(ChatColor.RED+"There is no object with this name for this map");
+					return true;
+				}
+			}else {
+				sender.sendMessage("usage: /vi5 map addMapObject <MapName> <ObjectName>");
+				return true;
+			}
+		case "setObjBlock":
+			if(args.length>=3) {
+				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
+				if (cfg==null) {
+					sender.sendMessage(ChatColor.RED+"There is no map with this name");
+					return true;
+				}
+				if (mainref.getCfgmanager().getObjectNamesList(args[2]).contains(args[3])) {
+					if (sender instanceof Player) {
+						Player p = (Player)sender;
+						Block b = p.getTargetBlock(null, 10);
+						cfg.set("mapObjects."+args[3]+"blockType", b.getType().name());
+						cfg.set("mapObjects."+args[3]+"blockData", b.getBlockData().getAsString());
+						cfg.set("mapObjects."+args[3]+"blockLocation", b.getLocation());
+						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+						sender.sendMessage(ChatColor.GREEN+"Object's block set!");
+						return true;
+					}else {
+						sender.sendMessage(ChatColor.RED+"You need to be a player to use this command");
+						return true;
+					}
+				}else {
+					sender.sendMessage(ChatColor.RED+"There is no object with this name for this map");
+					return true;
+				}
+			}else {
+				sender.sendMessage("usage: /vi5 map setObjBlock <MapName> <ObjectName>");
+				return true;
+			}
+		case "setObjSize":
+			if(args.length>=6) {
+				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
+				if (cfg==null) {
+					sender.sendMessage(ChatColor.RED+"There is no map with this name");
+					return true;
+				}
+				if (mainref.getCfgmanager().getObjectNamesList(args[2]).contains(args[3])) {
+					cfg.set("mapObjects."+args[3]+"sizex", args[4]);
+					cfg.set("mapObjects."+args[3]+"sizey", args[5]);
+					cfg.set("mapObjects."+args[3]+"sizez", args[6]);
+					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+				}else {
+					sender.sendMessage(ChatColor.RED+"There is no object with this name for this map");
+					return true;
+				}
+			}else {
+				sender.sendMessage("usage: /vi5 map setObjSize <MapName> <ObjectName> <x> <y> <z>");
+				return true;
+			}
 		case "addMapEscape":
 			break;
 		case "removeMapObject":
@@ -238,7 +331,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 			break;
 		case "removeMapEscape":
 			break;
-			
 		}
 		return false;
 	}

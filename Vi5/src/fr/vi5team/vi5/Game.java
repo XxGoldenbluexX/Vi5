@@ -2,6 +2,7 @@ package fr.vi5team.vi5;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -15,8 +16,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
-
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
 
@@ -288,121 +287,46 @@ public class Game implements Listener {
 		}
 		//recolter les maps objects
 		mapObjects.clear();
-		int nbValues=-1;
-		nbValues = mapcfg.getInt("mapObjects.number",-1);
-		if (nbValues==-1) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-			return false;
-		}
-		for (i=0;i<nbValues;i++) {
-			String _name=mapcfg.getString("mapObjects."+i+"name","DefaultObject");
-			Location _position = mapcfg.getLocation("mapObjects."+i+"location");
-			Location _blockPosition = mapcfg.getLocation("mapObjects."+i+"blockPosition");
-			BlockData _blockData = Bukkit.createBlockData(mapcfg.getString("mapObjects."+i+"blockData")); //le blockdata est enregistré sous forme de string dans le config puis transformé en blockdata ici
-			Material _blockType = Material.valueOf(mapcfg.getString("mapObjects."+i+"blockType"));
-			int sizex = mapcfg.getInt("mapObjects."+i+"sizeX",-1);
-			int sizey = mapcfg.getInt("mapObjects."+i+"sizeY",-1);
-			int sizez = mapcfg.getInt("mapObjects."+i+"sizeZ",-1);
-			if (_name==null) {
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".name n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-				return false;
-			}
+		List<String> objList = mapcfg.getStringList(map_name+".objectList");
+		for (String objname : objList) {
+			Location _position = mapcfg.getLocation("mapObjects."+objname+"centerLocation");
+			Location _blockPosition = mapcfg.getLocation("mapObjects."+objname+"blockLocation");
+			BlockData _blockData = Bukkit.createBlockData(mapcfg.getString("mapObjects."+objname+"blockData")); //le blockdata est enregistré sous forme de string dans le config puis transformé en blockdata ici
+			Material _blockType = Material.valueOf(mapcfg.getString("mapObjects."+objname+"blockType"));
+			int sizex = mapcfg.getInt("mapObjects."+i+"sizex",-1);
+			int sizey = mapcfg.getInt("mapObjects."+i+"sizey",-1);
+			int sizez = mapcfg.getInt("mapObjects."+i+"sizez",-1);
 			if (_position==null) {
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".location n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-				return false;
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".centerLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 			}
 			if (_blockPosition==null) {
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".blockPosition n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".blockLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
 			if (_blockData==null) {
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".blockData n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".blockData n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
 			if (_blockType==null) {
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".blockType n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".blockType n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
-			if (sizex==-1) {
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".sizeX n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+			if (sizex<=0) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".sizex n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
-			if (sizey==-1) {
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".sizeY n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+			if (sizey<=0) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".sizey n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
-			if (sizez==-1) {
-				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapObjects."+i+".sizeZ n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+			if (sizez<=0) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".sizez n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				return false;
 			}
-			mapObjects.add(new MapObject(this,_name, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez));
+			mapObjects.add(new MapObject(this,objname, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez));
 		}
-		mapEnterZones.clear();
-		nbValues=-1;
-		nbValues = mapcfg.getInt("mapEnterZones.number",-1);
-		if (nbValues==-1) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapEnterZones.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-			return false;
-		}
-		for (i=0;i<nbValues;i++) {
-			MapEnterZone m = getMapEnterZone(mapcfg , "mapEnterZones."+i,map_name);
-			if (m!=null) {
-				mapEnterZones.add(m);
-			}
-		}
-		if (mapEnterZones.size()<=0) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> aucunes mapEnterZones valides pour la map "+ChatColor.ITALIC+map_name);
-			return false;
-		}
-		mapLeaveZones.clear();
-		nbValues=-1;
-		nbValues = mapcfg.getInt("mapLeaveZones.number",-1);
-		if (nbValues==-1) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapLeaveZones.number n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-			return false;
-		}
-		for (i=0;i<nbValues;i++) {
-			MapLeaveZone m = getMapLeaveZone(mapcfg , "mapLeaveZones."+i,map_name);
-			if (m!=null) {
-				mapLeaveZones.add(m);
-			}
-		}
-		if (mapLeaveZones.size()<=0) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> aucunes mapLeaveZones valides pour la map "+ChatColor.ITALIC+map_name);
-			return false;
-		}
+		//MAP ENTER/LEAVE ZONE TODO
 		return true;
-	}
-	
-	public MapEnterZone getMapEnterZone(YamlConfiguration cfg ,String path,String map_name) {
-		Location loc;
-		Vector size;
-		loc = cfg.getLocation(path+".location");
-		if (loc==null) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapEnterZone."+path+".location n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-			return null;
-		}
-		size = cfg.getVector(path+".size");
-		if (size==null) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapEnterZone."+path+".size n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-			return null;
-		}
-		return new MapEnterZone(this, loc, size);
-	}
-	public MapLeaveZone getMapLeaveZone(YamlConfiguration cfg ,String path,String map_name) {
-		Location loc;
-		Vector size;
-		loc = cfg.getLocation(path+".location");
-		if (loc==null) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapLeaveZone."+path+".location n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-			return null;
-		}
-		size = cfg.getVector(path+".size");
-		if (size==null) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> mapLeaveZone."+path+".size n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-			return null;
-		}
-		return new MapLeaveZone(this, loc, size);
 	}
 
 	public ArrayList<MapObject> getMapObjects() {

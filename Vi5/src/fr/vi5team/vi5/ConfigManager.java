@@ -3,7 +3,7 @@ package fr.vi5team.vi5;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -81,16 +81,38 @@ public class ConfigManager {
 		}
 		return getMapConfig(mapname);
 	}
-	public void renameMapConfig(String mapname, String newName){
+	public boolean renameMapConfig(String mapname, String newName){
 		File oldf = new File(mapFolder,mapname+".yml");
 		if (oldf.exists()) {
 			File newf = new File(mapFolder,newName+".yml");
-			oldf.renameTo(newf);
-			Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN+mapname+ChatColor.BLUE+" has been renamed to: "+ChatColor.GREEN+newName);
+			if (oldf.renameTo(newf)) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN+mapname+ChatColor.BLUE+" has been renamed to: "+ChatColor.GREEN+newName);
+				return true;
+			}else {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN+mapname+ChatColor.BLUE+" was unable to be renamed into: "+ChatColor.GREEN+newName);
+				return false;
+			}
 		}
 		else {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"Impossible d'enregistrer les modifications faites sur la map "+ChatColor.AQUA+mapname+ChatColor.RED+" car elle n'existe pas.");
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"La map "+ChatColor.AQUA+mapname+ChatColor.RED+" n'existe pas.");
+			return false;
 		}
 	}
-	
+	public List<String> getObjectNamesList(String mapName){
+		YamlConfiguration cfg = getMapConfig(mapName);
+		List<String> list = null;
+		if (cfg!=null) {
+			list = cfg.getStringList(mapName+".objectList");
+		}
+		return list;
+	}
+	public boolean setObjectNamesList(String mapName,List<String> list) {
+		YamlConfiguration cfg = getMapConfig(mapName);
+		if (cfg!=null) {
+			cfg.set(mapName+".objectList", list);
+			saveMapConfig(mapName, cfg);
+			return true;
+		}
+		return false;
+	}
 }

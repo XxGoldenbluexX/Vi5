@@ -43,9 +43,9 @@ public class MapObject implements Listener{
 		double playerx = playerloc.getX();
 		double playery = playerloc.getY();
 		double playerz = playerloc.getZ();
-		boolean xx = ( position.getBlockX()+xsize > playerx && playerx > position.getBlockX()-xsize);
-		boolean yy = ( position.getBlockY()+ysize > playery && playery > position.getBlockY()-ysize);
-		boolean zz = ( position.getBlockZ()+zsize > playerz && playerz > position.getBlockZ()-zsize);
+		boolean xx = ( position.getBlockX()+(xsize/2) > playerx && playerx > position.getBlockX()-(xsize/2));
+		boolean yy = ( position.getBlockY()+(ysize/2) > playery && playery > position.getBlockY()-(ysize/2));
+		boolean zz = ( position.getBlockZ()+(zsize/2) > playerz && playerz > position.getBlockZ()-(zsize/2));
 		return (xx && yy && zz);//la ligne de code de 80m me stressait
 	}
 	public boolean isGuardOnPoint() {
@@ -73,6 +73,9 @@ public class MapObject implements Listener{
 	}
 	public void Tick() {
 		if (captureState==CaptureState.STEALABLE && !captureCooldown) {
+			if (captureLevel>0) {
+				captureLevel--;
+			}
 			for (Player p : playersOnObject) {
 				PlayerWrapper wrap = gameref.getPlayerWrapper(p);
 				if (wrap!=null) {
@@ -82,7 +85,7 @@ public class MapObject implements Listener{
 								p.sendTitle("", ChatColor.RED+"Capture paused (a guard is near)", 0, 1, 0);
 								return;
 							}
-							captureLevel++;
+							captureLevel+=2;
 							int percent = (captureLevel/MAX_CAPTURE_LEVEL)*100;
 							p.sendTitle("", ChatColor.DARK_GREEN+"Capturing "+ChatColor.RED+ChatColor.UNDERLINE+objectName+" :"+percent+"%", 0, 1, 0);
 						}else {
