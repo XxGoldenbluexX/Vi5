@@ -81,6 +81,15 @@ public class ConfigManager {
 		}
 		return getMapConfig(mapname);
 	}
+	public boolean deleteMapConfig(String mapname){
+		File f = new File(mapFolder,mapname+".yml");
+		if(f.exists()) {
+			f.delete();
+			return true;
+		}else {
+			return false;
+		}
+	}
 	public boolean renameMapConfig(String mapname, String newName){
 		File oldf = new File(mapFolder,mapname+".yml");
 		if (oldf.exists()) {
@@ -110,6 +119,40 @@ public class ConfigManager {
 		YamlConfiguration cfg = getMapConfig(mapName);
 		if (cfg!=null) {
 			cfg.set(mapName+".objectList", list);
+			saveMapConfig(mapName, cfg);
+			return true;
+		}
+		return false;
+	}
+	public List<String> getMapEscapesList(String mapName){
+		YamlConfiguration cfg = getMapConfig(mapName);
+		List<String> list = null;
+		if (cfg!=null) {
+			list = cfg.getStringList(mapName+".escapeList");
+		}
+		return list;
+	}
+	public boolean setMapEscapesList(String mapName,List<String> list) {
+		YamlConfiguration cfg = getMapConfig(mapName);
+		if (cfg!=null) {
+			cfg.set(mapName+".escapeList", list);
+			saveMapConfig(mapName, cfg);
+			return true;
+		}
+		return false;
+	}
+	public List<String> getMapEntrancesList(String mapName){
+		YamlConfiguration cfg = getMapConfig(mapName);
+		List<String> list = null;
+		if (cfg!=null) {
+			list = cfg.getStringList(mapName+".entranceList");
+		}
+		return list;
+	}
+	public boolean setMapEntrancesList(String mapName,List<String> list) {
+		YamlConfiguration cfg = getMapConfig(mapName);
+		if (cfg!=null) {
+			cfg.set(mapName+".entranceList", list);
 			saveMapConfig(mapName, cfg);
 			return true;
 		}
