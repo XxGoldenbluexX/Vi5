@@ -167,4 +167,8 @@ public class Vi5Main extends JavaPlugin implements Listener {
 			return;
 		}
 	}
+
+	public PluginManager getPmanager() {
+		return pmanager;
+	}
 }

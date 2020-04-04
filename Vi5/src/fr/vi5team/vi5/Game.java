@@ -329,7 +329,9 @@ public class Game implements Listener {
 				valid=false;
 			}
 			if (valid) {
-				mapObjects.add(new MapObject(this,objname, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez));
+				MapObject o=new MapObject(this,objname, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez);
+				mapObjects.add(o);
+				mainref.getPmanager().registerEvents(o, mainref);
 			}
 		}
 		//get escapes
@@ -358,7 +360,9 @@ public class Game implements Listener {
 				valid=false;
 			}
 			if (valid) {
-				mapLeaveZones.add(new MapLeaveZone(this,loc,new Vector(sizex,sizey,sizez)));
+				MapLeaveZone o = new MapLeaveZone(this,loc,new Vector(sizex,sizey,sizez));
+				mapLeaveZones.add(o);
+				mainref.getPmanager().registerEvents(o, mainref);
 			}
 		}
 		//get entrance
@@ -387,7 +391,9 @@ public class Game implements Listener {
 					valid=false;
 				}
 				if (valid) {
-					mapEnterZones.add(new MapEnterZone(this,loc,new Vector(sizex,sizey,sizez)));
+					MapEnterZone o = new MapEnterZone(this,loc,new Vector(sizex,sizey,sizez));
+					mapEnterZones.add(o);
+					mainref.getPmanager().registerEvents(o, mainref);
 				}
 			}
 		return true;
