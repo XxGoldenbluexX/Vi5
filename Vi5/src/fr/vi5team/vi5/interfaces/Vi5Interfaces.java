@@ -81,6 +81,7 @@ public class Vi5Interfaces implements Listener{
 	public void openThiefInterface(Player player) {
 		
 	}
+	@SuppressWarnings("unused")
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		HumanEntity hentity/*et non hentai*/ = event.getWhoClicked();

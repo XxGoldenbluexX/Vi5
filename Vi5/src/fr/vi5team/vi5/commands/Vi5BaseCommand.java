@@ -1,6 +1,5 @@
 package fr.vi5team.vi5.commands;
 
-import java.io.File;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -64,6 +63,21 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("usage: /vi5 game create <GameName>");
 				return true;
 			}
+		case "join":
+            if(args.length>1) {
+                Player p = (Player)sender;
+                if (!mainref.isPlayerIngame(p)) {
+                    Game g = mainref.getGame(args[2]);
+                    g.addPlayer(p);
+                    return true;
+                }else {
+                    sender.sendMessage("You are already in a game!");
+                    return true;
+                }
+            }else {
+                sender.sendMessage("usage: /vi5 game join <GameName>");
+                return true;
+            }
 		case "start":
 			if (args.length>2) {
 				Game g = mainref.getGame(args[2]);
@@ -126,8 +140,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 			break;
 		case "stop":
 			break;
-		case "join":
-			break;
 		case "leave":
 			break;
 		case "list":
@@ -148,12 +160,15 @@ public class Vi5BaseCommand implements CommandExecutor {
 		switch (args[1]) {
 		case "Objects":
 			sender.sendMessage("Usages: /vi5 map <objectList,addMapObject,removeMapObject,setObjBlock,setObjLoc,setObjSize>");
+			return true;
 		case "Entrances":
 			sender.sendMessage("Usages: /vi5 map <entranceList,addMapEntrance,removeMapEntrance,setEntranceBlock,setEntranceLoc,setEntranceSize>");
+			return true;
 		case "Escapes":	
 			sender.sendMessage("Usages: /vi5 map <escapeList,addMapEscape,removeMapEscape,setEscapeLoc,setEscapeSize>");
+			return true;
 		case "create":
-			if (args.length>=2) {
+			if (args.length>2) {
 				mainref.getCfgmanager().createMapConfig(args[2]);
 				sender.sendMessage(ChatColor.DARK_GREEN+"Map created (except if it was already created)");
 				return true;
@@ -162,7 +177,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "delete":
-			if (args.length>=2) {
+			if (args.length>2) {
 				if(mainref.getCfgmanager().deleteMapConfig(args[2])) {
 					sender.sendMessage(ChatColor.DARK_GREEN+"Map deleted!");
 					return true;
@@ -175,7 +190,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setGuardSpawn":
-			if (args.length>=2) {
+			if (args.length>2) {
 				if (sender instanceof Player) {
 					Player p = (Player)sender;
 					YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
@@ -195,7 +210,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setVoleurMinimapSpawn":
-			if (args.length>=2) {
+			if (args.length>2) {
 				if (sender instanceof Player) {
 					Player p = (Player)sender;
 					YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
@@ -221,7 +236,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			};
 			return true;
 		case "rename":
-			if (args.length>=2) {
+			if (args.length>3) {
 				if (mainref.getCfgmanager().renameMapConfig(args[2], args[3])) {
 					sender.sendMessage(ChatColor.GREEN+"Success!");
 				}else {
@@ -233,13 +248,13 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "addMapObject":
-			List<String> l = mainref.getCfgmanager().getObjectNamesList(args[2]);
-			if(args.length>=3) {
+			if(args.length>3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
 					return true;
 				}
+				List<String> l = mainref.getCfgmanager().getObjectNamesList(args[2]);
 				if (l.contains(args[3])) {
 					sender.sendMessage(ChatColor.RED+"This object already exist for this map");
 					return true;
@@ -253,7 +268,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "objectList":
-			if(args.length>=2) {
+			if(args.length>2) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -269,7 +284,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setObjLoc":
-			if(args.length>=3) {
+			if(args.length>3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -296,7 +311,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setObjBlock":
-			if(args.length>=3) {
+			if(args.length>3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -325,7 +340,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setObjSize":
-			if(args.length>=6) {
+			if(args.length>6) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -345,7 +360,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "removeMapObject":
-			if(args.length>=3) {
+			if(args.length>3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if(cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -365,8 +380,8 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("usage: /vi5 map removeMapObject <MapName> <ObjectName>");
 				return true;
 			}	
-		case "addMapEscape":
-			if(args.length>=3) {
+		case "addEscape":
+			if(args.length>3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if(cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -379,6 +394,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}else {
 					escapesList.add(args[3]);
 					mainref.getCfgmanager().setMapEscapesList(args[2], escapesList);
+					sender.sendMessage(ChatColor.GREEN+"Map escape created!");
 					return true;
 				}
 			} else {
@@ -386,7 +402,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setEscapeLoc":
-			if(args.length>=3) {
+			if(args.length>3) {
 				if (mainref.getCfgmanager().getMapEscapesList(args[2]).contains(args[3])) {
 					if (sender instanceof Player) {
 						YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
@@ -413,7 +429,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setEscapeSize":
-			if(args.length>=6) {
+			if(args.length>6) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -424,6 +440,8 @@ public class Vi5BaseCommand implements CommandExecutor {
 					cfg.set("mapEscapes."+args[3]+".sizey", args[5]);
 					cfg.set("mapEscapes."+args[3]+".sizez", args[6]);
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+					sender.sendMessage(ChatColor.GREEN+"Map escape's size set!");
+					return true;
 				}else {
 					sender.sendMessage(ChatColor.RED+"There is no espace with this name for this map");
 					return true;
@@ -432,8 +450,8 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("usage: /vi5 map setEscapeSize <MapName> <EscapeName> <x> <y> <z>");
 				return true;
 			}
-		case "addMapEntrance":
-			if(args.length>=3) {
+		case "addEntrance":
+			if(args.length>3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if(cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -453,7 +471,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setEntranceBlock":
-			if(args.length>=3) {
+			if(args.length>3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -479,7 +497,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setEntranceLoc":
-			if(args.length>=3) {
+			if(args.length>3) {
 				if (mainref.getCfgmanager().getMapEntrancesList(args[2]).contains(args[3])) {
 					if (sender instanceof Player) {
 						YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
@@ -491,7 +509,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 						Block blockCenter = player.getTargetBlock(null, 10);
 						cfg.set("mapEntrances."+args[3]+".centerLocation", blockCenter.getLocation());
 						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
-						sender.sendMessage(ChatColor.GREEN+"Escape's center location set!");
+						sender.sendMessage(ChatColor.GREEN+"Entrance's center location set!");
 						return true;
 					}else {
 						sender.sendMessage(ChatColor.RED+"You need to be a player to use this command");
@@ -506,7 +524,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "setEntranceSize":
-			if(args.length>=6) {
+			if(args.length>6) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -514,9 +532,11 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}
 				if (mainref.getCfgmanager().getMapEntrancesList(args[2]).contains(args[3])) {
 					cfg.set("mapEntrances."+args[3]+".sizex", args[4]);
-					cfg.set("mapEntrance."+args[3]+".sizey", args[5]);
-					cfg.set("mapEntrance."+args[3]+".sizez", args[6]);
+					cfg.set("mapEntrances."+args[3]+".sizey", args[5]);
+					cfg.set("mapEntrances."+args[3]+".sizez", args[6]);
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+					sender.sendMessage(ChatColor.GREEN+"Entrance's size location set!");
+					return true;
 				}else {
 					sender.sendMessage(ChatColor.RED+"There is no entrance with this name for this map");
 					return true;
@@ -525,8 +545,8 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("usage: /vi5 map setEntranceSize <MapName> <EntranceName> <x> <y> <z>");
 				return true;
 			}
-		case "removeMapEntrance":
-			if(args.length>=3) {
+		case "removeEntrance":
+			if(args.length>3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if(cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -537,6 +557,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 					entranceList.remove(args[3]);
 					mainref.getCfgmanager().setMapEntrancesList(args[2], entranceList);
 					cfg.set("mapEntrances."+args[3], null);
+					sender.sendMessage(ChatColor.GREEN+"Entrance removed!");
 					return true;
 				}else {
 					sender.sendMessage(ChatColor.RED+"There is no entrance with this name for this map");
@@ -546,7 +567,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("usage: /vi5 map removeMapEntrance <MapName> <EntranceName>");
 				return true;
 			}	
-		case "removeMapEscape":
+		case "removeEscape":
 			if(args.length>=3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if(cfg==null) {
@@ -558,6 +579,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 					escapeList.remove(args[3]);
 					mainref.getCfgmanager().setMapEscapesList(args[2], escapeList);
 					cfg.set("mapEscapes."+args[3], null);
+					sender.sendMessage(ChatColor.GREEN+"Escape removed!");
 					return true;
 				}else {
 					sender.sendMessage(ChatColor.RED+"There is no escape with this name for this map");
@@ -568,7 +590,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "entranceList":
-			if(args.length>=2) {
+			if(args.length>2) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");
@@ -584,7 +606,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "escapeList":
-			if(args.length>=2) {
+			if(args.length>2) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
 					sender.sendMessage(ChatColor.RED+"There is no map with this name");

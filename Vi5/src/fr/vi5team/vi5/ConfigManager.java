@@ -111,14 +111,14 @@ public class ConfigManager {
 		YamlConfiguration cfg = getMapConfig(mapName);
 		List<String> list = null;
 		if (cfg!=null) {
-			list = cfg.getStringList(mapName+".objectList");
+			list = cfg.getStringList("objectList");
 		}
 		return list;
 	}
 	public boolean setObjectNamesList(String mapName,List<String> list) {
 		YamlConfiguration cfg = getMapConfig(mapName);
 		if (cfg!=null) {
-			cfg.set(mapName+".objectList", list);
+			cfg.set("objectList", list);
 			saveMapConfig(mapName, cfg);
 			return true;
 		}
@@ -128,14 +128,14 @@ public class ConfigManager {
 		YamlConfiguration cfg = getMapConfig(mapName);
 		List<String> list = null;
 		if (cfg!=null) {
-			list = cfg.getStringList(mapName+".escapeList");
+			list = cfg.getStringList("escapeList");
 		}
 		return list;
 	}
 	public boolean setMapEscapesList(String mapName,List<String> list) {
 		YamlConfiguration cfg = getMapConfig(mapName);
 		if (cfg!=null) {
-			cfg.set(mapName+".escapeList", list);
+			cfg.set("escapeList", list);
 			saveMapConfig(mapName, cfg);
 			return true;
 		}
@@ -145,14 +145,14 @@ public class ConfigManager {
 		YamlConfiguration cfg = getMapConfig(mapName);
 		List<String> list = null;
 		if (cfg!=null) {
-			list = cfg.getStringList(mapName+".entranceList");
+			list = cfg.getStringList("entranceList");
 		}
 		return list;
 	}
 	public boolean setMapEntrancesList(String mapName,List<String> list) {
 		YamlConfiguration cfg = getMapConfig(mapName);
 		if (cfg!=null) {
-			cfg.set(mapName+".entranceList", list);
+			cfg.set("entranceList", list);
 			saveMapConfig(mapName, cfg);
 			return true;
 		}

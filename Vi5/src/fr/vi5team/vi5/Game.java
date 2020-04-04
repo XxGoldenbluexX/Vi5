@@ -16,6 +16,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
 
@@ -289,6 +291,7 @@ public class Game implements Listener {
 		mapObjects.clear();
 		List<String> objList = mapcfg.getStringList(map_name+".objectList");
 		for (String objname : objList) {
+			boolean valid=true;
 			Location _position = mapcfg.getLocation("mapObjects."+objname+"centerLocation");
 			Location _blockPosition = mapcfg.getLocation("mapObjects."+objname+"blockLocation");
 			BlockData _blockData = Bukkit.createBlockData(mapcfg.getString("mapObjects."+objname+"blockData")); //le blockdata est enregistré sous forme de string dans le config puis transformé en blockdata ici
@@ -298,34 +301,94 @@ public class Game implements Listener {
 			int sizez = mapcfg.getInt("mapObjects."+i+"sizez",-1);
 			if (_position==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".centerLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				valid=false;
 			}
 			if (_blockPosition==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".blockLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-				return false;
+				valid=false;
 			}
 			if (_blockData==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".blockData n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-				return false;
+				valid=false;
 			}
 			if (_blockType==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".blockType n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-				return false;
+				valid=false;
 			}
 			if (sizex<=0) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".sizex n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-				return false;
+				valid=false;
 			}
 			if (sizey<=0) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".sizey n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-				return false;
+				valid=false;
 			}
 			if (sizez<=0) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".sizez n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
-				return false;
+				valid=false;
 			}
-			mapObjects.add(new MapObject(this,objname, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez));
+			if (valid) {
+				mapObjects.add(new MapObject(this,objname, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez));
+			}
 		}
-		//MAP ENTER/LEAVE ZONE TODO
+		//get escapes
+		mapLeaveZones.clear();
+		objList = mapcfg.getStringList(map_name+".escapeList");
+		for (String objname : objList) {
+			boolean valid=true;
+			Location loc = mapcfg.getLocation("mapEscapes."+objname+"centerLocation");
+			int sizex = mapcfg.getInt("mapEscapes."+objname+"sizex",-1);
+			int sizey = mapcfg.getInt("mapEscapes."+objname+"sizey",-1);
+			int sizez = mapcfg.getInt("mapEscapes."+objname+"sizez",-1);
+			if (loc==null) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEscapes."+objname+".centerLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				valid=false;
+			}
+			if (sizex<=0) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEscapes."+objname+".sizex n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				valid=false;
+			}
+			if (sizey<=0) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEscapes."+objname+".sizey n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				valid=false;
+			}
+			if (sizez<=0) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEscapes."+objname+".sizez n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+				valid=false;
+			}
+			if (valid) {
+				mapLeaveZones.add(new MapLeaveZone(this,loc,new Vector(sizex,sizey,sizez)));
+			}
+		}
+		//get entrance
+			mapEnterZones.clear();
+			objList = mapcfg.getStringList(map_name+".escapeList");
+			for (String objname : objList) {
+				boolean valid=true;
+				Location loc = mapcfg.getLocation("mapEntrances."+objname+"centerLocation");
+				int sizex = mapcfg.getInt("mapEntrances."+objname+"sizex",-1);
+				int sizey = mapcfg.getInt("mapEntrances."+objname+"sizey",-1);
+				int sizez = mapcfg.getInt("mapEntrances."+objname+"sizez",-1);
+				if (loc==null) {
+					Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEntrances."+objname+".centerLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+					valid=false;
+				}
+				if (sizex<=0) {
+					Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEntrances."+objname+".sizex n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+					valid=false;
+				}
+				if (sizey<=0) {
+					Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEntrances."+objname+".sizey n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+					valid=false;
+				}
+				if (sizez<=0) {
+					Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEntrances."+objname+".sizez n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
+					valid=false;
+				}
+				if (valid) {
+					mapEnterZones.add(new MapEnterZone(this,loc,new Vector(sizex,sizey,sizez)));
+				}
+			}
 		return true;
 	}
 
