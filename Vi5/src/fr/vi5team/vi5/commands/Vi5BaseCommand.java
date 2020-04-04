@@ -64,7 +64,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				return true;
 			}
 		case "join":
-            if(args.length>1) {
+            if(args.length>2) {
                 Player p = (Player)sender;
                 if (!mainref.isPlayerIngame(p)) {
                     Game g = mainref.getGame(args[2]);

@@ -224,6 +224,7 @@ public class Game implements Listener {
 					wrap.setCurrentStatus(VoleurStatus.OUTSIDE);
 				}
 			}
+			messagePlayersInGame(ChatColor.GOLD+"Game start!");
 			//creer un runnable qui tick les MapObjects et autres
 			gameTick=new BukkitRunnable() {
 				@Override
