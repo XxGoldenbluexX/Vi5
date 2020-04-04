@@ -290,12 +290,16 @@ public class Game implements Listener {
 		}
 		//recolter les maps objects
 		mapObjects.clear();
-		List<String> objList = mapcfg.getStringList(map_name+".objectList");
+		List<String> objList = cfgManager.getObjectNamesList(map_name);
 		for (String objname : objList) {
+			System.out.println("trying to load "+objname);
 			boolean valid=true;
 			Location _position = mapcfg.getLocation("mapObjects."+objname+"centerLocation");
 			Location _blockPosition = mapcfg.getLocation("mapObjects."+objname+"blockLocation");
-			BlockData _blockData = Bukkit.createBlockData(mapcfg.getString("mapObjects."+objname+"blockData")); //le blockdata est enregistré sous forme de string dans le config puis transformé en blockdata ici
+			String s = mapcfg.getString("mapObjects."+objname+"blockData");
+			//TODO SOMETHING WRONG HERE (the line above return null)
+			System.out.println("blockData:"+s);
+			BlockData _blockData = Bukkit.createBlockData(s); //le blockdata est enregistré sous forme de string dans le config puis transformé en blockdata ici
 			Material _blockType = Material.valueOf(mapcfg.getString("mapObjects."+objname+"blockType"));
 			int sizex = mapcfg.getInt("mapObjects."+i+"sizex",-1);
 			int sizey = mapcfg.getInt("mapObjects."+i+"sizey",-1);
@@ -332,11 +336,12 @@ public class Game implements Listener {
 				MapObject o=new MapObject(this,objname, _position, _blockPosition, _blockData, _blockType, sizex, sizey, sizez);
 				mapObjects.add(o);
 				mainref.getPmanager().registerEvents(o, mainref);
+				System.out.println(objname+"loaded");
 			}
 		}
 		//get escapes
 		mapLeaveZones.clear();
-		objList = mapcfg.getStringList(map_name+".escapeList");
+		objList = cfgManager.getMapEscapesList(map_name);
 		for (String objname : objList) {
 			boolean valid=true;
 			Location loc = mapcfg.getLocation("mapEscapes."+objname+"centerLocation");
@@ -363,11 +368,12 @@ public class Game implements Listener {
 				MapLeaveZone o = new MapLeaveZone(this,loc,new Vector(sizex,sizey,sizez));
 				mapLeaveZones.add(o);
 				mainref.getPmanager().registerEvents(o, mainref);
+				System.out.println(objname+"loaded");
 			}
 		}
 		//get entrance
 			mapEnterZones.clear();
-			objList = mapcfg.getStringList(map_name+".escapeList");
+			objList = cfgManager.getMapEntrancesList(map_name);
 			for (String objname : objList) {
 				boolean valid=true;
 				Location loc = mapcfg.getLocation("mapEntrances."+objname+"centerLocation");
@@ -394,6 +400,7 @@ public class Game implements Listener {
 					MapEnterZone o = new MapEnterZone(this,loc,new Vector(sizex,sizey,sizez));
 					mapEnterZones.add(o);
 					mainref.getPmanager().registerEvents(o, mainref);
+					System.out.println(objname+"loaded");
 				}
 			}
 		return true;

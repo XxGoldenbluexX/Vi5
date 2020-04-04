@@ -15,9 +15,11 @@ public class MapEnterZone implements Listener {
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
 		Location ploc = event.getTo();
+		System.out.println("playerMove");
 		if (loc.getX()<ploc.getX() && ploc.getX()<loc.getX()+size.getX()) {
 			if (loc.getY()<ploc.getY() && ploc.getY()<loc.getY()+size.getY()) {
 				if (loc.getZ()<ploc.getZ() && ploc.getZ()<loc.getZ()+size.getZ()) {
+					System.out.println("playerEnter");
 					game.playerEnterMap(event.getPlayer());
 				}else {
 					return;
