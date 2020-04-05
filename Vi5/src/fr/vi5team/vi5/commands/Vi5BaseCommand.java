@@ -652,7 +652,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}else {
 								if (mainref.isPlayerIngame(p)) {
 									mainref.getPlayerWrapper(p).setTeam(Vi5Team.GARDE);
-									sender.sendMessage(ChatColor.GREEN+"You are now a guard");
+									sender.sendMessage(ChatColor.GREEN+"This player is now a guard");
 									return true;
 								}else {
 									sender.sendMessage(ChatColor.RED+"This player is not in a game");
@@ -673,7 +673,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}else {
 								if (mainref.isPlayerIngame(p)) {
 									mainref.getPlayerWrapper(p).setTeam(Vi5Team.VOLEUR);
-									sender.sendMessage(ChatColor.GREEN+"You are now a thief");
+									sender.sendMessage(ChatColor.GREEN+"This player is now a thief");
 									return true;
 								}else {
 									sender.sendMessage(ChatColor.RED+"This player is not in a game");
@@ -694,7 +694,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}else {
 								if (mainref.isPlayerIngame(p)) {
 									mainref.getPlayerWrapper(p).setTeam(Vi5Team.SPECTATEUR);
-									sender.sendMessage(ChatColor.GREEN+"You are now a spectator");
+									sender.sendMessage(ChatColor.GREEN+"This player is now a spectator");
 									return true;
 								}else {
 									sender.sendMessage(ChatColor.RED+"This player is not in a game");

@@ -77,9 +77,11 @@ public class Game implements Listener {
 			if (wrap.getTeam()==Vi5Team.VOLEUR && wrap.getCurrentStatus()==VoleurStatus.INSIDE) {
 				messagePlayersInGame(ChatColor.RED+player.getName()+ChatColor.GOLD+" leaved the place with "+ChatColor.AQUA+wrap.getNbItemStealed()+ChatColor.GOLD+" objects!");
 				player.setGameMode(GameMode.SPECTATOR);
+				wrap.setCurrentStatus(VoleurStatus.ESCAPED);
 				totalObjVolés+=wrap.getNbItemStealed();
 				nbVoleurAlive--;
 				if (nbVoleurAlive<=0) {
+					System.out.println("leaved");
 					endGame();
 				}
 			}
@@ -98,13 +100,15 @@ public class Game implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
-		PlayerWrapper wrap = playersInGame.get(player);
-		if(wrap.getTeam()==Vi5Team.VOLEUR) {
-			messagePlayersInGame(ChatColor.RED+player.getName()+" died with "+ChatColor.GREEN+wrap.getNbItemStealed()+ChatColor.GOLD+" object(s)!");
-			player.setGameMode(GameMode.SPECTATOR);
-			nbVoleurAlive--;
-			if (nbVoleurAlive<=0) {
-				endGame();
+		if (hasPlayer(player)) {
+			PlayerWrapper wrap = playersInGame.get(player);
+			if(wrap.getTeam()==Vi5Team.VOLEUR) {
+				messagePlayersInGame(ChatColor.RED+player.getName()+" died with "+ChatColor.GREEN+wrap.getNbItemStealed()+ChatColor.GOLD+" object(s)!");
+				player.setGameMode(GameMode.SPECTATOR);
+				nbVoleurAlive--;
+				if (nbVoleurAlive<=0) {
+					endGame();
+				}
 			}
 		}
 	}
@@ -223,6 +227,7 @@ public class Game implements Listener {
 					p.setGameMode(GameMode.ADVENTURE);
 					wrap.setCurrentStatus(VoleurStatus.INSIDE);
 				}else if (wrap.getTeam()==Vi5Team.VOLEUR) {
+					wrap.setNbItemStealed((short) 0);
 					p.teleport(voleurMinimapSpawn);
 					hideVoleur(p);
 					nbVoleurAlive++;
