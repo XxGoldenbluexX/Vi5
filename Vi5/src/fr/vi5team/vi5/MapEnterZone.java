@@ -6,6 +6,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
+import fr.vi5team.vi5.enums.Vi5Team;
+import fr.vi5team.vi5.enums.VoleurStatus;
+
 public class MapEnterZone implements Listener {
 	
 	private final Location loc;
@@ -15,12 +18,18 @@ public class MapEnterZone implements Listener {
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
 		Location ploc = event.getTo();
-		System.out.println("playerMove");
-		if (loc.getX()<ploc.getX() && ploc.getX()<loc.getX()+size.getX()) {
-			if (loc.getY()<ploc.getY() && ploc.getY()<loc.getY()+size.getY()) {
-				if (loc.getZ()<ploc.getZ() && ploc.getZ()<loc.getZ()+size.getZ()) {
-					System.out.println("playerEnter");
-					game.playerEnterMap(event.getPlayer());
+		if (game.hasPlayer(event.getPlayer())) {
+			if (game.getPlayerWrapper(event.getPlayer()).getTeam()==Vi5Team.VOLEUR && game.getPlayerWrapper(event.getPlayer()).getCurrentStatus()==VoleurStatus.OUTSIDE) {
+				if (loc.getX()<ploc.getX() && ploc.getX()<loc.getX()+size.getX()) {
+					if (loc.getY()<ploc.getY() && ploc.getY()<loc.getY()+size.getY()) {
+						if (loc.getZ()<ploc.getZ() && ploc.getZ()<loc.getZ()+size.getZ()) {
+							game.playerEnterMap(event.getPlayer());
+						}else {
+							return;
+						}
+					}else {
+						return;
+					}
 				}else {
 					return;
 				}

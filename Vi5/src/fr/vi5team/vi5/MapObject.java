@@ -2,6 +2,7 @@ package fr.vi5team.vi5;
 
 
 import java.util.ArrayList;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.vi5team.vi5.enums.Vi5Team;
+import fr.vi5team.vi5.enums.VoleurStatus;
 
 
 public class MapObject implements Listener{
@@ -26,7 +28,7 @@ public class MapObject implements Listener{
 	private Game gameref;
 	public CaptureState captureState=CaptureState.STEALABLE;
 	public short captureLevel=0;//variable représentant le niveau de capture de l'objet (captureLevel/MAX_CAPTURE_LEVEL)*100 = pourcentage de capture
-	public final short MAX_CAPTURE_LEVEL=1000;//constante représentant le niveau maximum de la jauge de capture
+	public final short MAX_CAPTURE_LEVEL=100;//constante représentant le niveau maximum de la jauge de capture
 	public boolean captureCooldown=false;//dit si oui ou non l'objet est incapturable a cause du délais de capture
 	private final String objectName;
 	private final Location position;
@@ -43,9 +45,9 @@ public class MapObject implements Listener{
 		double playerx = playerloc.getX();
 		double playery = playerloc.getY();
 		double playerz = playerloc.getZ();
-		boolean xx = ( position.getBlockX()+(xsize/2) > playerx && playerx > position.getBlockX()-(xsize/2));
-		boolean yy = ( position.getBlockY()+(ysize/2) > playery && playery > position.getBlockY()-(ysize/2));
-		boolean zz = ( position.getBlockZ()+(zsize/2) > playerz && playerz > position.getBlockZ()-(zsize/2));
+		boolean xx = ( position.getBlockX()+xsize > playerx && playerx > position.getBlockX()-xsize);
+		boolean yy = ( position.getBlockY()+ysize > playery && playery > position.getBlockY()-ysize);
+		boolean zz = ( position.getBlockZ()+zsize > playerz && playerz > position.getBlockZ()-zsize);
 		return (xx && yy && zz);//la ligne de code de 80m me stressait
 	}
 	public boolean isGuardOnPoint() {
@@ -79,15 +81,15 @@ public class MapObject implements Listener{
 			for (Player p : playersOnObject) {
 				PlayerWrapper wrap = gameref.getPlayerWrapper(p);
 				if (wrap!=null) {
-					if (wrap.getTeam()==Vi5Team.VOLEUR) {
+					if (wrap.getTeam()==Vi5Team.VOLEUR && wrap.getCurrentStatus()==VoleurStatus.INSIDE) {
 						if (captureLevel<MAX_CAPTURE_LEVEL) {
 							if (isGuardOnPoint()) {
 								p.sendTitle("", ChatColor.RED+"Capture paused (a guard is near)", 0, 1, 0);
 								return;
 							}
 							captureLevel+=2;
-							int percent = (captureLevel/MAX_CAPTURE_LEVEL)*100;
-							p.sendTitle("", ChatColor.DARK_GREEN+"Capturing "+ChatColor.RED+ChatColor.UNDERLINE+objectName+" :"+percent+"%", 0, 1, 0);
+							float percent = ((float)captureLevel/(float)MAX_CAPTURE_LEVEL)*100f;
+							p.sendTitle("", ChatColor.DARK_GREEN+"Capturing "+ChatColor.RED+ChatColor.UNDERLINE+objectName+" : "+percent+"%", 0, 2, 0);
 						}else {
 							capture(p,wrap);
 						}
@@ -137,7 +139,6 @@ public class MapObject implements Listener{
 	public void removeBlock() {
 		Block block = blockPosition.getWorld().getBlockAt(blockPosition);
 		block.setType(Material.AIR);
-		block.setBlockData(null);
 	}
 	public Location getPosition() {
 		return position;

@@ -51,7 +51,7 @@ public class Game implements Listener {
 			p.setGameMode(GameMode.SPECTATOR);
 		}
 		messagePlayersInGame(ChatColor.GOLD+"La partie est terminée!");
-		messagePlayersInGame(ChatColor.GOLD+"Les voleurs se sont enfuit avec "+ChatColor.AQUA+totalObjVolés);
+		messagePlayersInGame(ChatColor.GOLD+"Les voleurs se sont enfuit avec "+ChatColor.AQUA+totalObjVolés+ChatColor.GOLD+" objects!");
 	}
 	
 	public boolean addPlayer(Player player) {
@@ -91,6 +91,7 @@ public class Game implements Listener {
 			PlayerWrapper wrap = playersInGame.get(player);
 			if (wrap.getTeam()==Vi5Team.VOLEUR && wrap.getCurrentStatus()==VoleurStatus.OUTSIDE) {
 				showPlayer(player);
+				wrap.setCurrentStatus(VoleurStatus.INSIDE);
 				player.sendMessage(ChatColor.GOLD+"You entered the complex");
 			}
 		}
@@ -224,6 +225,9 @@ public class Game implements Listener {
 					wrap.setCurrentStatus(VoleurStatus.OUTSIDE);
 				}
 			}
+			for (MapObject o : mapObjects) {
+				o.setBlock();
+			}
 			messagePlayersInGame(ChatColor.GOLD+"Game start!");
 			//creer un runnable qui tick les MapObjects et autres
 			gameTick=new BukkitRunnable() {
@@ -275,7 +279,6 @@ public class Game implements Listener {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[configManager] -> impossible de charger le fichier config pour "+ChatColor.ITALIC+map_name);
 			return false;
 		}
-		int i=0;//variable utilisée pour les maneuvres
 		//récolter le spawn des gardes
 		gardeSpawn = mapcfg.getLocation("gardeSpawn");
 		if (gardeSpawn==null) {
@@ -294,16 +297,13 @@ public class Game implements Listener {
 		for (String objname : objList) {
 			System.out.println("trying to load "+objname);
 			boolean valid=true;
-			Location _position = mapcfg.getLocation("mapObjects."+objname+"centerLocation");
-			Location _blockPosition = mapcfg.getLocation("mapObjects."+objname+"blockLocation");
-			String s = mapcfg.getString("mapObjects."+objname+"blockData");
-			//TODO SOMETHING WRONG HERE (the line above return null)
-			System.out.println("blockData:"+s);
-			BlockData _blockData = Bukkit.createBlockData(s); //le blockdata est enregistré sous forme de string dans le config puis transformé en blockdata ici
-			Material _blockType = Material.valueOf(mapcfg.getString("mapObjects."+objname+"blockType"));
-			int sizex = mapcfg.getInt("mapObjects."+i+"sizex",-1);
-			int sizey = mapcfg.getInt("mapObjects."+i+"sizey",-1);
-			int sizez = mapcfg.getInt("mapObjects."+i+"sizez",-1);
+			Location _position = mapcfg.getLocation("mapObjects."+objname+".centerLocation");
+			Location _blockPosition = mapcfg.getLocation("mapObjects."+objname+".blockLocation");
+			BlockData _blockData = Bukkit.createBlockData(mapcfg.getString("mapObjects."+objname+".blockData","")); //le blockdata est enregistré sous forme de string dans le config puis transformé en blockdata ici
+			Material _blockType = Material.valueOf(mapcfg.getString("mapObjects."+objname+".blockType"));
+			int sizex = mapcfg.getInt("mapObjects."+objname+".sizex",-1);
+			int sizey = mapcfg.getInt("mapObjects."+objname+".sizey",-1);
+			int sizez = mapcfg.getInt("mapObjects."+objname+".sizez",-1);
 			if (_position==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".centerLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				valid=false;
@@ -344,10 +344,10 @@ public class Game implements Listener {
 		objList = cfgManager.getMapEscapesList(map_name);
 		for (String objname : objList) {
 			boolean valid=true;
-			Location loc = mapcfg.getLocation("mapEscapes."+objname+"centerLocation");
-			int sizex = mapcfg.getInt("mapEscapes."+objname+"sizex",-1);
-			int sizey = mapcfg.getInt("mapEscapes."+objname+"sizey",-1);
-			int sizez = mapcfg.getInt("mapEscapes."+objname+"sizez",-1);
+			Location loc = mapcfg.getLocation("mapEscapes."+objname+".centerLocation");
+			int sizex = mapcfg.getInt("mapEscapes."+objname+".sizex",-1);
+			int sizey = mapcfg.getInt("mapEscapes."+objname+".sizey",-1);
+			int sizez = mapcfg.getInt("mapEscapes."+objname+".sizez",-1);
 			if (loc==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEscapes."+objname+".centerLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				valid=false;
@@ -376,10 +376,10 @@ public class Game implements Listener {
 			objList = cfgManager.getMapEntrancesList(map_name);
 			for (String objname : objList) {
 				boolean valid=true;
-				Location loc = mapcfg.getLocation("mapEntrances."+objname+"centerLocation");
-				int sizex = mapcfg.getInt("mapEntrances."+objname+"sizex",-1);
-				int sizey = mapcfg.getInt("mapEntrances."+objname+"sizey",-1);
-				int sizez = mapcfg.getInt("mapEntrances."+objname+"sizez",-1);
+				Location loc = mapcfg.getLocation("mapEntrances."+objname+".centerLocation");
+				int sizex = mapcfg.getInt("mapEntrances."+objname+".sizex",-1);
+				int sizey = mapcfg.getInt("mapEntrances."+objname+".sizey",-1);
+				int sizez = mapcfg.getInt("mapEntrances."+objname+".sizez",-1);
 				if (loc==null) {
 					Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEntrances."+objname+".centerLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 					valid=false;

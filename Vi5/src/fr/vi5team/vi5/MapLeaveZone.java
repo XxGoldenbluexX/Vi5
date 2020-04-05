@@ -6,6 +6,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
+import fr.vi5team.vi5.enums.Vi5Team;
+import fr.vi5team.vi5.enums.VoleurStatus;
+
 public class MapLeaveZone implements Listener {
 	
 	private final Location loc;
@@ -15,10 +18,24 @@ public class MapLeaveZone implements Listener {
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
 		Location ploc = event.getTo();
-		if (loc.getX()<ploc.getX() && ploc.getX()<loc.getX()+size.getX()) {
-			if (loc.getY()<ploc.getY() && ploc.getY()<loc.getY()+size.getY()) {
-				if (loc.getZ()<ploc.getZ() && ploc.getZ()<loc.getZ()+size.getZ()) {
-					game.playerLeaveMap(event.getPlayer());
+		if (game.hasPlayer(event.getPlayer())) {
+			if (game.getPlayerWrapper(event.getPlayer()).getCurrentStatus()==VoleurStatus.INSIDE) {
+				if (loc.getX()<ploc.getX() && ploc.getX()<loc.getX()+size.getX()) {
+					if (loc.getY()<ploc.getY() && ploc.getY()<loc.getY()+size.getY()) {
+						if (loc.getZ()<ploc.getZ() && ploc.getZ()<loc.getZ()+size.getZ()) {
+							if (game.getPlayerWrapper(event.getPlayer()).getTeam()==Vi5Team.VOLEUR) {
+								game.playerLeaveMap(event.getPlayer());
+								return;
+							}else if (game.getPlayerWrapper(event.getPlayer()).getTeam()==Vi5Team.GARDE) {
+								event.setCancelled(true);
+								return;
+							}
+						}else {
+							return;
+						}
+					}else {
+						return;
+					}
 				}else {
 					return;
 				}

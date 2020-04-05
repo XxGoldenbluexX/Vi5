@@ -20,6 +20,15 @@ public class Vi5BaseCommand implements CommandExecutor {
 	public Vi5BaseCommand(Vi5Main main) {
 		mainref=main;
 	}
+	public int StringToInt(String st) {
+		st.replaceAll("[^0-9]", "");
+		try {
+			int i = Integer.valueOf(st);
+			return i;
+		}catch(NumberFormatException e){
+			return -1;
+		}
+	}
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String arg2, String[] args) {
@@ -347,9 +356,9 @@ public class Vi5BaseCommand implements CommandExecutor {
 					return true;
 				}
 				if (mainref.getCfgmanager().getObjectNamesList(args[2]).contains(args[3])) {
-					cfg.set("mapObjects."+args[3]+".sizex", args[4]);
-					cfg.set("mapObjects."+args[3]+".sizey", args[5]);
-					cfg.set("mapObjects."+args[3]+".sizez", args[6]);
+					cfg.set("mapObjects."+args[3]+".sizex", StringToInt(args[4]));
+					cfg.set("mapObjects."+args[3]+".sizey", StringToInt(args[5]));
+					cfg.set("mapObjects."+args[3]+".sizez", StringToInt(args[6]));
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
 				}else {
 					sender.sendMessage(ChatColor.RED+"There is no object with this name for this map");
@@ -436,9 +445,9 @@ public class Vi5BaseCommand implements CommandExecutor {
 					return true;
 				}
 				if (mainref.getCfgmanager().getMapEscapesList(args[2]).contains(args[3])) {
-					cfg.set("mapEscapes."+args[3]+".sizex", args[4]);
-					cfg.set("mapEscapes."+args[3]+".sizey", args[5]);
-					cfg.set("mapEscapes."+args[3]+".sizez", args[6]);
+					cfg.set("mapEscapes."+args[3]+".sizex", StringToInt(args[4]));
+					cfg.set("mapEscapes."+args[3]+".sizey", StringToInt(args[5]));
+					cfg.set("mapEscapes."+args[3]+".sizez", StringToInt(args[6]));
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
 					sender.sendMessage(ChatColor.GREEN+"Map escape's size set!");
 					return true;
@@ -531,9 +540,9 @@ public class Vi5BaseCommand implements CommandExecutor {
 					return true;
 				}
 				if (mainref.getCfgmanager().getMapEntrancesList(args[2]).contains(args[3])) {
-					cfg.set("mapEntrances."+args[3]+".sizex", args[4]);
-					cfg.set("mapEntrances."+args[3]+".sizey", args[5]);
-					cfg.set("mapEntrances."+args[3]+".sizez", args[6]);
+					cfg.set("mapEntrances."+args[3]+".sizex", StringToInt(args[4]));
+					cfg.set("mapEntrances."+args[3]+".sizey", StringToInt(args[5]));
+					cfg.set("mapEntrances."+args[3]+".sizez", StringToInt(args[6]));
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
 					sender.sendMessage(ChatColor.GREEN+"Entrance's size location set!");
 					return true;
@@ -643,6 +652,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}else {
 								if (mainref.isPlayerIngame(p)) {
 									mainref.getPlayerWrapper(p).setTeam(Vi5Team.GARDE);
+									sender.sendMessage(ChatColor.GREEN+"You are now a guard");
 									return true;
 								}else {
 									sender.sendMessage(ChatColor.RED+"This player is not in a game");
@@ -651,6 +661,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}
 						}else {
 							mainref.getPlayerWrapper(player).setTeam(Vi5Team.GARDE);
+							sender.sendMessage(ChatColor.GREEN+"You are now a guard");
 							return true;
 						}
 					case "thief":
@@ -662,6 +673,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}else {
 								if (mainref.isPlayerIngame(p)) {
 									mainref.getPlayerWrapper(p).setTeam(Vi5Team.VOLEUR);
+									sender.sendMessage(ChatColor.GREEN+"You are now a thief");
 									return true;
 								}else {
 									sender.sendMessage(ChatColor.RED+"This player is not in a game");
@@ -670,6 +682,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}
 						}else {
 							mainref.getPlayerWrapper(player).setTeam(Vi5Team.VOLEUR);
+							sender.sendMessage(ChatColor.GREEN+"You are now a thief");
 							return true;
 						}
 					case "spectator":
@@ -681,6 +694,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}else {
 								if (mainref.isPlayerIngame(p)) {
 									mainref.getPlayerWrapper(p).setTeam(Vi5Team.SPECTATEUR);
+									sender.sendMessage(ChatColor.GREEN+"You are now a spectator");
 									return true;
 								}else {
 									sender.sendMessage(ChatColor.RED+"This player is not in a game");
@@ -689,6 +703,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}
 						}else {
 							mainref.getPlayerWrapper(player).setTeam(Vi5Team.SPECTATEUR);
+							sender.sendMessage(ChatColor.GREEN+"You are now a spectator");
 							return true;
 						}
 					default:
