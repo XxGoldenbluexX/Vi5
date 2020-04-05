@@ -17,7 +17,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
 
@@ -215,14 +214,23 @@ public class Game implements Listener {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
 			return;
 		}else {
+			totalObjVolés=0;
+			nbVoleurAlive=0;
 			for (Player p : playersInGame.keySet()) {
 				PlayerWrapper wrap = playersInGame.get(p);
 				if (wrap.getTeam()==Vi5Team.GARDE) {
 					p.teleport(gardeSpawn);
+					p.setGameMode(GameMode.ADVENTURE);
+					wrap.setCurrentStatus(VoleurStatus.INSIDE);
 				}else if (wrap.getTeam()==Vi5Team.VOLEUR) {
 					p.teleport(voleurMinimapSpawn);
 					hideVoleur(p);
+					nbVoleurAlive++;
+					p.setGameMode(GameMode.ADVENTURE);
 					wrap.setCurrentStatus(VoleurStatus.OUTSIDE);
+				}else if (wrap.getTeam()==Vi5Team.SPECTATEUR) {
+					p.setGameMode(GameMode.SPECTATOR);
+					p.teleport(voleurMinimapSpawn);
 				}
 			}
 			for (MapObject o : mapObjects) {

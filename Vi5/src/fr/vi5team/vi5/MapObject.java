@@ -74,17 +74,17 @@ public class MapObject implements Listener{
 		return;
 	}
 	public void Tick() {
-		if (captureState==CaptureState.STEALABLE && !captureCooldown) {
-			if (captureLevel>0) {
-				captureLevel--;
-			}
-			for (Player p : playersOnObject) {
+		if (captureLevel>0 && captureState==CaptureState.STEALABLE) {
+			captureLevel--;
+		}
+		for (Player p : playersOnObject) {
+			if (captureState==CaptureState.STEALABLE && !captureCooldown) {
 				PlayerWrapper wrap = gameref.getPlayerWrapper(p);
 				if (wrap!=null) {
 					if (wrap.getTeam()==Vi5Team.VOLEUR && wrap.getCurrentStatus()==VoleurStatus.INSIDE) {
 						if (captureLevel<MAX_CAPTURE_LEVEL) {
 							if (isGuardOnPoint()) {
-								p.sendTitle("", ChatColor.RED+"Capture paused (a guard is near)", 0, 1, 0);
+								p.sendTitle("", ChatColor.RED+"Capture paused (a guard is near)", 0, 2, 0);
 								return;
 							}
 							captureLevel+=2;
@@ -96,8 +96,8 @@ public class MapObject implements Listener{
 					}
 				}
 			}
-		}	
-	}
+		}
+	}	
 	
 	public void capture(Player player,PlayerWrapper wrap) {
 		//called when this point is captured
