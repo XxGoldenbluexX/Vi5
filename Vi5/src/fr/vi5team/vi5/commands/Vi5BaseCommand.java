@@ -98,6 +98,8 @@ public class Vi5BaseCommand implements CommandExecutor {
 						sender.sendMessage(ChatColor.RED+"Everyone is not ready");
 						return true;
 					}
+				}else {
+					sender.sendMessage(ChatColor.RED+"This game does not exist!");
 				}
 			}else {
 				sender.sendMessage("usage: /vi5 game start <GameName>");
@@ -151,11 +153,19 @@ public class Vi5BaseCommand implements CommandExecutor {
 			break;
 		case "leave":
 			break;
+		case "delete":
+			break;
 		case "list":
 			sender.sendMessage(ChatColor.DARK_GREEN+"Games: ");
 			for (Game g : mainref.getGamesList()) {
 				sender.sendMessage(ChatColor.AQUA+"- "+g.getName()+ChatColor.LIGHT_PURPLE+" ("+g.getMapName()+")");
 			}
+			return true;
+		default:
+			sender.sendMessage(ChatColor.RED+"Wrong Command! "+ChatColor.BLUE+ChatColor.UNDERLINE+"Usage: "+ChatColor.WHITE+"/vi5 game "+ChatColor.DARK_GREEN+"...");
+			sender.sendMessage(ChatColor.DARK_GREEN+"create"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"setMap"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"list"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"delete");
+			sender.sendMessage(ChatColor.DARK_GREEN+"join"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"leave"+ChatColor.WHITE+"/");
+			sender.sendMessage(ChatColor.DARK_GREEN+"start"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"fstart"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"restart"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"stop");
 			return true;
 		}
 		return false;
