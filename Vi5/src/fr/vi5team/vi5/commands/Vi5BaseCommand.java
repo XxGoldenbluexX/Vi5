@@ -54,7 +54,10 @@ public class Vi5BaseCommand implements CommandExecutor {
 	
 	public boolean gameCommand(CommandSender sender,String[] args) {
 		if (args.length<2) {
-			sender.sendMessage("usage: /vi5 game create/start/fstart/setMap/list");
+			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game "+ChatColor.GOLD+"...");
+			sender.sendMessage("["+ChatColor.GOLD+"create"+ChatColor.WHITE+","+ChatColor.GOLD+"setMap"+ChatColor.WHITE+","+ChatColor.GOLD+"list"+ChatColor.WHITE+","+ChatColor.GOLD+"delete"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"join"+ChatColor.WHITE+","+ChatColor.GOLD+"leave"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"start"+ChatColor.WHITE+","+ChatColor.GOLD+"fstart"+ChatColor.WHITE+","+ChatColor.GOLD+"restart"+ChatColor.WHITE+","+ChatColor.GOLD+"stop"+ChatColor.WHITE+"]");
 			return true;
 		}
 		switch (args[1]) {
@@ -162,10 +165,10 @@ public class Vi5BaseCommand implements CommandExecutor {
 			}
 			return true;
 		default:
-			sender.sendMessage(ChatColor.RED+"Wrong Command! "+ChatColor.BLUE+ChatColor.UNDERLINE+"Usage: "+ChatColor.WHITE+"/vi5 game "+ChatColor.DARK_GREEN+"...");
-			sender.sendMessage(ChatColor.DARK_GREEN+"create"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"setMap"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"list"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"delete");
-			sender.sendMessage(ChatColor.DARK_GREEN+"join"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"leave"+ChatColor.WHITE+"/");
-			sender.sendMessage(ChatColor.DARK_GREEN+"start"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"fstart"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"restart"+ChatColor.WHITE+"/"+ChatColor.DARK_GREEN+"stop");
+			sender.sendMessage(ChatColor.RED+"Wrong Command! "+ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game "+ChatColor.GOLD+"...");
+			sender.sendMessage("["+ChatColor.GOLD+"create"+ChatColor.WHITE+","+ChatColor.GOLD+"setMap"+ChatColor.WHITE+","+ChatColor.GOLD+"list"+ChatColor.WHITE+","+ChatColor.GOLD+"delete"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"join"+ChatColor.WHITE+","+ChatColor.GOLD+"leave"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"start"+ChatColor.WHITE+","+ChatColor.GOLD+"fstart"+ChatColor.WHITE+","+ChatColor.GOLD+"restart"+ChatColor.WHITE+","+ChatColor.GOLD+"stop"+ChatColor.WHITE+"]");
 			return true;
 		}
 		return false;
