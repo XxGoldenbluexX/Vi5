@@ -1,5 +1,7 @@
 package fr.vi5team.vi5.runes;
 
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -35,6 +37,8 @@ public class RuneInviSneak extends BaseRune {
 		if (wrap!=null) {
 			if (wrap.getTeam()==Vi5Team.GARDE && event.getPlayer().getLocation().distanceSquared(getPlayer().getLocation())<=9) {
 				getPlayer().removePotionEffect(PotionEffectType.INVISIBILITY);
+				event.getPlayer().playSound(getPlayer().getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, SoundCategory.MASTER, 0.1F, 2F);
+				getPlayer().playSound(getPlayer().getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, SoundCategory.MASTER, 0.1F, 2F);
 			}
 		}
 	}
