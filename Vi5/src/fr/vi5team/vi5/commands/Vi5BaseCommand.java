@@ -989,6 +989,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED+"You need to be a player to use this command!");
 				sender.sendMessage("");
 				return true;
+				//osef
 			}
 		}
 	}
