@@ -233,7 +233,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 		case "Objects":
 			sender.sendMessage("");
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map "+ChatColor.GOLD+"...");
-			sender.sendMessage("["+ChatColor.GOLD+"addMapObject"+ChatColor.WHITE+"/"+ChatColor.GOLD+"objectList"+ChatColor.WHITE+"/"+ChatColor.GOLD+"removeMapObject"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"addObject"+ChatColor.WHITE+"/"+ChatColor.GOLD+"objectList"+ChatColor.WHITE+"/"+ChatColor.GOLD+"removeObject"+ChatColor.WHITE+"]");
 			sender.sendMessage("["+ChatColor.GOLD+"setObjBlock"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setObjLoc"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setObjSize"+ChatColor.WHITE+"]");
 			sender.sendMessage("");
 			return true;
@@ -361,7 +361,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("");
 				return true;
 			}
-		case "addMapObject":
+		case "addObject":
 			if(args.length>3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
@@ -385,7 +385,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}
 			}else {
 				sender.sendMessage("");
-				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map addMapObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map addObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
 				sender.sendMessage("");
 				return true;
 			}
@@ -435,7 +435,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}else {
 					sender.sendMessage("");
 					sender.sendMessage(ChatColor.RED+"This object does not exist on map: "+ChatColor.GOLD+args[2]);
-					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addMapObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
 					sender.sendMessage("");
 					return true;
 				}
@@ -477,7 +477,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}else {
 					sender.sendMessage("");
 					sender.sendMessage(ChatColor.RED+"This object does not exist on map: "+ChatColor.GOLD+args[2]);
-					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addMapObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
 					sender.sendMessage("");
 					return true;
 				}
@@ -507,7 +507,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}else {
 					sender.sendMessage("");
 					sender.sendMessage(ChatColor.RED+"This object does not exist on map: "+ChatColor.GOLD+args[2]);
-					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addMapObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
 					sender.sendMessage("");
 					return true;
 				}
@@ -518,7 +518,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("");
 				return true;
 			}
-		case "removeMapObject":
+		case "removeObject":
 			if(args.length>3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if(cfg==null) {
@@ -537,13 +537,13 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}else {
 					sender.sendMessage("");
 					sender.sendMessage(ChatColor.RED+"This object does not exist on map: "+ChatColor.GOLD+args[2]);
-					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addMapObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
 					sender.sendMessage("");
 					return true;
 				}
 			}else {
 				sender.sendMessage("");
-				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map removeMapObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map removeObject "+ChatColor.GOLD+"<MapName> <ObjectName>");
 				sender.sendMessage("");
 				return true;
 			}	
