@@ -47,6 +47,8 @@ public class Game implements Listener {
 		started=false;
 		gameTick.cancel();
 		for (Player p : playersInGame.keySet()) {
+			PlayerWrapper wrap = playersInGame.get(p);
+			wrap.gameEnd();
 			p.setGameMode(GameMode.SPECTATOR);
 		}
 		messagePlayersInGame(ChatColor.GOLD+"La partie est terminée!");
@@ -222,6 +224,7 @@ public class Game implements Listener {
 			nbVoleurAlive=0;
 			for (Player p : playersInGame.keySet()) {
 				PlayerWrapper wrap = playersInGame.get(p);
+				wrap.gameStart();
 				if (wrap.getTeam()==Vi5Team.GARDE) {
 					p.teleport(gardeSpawn);
 					p.setGameMode(GameMode.ADVENTURE);
@@ -247,11 +250,17 @@ public class Game implements Listener {
 				@Override
 				public void run() {
 					tickMapObjects();
+					tickRunes();
 				}
 			};
 			gameTick.runTaskTimer(mainref, 0, 1);
 		}
 	};
+	public void tickRunes() {
+		for (PlayerWrapper p : playersInGame.values()) {
+			p.tickRunes();
+		}
+	}
 	public void hideVoleur(Player player) {
 		//cache un voleur a tout les gardes
 		if (hasPlayer(player)) {
