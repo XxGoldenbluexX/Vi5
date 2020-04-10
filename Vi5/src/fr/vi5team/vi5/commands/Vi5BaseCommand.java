@@ -60,7 +60,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage("");
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game "+ChatColor.GOLD+"...");
 			sender.sendMessage("["+ChatColor.GOLD+"create"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setMap"+ChatColor.WHITE+"/"+ChatColor.GOLD+"list"+ChatColor.WHITE+"/"+ChatColor.GOLD+"delete"+ChatColor.WHITE+"]");
-			sender.sendMessage("["+ChatColor.GOLD+"join"+ChatColor.WHITE+"/"+ChatColor.GOLD+"leave"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"join"+ChatColor.WHITE+"/"+ChatColor.GOLD+"ready"+ChatColor.WHITE+ChatColor.GOLD+"leave"+ChatColor.WHITE+"]");
 			sender.sendMessage("["+ChatColor.GOLD+"start"+ChatColor.WHITE+"/"+ChatColor.GOLD+"fstart"+ChatColor.WHITE+"/"+ChatColor.GOLD+"restart"+ChatColor.WHITE+"/"+ChatColor.GOLD+"stop"+ChatColor.WHITE+"]");
 			sender.sendMessage("");
 			return true;
@@ -83,7 +83,42 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game create "+ChatColor.GOLD+"<GameName>");
 			sender.sendMessage("");
 			return true;
-
+		case "ready":
+			if(args.length>2) {
+				Player p;
+				if (args.length>3) {
+					p = Bukkit.getServer().getPlayer(args[3]);
+            		if (p.equals(null)) {
+            			sender.sendMessage("");
+                    	sender.sendMessage(ChatColor.RED+"This player does not exist!");
+                    	sender.sendMessage("");
+                        return true;
+            		}
+            	}else {
+            		p = (Player)sender;		
+				}
+				Game g = mainref.getGame(args[2]);
+				if (g.hasPlayer(p)){
+					if(!g.is_playerReady(p)) {
+						PlayerWrapper wrap = mainref.getPlayerWrapper(p);
+						wrap.setReady(true);
+						sender.sendMessage(ChatColor.GREEN+"Player ("+p+ChatColor.GREEN+") is now ready!");
+					}else {
+						sender.sendMessage("");
+		    			sender.sendMessage(ChatColor.RED+"This player is already ready!");
+		    			sender.sendMessage("");
+					}
+				}else {
+					sender.sendMessage("");
+	    			sender.sendMessage(ChatColor.RED+"This player is not in a game!");
+	    			sender.sendMessage("");
+				}
+			}else {
+            	sender.sendMessage("");
+    			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game ready "+ChatColor.GOLD+"<GameName> (PlayerName)");
+    			sender.sendMessage("");
+                return true;
+			}
 		case "join":
             if(args.length>2) {
             	Player p;
@@ -193,7 +228,23 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}
 			}
 		case "restart":
-			break;
+			if(args.length>2) {
+				Game g = mainref.getGame(args[2]);
+				if (g!=null) {
+					g.start();
+					return true;
+				}else {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This game does not exist!");
+					sender.sendMessage("");
+					return true;
+				}
+			}else {
+			sender.sendMessage("");
+			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game restart "+ChatColor.GOLD+"<GameName>");
+			sender.sendMessage("");
+			return true;
+			}
 		case "stop":
 			if(args.length>2) {
 				Game game = mainref.getGame(args[2]);
