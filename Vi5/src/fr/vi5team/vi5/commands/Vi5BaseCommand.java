@@ -889,7 +889,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 		if (args.length<2) {
 			sender.sendMessage("");
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 team "+ChatColor.GOLD+"...");
-			sender.sendMessage(ChatColor.GOLD+"<Guard/Thief/Spectator> [PlayerName]");
+			sender.sendMessage(ChatColor.GOLD+"<guard/thief/spectator> [PlayerName]");
 			sender.sendMessage("");
 			return true;
 		}else {
@@ -974,7 +974,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 						}
 					default:
 						sender.sendMessage("");
-						sender.sendMessage(ChatColor.RED+"Only Thief/Guard/Spectator are valid teams!");
+						sender.sendMessage(ChatColor.RED+"Only thief/guard/spectator are valid teams!");
 						sender.sendMessage("");
 						return true;
 					}
@@ -989,7 +989,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.RED+"You need to be a player to use this command!");
 				sender.sendMessage("");
 				return true;
-				//osef
 			}
 		}
 	}
