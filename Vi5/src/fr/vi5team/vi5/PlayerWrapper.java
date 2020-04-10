@@ -103,7 +103,11 @@ public class PlayerWrapper implements Listener {
 	public void addItemStealed() {
 		nbItemStealed++;
 	}
-
+	
+	public void resetItemStealed() {
+		nbItemStealed=0;
+	}
+	
 	public VoleurStatus getCurrentStatus() {
 		return currentStatus;
 	}

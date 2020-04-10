@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import fr.vi5team.vi5.Game;
+import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
 
@@ -194,9 +195,58 @@ public class Vi5BaseCommand implements CommandExecutor {
 		case "restart":
 			break;
 		case "stop":
-			break;
+			if(args.length>2) {
+				Game game = mainref.getGame(args[2]);
+				if (!game.is_Started()) {
+					for(Player p:Bukkit.getOnlinePlayers()) {
+						if (game.hasPlayer(p)) {
+							p.sendMessage(ChatColor.RED+"Game has forcefully stopped the game by: "+sender);
+							PlayerWrapper wrap = mainref.getPlayerWrapper(p);
+							wrap.resetItemStealed();
+						}
+					}
+					game.endGame();
+					return true;
+				}
+				sender.sendMessage("");
+				sender.sendMessage(ChatColor.RED+"Game does not exist or haven't started!");
+				sender.sendMessage("");
+				return true;
+			}
+			sender.sendMessage("");
+			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game stop "+ChatColor.GOLD+"<GameName>");
+			sender.sendMessage("");
+			return true;
 		case "leave":
-			break;
+            if(args.length>2) {
+            	Player p;
+            	if (args.length>3) {
+            		p = Bukkit.getServer().getPlayer(args[3]);
+            		if (p.equals(null)) {
+            			sender.sendMessage("");
+                    	sender.sendMessage(ChatColor.RED+"This player does not exist!");
+                    	sender.sendMessage("");
+                        return true;
+            		}
+            	}else {
+            		p = (Player)sender;
+            	}
+                if (mainref.isPlayerIngame(p)) {
+                    Game g = mainref.getGame(args[2]);
+                    g.removePlayer(p);
+                    return true;
+                }else {
+                	sender.sendMessage("");
+                	sender.sendMessage(ChatColor.RED+"This player is not in a game!");
+                	sender.sendMessage("");
+                    return true;
+                }
+            }else {
+            	sender.sendMessage("");
+    			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game leave "+ChatColor.GOLD+"<GameName> (PlayerName)");
+    			sender.sendMessage("");
+                return true;
+            }
 		case "delete":
 			break;
 		case "list":
@@ -294,6 +344,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 					}
 					cfg.set("gardeSpawn",p.getLocation());
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+					sender.sendMessage(ChatColor.GREEN+"Guards spawn has been set!");
 					return true;
 				}else {
 					sender.sendMessage("");
@@ -322,6 +373,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 					}
 					cfg.set("voleurMinimapSpawn",p.getLocation());
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+					sender.sendMessage(ChatColor.GREEN+"Thief Minimap Spawn has been set!");
 					return true;
 				}else {
 					sender.sendMessage("");
