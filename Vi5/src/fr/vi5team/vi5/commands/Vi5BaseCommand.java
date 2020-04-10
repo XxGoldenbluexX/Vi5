@@ -60,15 +60,38 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage("");
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game "+ChatColor.GOLD+"...");
 			sender.sendMessage("["+ChatColor.GOLD+"create"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setMap"+ChatColor.WHITE+"/"+ChatColor.GOLD+"list"+ChatColor.WHITE+"/"+ChatColor.GOLD+"delete"+ChatColor.WHITE+"]");
-			sender.sendMessage("["+ChatColor.GOLD+"join"+ChatColor.WHITE+"/"+ChatColor.GOLD+"ready"+ChatColor.WHITE+ChatColor.GOLD+"leave"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"join"+ChatColor.WHITE+"/"+ChatColor.GOLD+"playerList"+ChatColor.WHITE+"/"+ChatColor.GOLD+"ready"+ChatColor.WHITE+ChatColor.GOLD+"leave"+ChatColor.WHITE+"]");
 			sender.sendMessage("["+ChatColor.GOLD+"start"+ChatColor.WHITE+"/"+ChatColor.GOLD+"fstart"+ChatColor.WHITE+"/"+ChatColor.GOLD+"restart"+ChatColor.WHITE+"/"+ChatColor.GOLD+"stop"+ChatColor.WHITE+"]");
 			sender.sendMessage("");
 			return true;
 		}
 		switch (args[1]) {
+		case "playerList":
+			if(args.length>2) {
+				Game g = mainref.getGame(args[2]);
+				sender.sendMessage(ChatColor.BLUE+"Player list for "+args[2]+ChatColor.BLUE+":");
+				for(Player p : g.playersInGamePlayers()) {
+					String playerName=p.getName();
+					if(g.is_Started()) {
+						sender.sendMessage(playerName+ChatColor.BLUE+", Status: "+ChatColor.GOLD+"[IN_GAME]");
+					}else {
+						PlayerWrapper wrap = mainref.getPlayerWrapper(p);
+						if(wrap.is_ready()) {
+							sender.sendMessage(playerName+ChatColor.BLUE+", Status: "+ChatColor.GREEN+"[READY]");	
+						}else {
+							sender.sendMessage(playerName+ChatColor.BLUE+", Status: "+ChatColor.RED+"[NOT READY]");
+						}
+					}
+				}
+				return true;
+			}else {
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game playerList "+ChatColor.GOLD+"<GameName>");
+				return true;
+			}
 		case "create":
 			if (args.length>2) {
 				Game g = mainref.createGame(args[2]);
+				sender.sendMessage(ChatColor.GREEN+"The game ("+args[2]+ChatColor.GREEN+") has been created!");
 				if (sender instanceof Player) {
 					Player p = (Player)sender;
 					if (!mainref.isPlayerIngame(p)) {
@@ -232,6 +255,11 @@ public class Vi5BaseCommand implements CommandExecutor {
 				Game g = mainref.getGame(args[2]);
 				if (g!=null) {
 					g.start();
+					for(Player p:Bukkit.getOnlinePlayers()) {
+						if (g.hasPlayer(p)) {
+							p.sendMessage(ChatColor.RED+"Game has been restarted by: "+sender);
+						}
+					}
 					return true;
 				}else {
 					sender.sendMessage("");
@@ -251,7 +279,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				if (!game.is_Started()) {
 					for(Player p:Bukkit.getOnlinePlayers()) {
 						if (game.hasPlayer(p)) {
-							p.sendMessage(ChatColor.RED+"Game has forcefully stopped the game by: "+sender);
+							p.sendMessage(ChatColor.RED+"Game has been forcefully stopped by: "+sender);
 							PlayerWrapper wrap = mainref.getPlayerWrapper(p);
 							wrap.resetItemStealed();
 						}
@@ -285,6 +313,7 @@ public class Vi5BaseCommand implements CommandExecutor {
                 if (mainref.isPlayerIngame(p)) {
                     Game g = mainref.getGame(args[2]);
                     g.removePlayer(p);
+                    sender.sendMessage(ChatColor.GREEN+"Player ("+p+ChatColor.GREEN+") left this game!");
                     return true;
                 }else {
                 	sender.sendMessage("");

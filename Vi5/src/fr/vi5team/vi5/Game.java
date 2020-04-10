@@ -35,8 +35,8 @@ public class Game implements Listener {
 	private ArrayList<MapEnterZone> mapEnterZones=new ArrayList<MapEnterZone>();
 	private ArrayList<MapLeaveZone> mapLeaveZones=new ArrayList<MapLeaveZone>();
 	private BukkitRunnable gameTick;
-	
-	HashMap<Player,PlayerWrapper> playersInGame = new HashMap<Player,PlayerWrapper>();//Liste des joueurs présents dans la partie et de leur wrapper
+	private final HashMap<Player,PlayerWrapper> playersInGame = new HashMap<Player,PlayerWrapper>();
+	//Liste des joueurs présents dans la partie et de leur wrapper
 	
 	public Game(Vi5Main main,ConfigManager cfgm,String _name) {
 		mainref=main;
@@ -464,5 +464,22 @@ public class Game implements Listener {
 	}
 	public void setMapLeaveZones(ArrayList<MapLeaveZone> mapLeaveZones) {
 		this.mapLeaveZones = mapLeaveZones;
+	}
+	public HashMap<Player, PlayerWrapper> playersInGame() {
+		return playersInGame;
+	}
+	public ArrayList<Player> playersInGamePlayers(){
+		ArrayList<Player> playerList = new ArrayList<Player>();
+		for (Player p : playersInGame().keySet()) {
+			playerList.add(p);
+		}
+		return playerList;
+	}
+	public ArrayList<PlayerWrapper> playersInGameWrapper(){
+		ArrayList<PlayerWrapper> wrapperList = new ArrayList<PlayerWrapper>();
+		for (PlayerWrapper wrap : playersInGame().values()) {
+			wrapperList.add(wrap);
+		}
+		return wrapperList;
 	}
 }
