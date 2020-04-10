@@ -380,6 +380,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}else {
 					l.add(args[3]);
 					mainref.getCfgmanager().setObjectNamesList(args[2], l);
+					sender.sendMessage(ChatColor.GREEN+"Map ("+ChatColor.GOLD+args[2]+ChatColor.GREEN+") has been created!");
 					return true;
 				}
 			}else {
@@ -565,7 +566,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}else {
 					escapesList.add(args[3]);
 					mainref.getCfgmanager().setMapEscapesList(args[2], escapesList);
-					sender.sendMessage(ChatColor.GREEN+"Map escape has been created!");
+					sender.sendMessage(ChatColor.GREEN+"Map escape ("+ChatColor.GOLD+args[3]+ChatColor.GREEN+") has been created on map: "+ChatColor.GOLD+args[2]+ChatColor.GREEN+" !");
 					return true;
 				}
 			} else {
@@ -662,6 +663,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}else {
 					entrancesList.add(args[3]);
 					mainref.getCfgmanager().setMapEntrancesList(args[2], entrancesList);
+					sender.sendMessage(ChatColor.GREEN+"Map entrance ("+ChatColor.GOLD+args[3]+ChatColor.GREEN+") has been created on map: "+ChatColor.GOLD+args[2]+ChatColor.GREEN+" !");
 					return true;
 				}
 			} else {
