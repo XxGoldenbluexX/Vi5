@@ -29,6 +29,24 @@ public class PlayerWrapper implements Listener {
 		return game;
 	}
 	
+	public void gameStart() {
+		primaire.gameStart();
+		secondaire.gameStart();
+		tertiaire.gameStart();
+	}
+	
+	public void gameEnd() {
+		primaire.gameEnd();
+		secondaire.gameEnd();
+		tertiaire.gameEnd();
+	}
+	
+	public void tickRunes() {
+		primaire.tick();
+		secondaire.tick();
+		tertiaire.tick();
+	}
+	
 	public boolean is_ingame() {
 		//permet de savoir si le joueur a rejoin une partie (/!\ NE DIT PAS SI LA PARTIE EST EN COURS)
 		return !(game.equals(null));
