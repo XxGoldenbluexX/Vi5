@@ -64,6 +64,7 @@ public class Game implements Listener {
 			}else {
 				PlayerWrapper wrap = new PlayerWrapper(this,player);
 				playersInGame.put(player, wrap);
+				mainref.getPmanager().registerEvents(wrap, mainref);
 				messagePlayersInGame(ChatColor.GOLD+player.getName()+ChatColor.DARK_GREEN+" joined this vi5 game!");
 				return true;
 			}

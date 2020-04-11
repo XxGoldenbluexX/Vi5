@@ -1,7 +1,15 @@
 package fr.vi5team.vi5;
 
+import java.util.ArrayList;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
@@ -19,14 +27,47 @@ public class PlayerWrapper implements Listener {
 	private final Game game;//référence a la game ou le joueur appartient, null si il n'en a pas
 	boolean ready=false;
 	private final Player player;
+	private ItemStack readyItem;
+	private ItemStack runeSelectionItem;
+	private ItemStack TeamSelectionItem;
 	
 	public PlayerWrapper(Game game, Player player) {
 		this.player=player;
 		this.game=game;
+		ItemStack item = new ItemStack(Material.EMERALD);
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(ChatColor.AQUA+"Runes");
+		ArrayList<String> lore= new ArrayList<String>();
+		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select your runes");
+		meta.setLore(lore);
+		item.setItemMeta(meta);
+		runeSelectionItem=item;
+		player.getInventory().setItem(1, item);
+		setReady(false);
+		setTeam(Vi5Team.GARDE);
 	}
 	
 	public Game getGame() {
 		return game;
+	}
+	
+	@EventHandler
+	public void onPlayerDrop(PlayerDropItemEvent event) {
+		ItemStack itm = event.getItemDrop().getItemStack();
+		if (itm.equals(readyItem)) {
+			if (ready) {
+				setReady(false);
+			}else {
+				setReady(true);
+			}
+			event.setCancelled(true);
+		}else if (itm.equals(runeSelectionItem)) {
+			//OPEN RUNE SELECTION
+			event.setCancelled(true);
+		}else if (itm.equals(TeamSelectionItem)) {
+			//OPEN TEAM SELECTION
+			event.setCancelled(true);
+		}
 	}
 	
 	public void gameStart() {
@@ -58,6 +99,25 @@ public class PlayerWrapper implements Listener {
 	
 	public void setReady(boolean r) {
 		ready=r;
+		if (ready) {
+			ItemStack item = new ItemStack(Material.EMERALD_BLOCK);
+			ItemMeta meta = item.getItemMeta();
+			meta.setDisplayName(ChatColor.DARK_GREEN+"Ready");
+			ArrayList<String> lore= new ArrayList<String>();
+			lore.add(ChatColor.LIGHT_PURPLE+"Drop this to set yourself not ready");
+			meta.setLore(lore);
+			item.setItemMeta(meta);
+			player.getInventory().setItem(0, item);
+		}else {
+			ItemStack item = new ItemStack(Material.REDSTONE_BLOCK);
+			ItemMeta meta = item.getItemMeta();
+			meta.setDisplayName(ChatColor.DARK_RED+"Not Ready");
+			ArrayList<String> lore= new ArrayList<String>();
+			lore.add(ChatColor.LIGHT_PURPLE+"Drop this to set yourself ready");
+			meta.setLore(lore);
+			item.setItemMeta(meta);
+			player.getInventory().setItem(0, item);
+		}
 	}
 
 	public Vi5Team getTeam() {
@@ -66,6 +126,28 @@ public class PlayerWrapper implements Listener {
 
 	public void setTeam(Vi5Team team) {
 		this.team = team;
+		ItemStack item = new ItemStack(Material.WHITE_BANNER);
+		switch (team) {
+		case GARDE:
+			item = new ItemStack(Material.CYAN_BANNER);
+			break;
+		case VOLEUR:
+			item = new ItemStack(Material.RED_BANNER);
+			break;
+		case SPECTATEUR:
+			item = new ItemStack(Material.LIME_BANNER);
+			break;
+		default:
+			break;
+		}
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(ChatColor.DARK_RED+"Team");
+		ArrayList<String> lore= new ArrayList<String>();
+		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select your team");
+		meta.setLore(lore);
+		item.setItemMeta(meta);
+		TeamSelectionItem=item;
+		player.getInventory().setItem(2, item);
 	}
 
 	public BaseRune getRunePrimaire() {
