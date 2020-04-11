@@ -108,6 +108,7 @@ public class PlayerWrapper implements Listener {
 			meta.setLore(lore);
 			item.setItemMeta(meta);
 			player.getInventory().setItem(0, item);
+			readyItem=item;
 		}else {
 			ItemStack item = new ItemStack(Material.REDSTONE_BLOCK);
 			ItemMeta meta = item.getItemMeta();
@@ -117,6 +118,7 @@ public class PlayerWrapper implements Listener {
 			meta.setLore(lore);
 			item.setItemMeta(meta);
 			player.getInventory().setItem(0, item);
+			readyItem=item;
 		}
 	}
 
@@ -141,7 +143,7 @@ public class PlayerWrapper implements Listener {
 			break;
 		}
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.DARK_RED+"Team");
+		meta.setDisplayName(ChatColor.BLUE+"Team");
 		ArrayList<String> lore= new ArrayList<String>();
 		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select your team");
 		meta.setLore(lore);
