@@ -29,6 +29,7 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
 import fr.vi5team.vi5.commands.Vi5BaseCommand;
 import fr.vi5team.vi5.enums.DieCancelType;
 import fr.vi5team.vi5.events.PlayerKillEvent;
+import fr.vi5team.vi5.interfaces.Vi5Interfaces;
 
 public class Vi5Main extends JavaPlugin implements Listener {
 	
@@ -36,6 +37,7 @@ public class Vi5Main extends JavaPlugin implements Listener {
 	private ArrayList<Game> gamesList= new ArrayList<Game>();
 	private PluginManager pmanager;
 	private ProtocolManager protocolManager;
+	private Vi5Interfaces InterfaceManager = new Vi5Interfaces(this);
 	
 	@Override
 	public void onEnable() {

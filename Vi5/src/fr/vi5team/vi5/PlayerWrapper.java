@@ -11,8 +11,10 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.vi5team.vi5.enums.RunesList;
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
+import fr.vi5team.vi5.runes.RuneInviSneak;
 
 public class PlayerWrapper implements Listener {
 	
@@ -30,6 +32,12 @@ public class PlayerWrapper implements Listener {
 	private ItemStack readyItem;
 	private ItemStack runeSelectionItem;
 	private ItemStack TeamSelectionItem;
+	private RunesList voleurPrimaire=RunesList.INVI;
+	private RunesList voleurSecondaire=null;
+	private RunesList voleurTertiaire=null;
+	private RunesList gardePrimaire=null;
+	private RunesList gardeSecondaire=null;
+	private RunesList gardeTertiaire=null;
 	
 	public PlayerWrapper(Game game, Player player) {
 		this.player=player;
@@ -54,38 +62,67 @@ public class PlayerWrapper implements Listener {
 	@EventHandler
 	public void onPlayerDrop(PlayerDropItemEvent event) {
 		ItemStack itm = event.getItemDrop().getItemStack();
-		if (itm.equals(readyItem)) {
-			if (ready) {
-				setReady(false);
-			}else {
-				setReady(true);
+		if (event.getPlayer().equals(player)) {
+			if (itm.equals(readyItem)) {
+				if (ready) {
+					setReady(false);
+				}else {
+					setReady(true);
+				}
+				event.getItemDrop().remove();
+				event.setCancelled(false);
+			}else if (itm.equals(runeSelectionItem)) {
+				//OPEN RUNE SELECTION
+				event.setCancelled(true);
+			}else if (itm.equals(TeamSelectionItem)) {
+				//OPEN TEAM SELECTION
+				event.setCancelled(true);
 			}
-			event.setCancelled(true);
-		}else if (itm.equals(runeSelectionItem)) {
-			//OPEN RUNE SELECTION
-			event.setCancelled(true);
-		}else if (itm.equals(TeamSelectionItem)) {
-			//OPEN TEAM SELECTION
-			event.setCancelled(true);
 		}
 	}
 	
 	public void gameStart() {
-		primaire.gameStart();
-		secondaire.gameStart();
-		tertiaire.gameStart();
+		switch (team) {
+		case GARDE:
+			primaire=makeRune(gardePrimaire);
+			secondaire=makeRune(gardeSecondaire);
+			tertiaire=makeRune(gardeTertiaire);
+			break;
+		case SPECTATEUR:
+			break;
+		case VOLEUR:
+			primaire=makeRune(voleurPrimaire);
+			secondaire=makeRune(voleurSecondaire);
+			tertiaire=makeRune(voleurTertiaire);
+			break;
+		}
+		if (primaire!=null) {
+			primaire.gameStart();
+		}
+		if (secondaire!=null) {
+			secondaire.gameStart();
+		}
+		if (tertiaire!=null) {
+			tertiaire.gameStart();
+		}
 	}
 	
 	public void gameEnd() {
-		primaire.gameEnd();
-		secondaire.gameEnd();
-		tertiaire.gameEnd();
+		primaire=null;
+		secondaire=null;
+		tertiaire=null;
 	}
 	
 	public void tickRunes() {
-		primaire.tick();
-		secondaire.tick();
-		tertiaire.tick();
+		if (tertiaire!=null) {
+			tertiaire.tick();
+		}
+		if (secondaire!=null) {
+			secondaire.tick();
+		}
+		if (tertiaire!=null) {
+			tertiaire.tick();
+		}
 	}
 	
 	public boolean is_ingame() {
@@ -210,5 +247,61 @@ public class PlayerWrapper implements Listener {
 
 	public void setEnterStealCooldown(boolean enterStealCooldown) {
 		this.enterStealCooldown = enterStealCooldown;
+	}
+	
+	public BaseRune makeRune(RunesList rune) {
+		switch (rune) {
+		case INVI:
+			return new RuneInviSneak(game.getMainRef(),this,player);
+		}
+		return null;
+	}
+
+	public RunesList getVoleurPrimaire() {
+		return voleurPrimaire;
+	}
+
+	public void setVoleurPrimaire(RunesList voleurPrimaire) {
+		this.voleurPrimaire = voleurPrimaire;
+	}
+
+	public RunesList getVoleurSecondaire() {
+		return voleurSecondaire;
+	}
+
+	public void setVoleurSecondaire(RunesList voleurSecondaire) {
+		this.voleurSecondaire = voleurSecondaire;
+	}
+
+	public RunesList getVoleurTertiaire() {
+		return voleurTertiaire;
+	}
+
+	public void setVoleurTertiaire(RunesList voleurTertiaire) {
+		this.voleurTertiaire = voleurTertiaire;
+	}
+
+	public RunesList getGardePrimaire() {
+		return gardePrimaire;
+	}
+
+	public void setGardePrimaire(RunesList gardePrimaire) {
+		this.gardePrimaire = gardePrimaire;
+	}
+
+	public RunesList getGardeSecondaire() {
+		return gardeSecondaire;
+	}
+
+	public void setGardeSecondaire(RunesList gardeSecondaire) {
+		this.gardeSecondaire = gardeSecondaire;
+	}
+
+	public RunesList getGardeTertiaire() {
+		return gardeTertiaire;
+	}
+
+	public void setGardeTertiaire(RunesList gardeTertiaire) {
+		this.gardeTertiaire = gardeTertiaire;
 	}
 }

@@ -476,6 +476,9 @@ public class Game implements Listener {
 		}
 		return playerList;
 	}
+	public Vi5Main getMainRef() {
+		return mainref;
+	}
 	public ArrayList<PlayerWrapper> playersInGameWrapper(){
 		ArrayList<PlayerWrapper> wrapperList = new ArrayList<PlayerWrapper>();
 		for (PlayerWrapper wrap : playersInGame().values()) {

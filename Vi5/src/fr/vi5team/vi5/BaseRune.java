@@ -20,7 +20,6 @@ public abstract class BaseRune implements Listener {
 	private final Vi5Main mainref;
 	private final RunesList Rune;
 	private int cooldown=0;
-	private boolean enabled=false;
 	private final BukkitRunnable cooldownTimer = new BukkitRunnable() {
 		@Override
 		public void run() {cooldownTick();}
@@ -40,9 +39,7 @@ public abstract class BaseRune implements Listener {
 	public void onPlayerDrop(PlayerDropItemEvent event) {
 		if (event.getItemDrop().getItemStack().getType()==Rune.getHotbarItem().getType()) {
 			event.setCancelled(true);
-			if (enabled) {
-				cast();
-			}
+			cast();
 		}
 	}
 	
@@ -92,7 +89,6 @@ public abstract class BaseRune implements Listener {
 	}
 	
 	public void gameStart() {
-		Enable();
 		switch (Rune.getType()) {
 		case PASSIF:
 			ItemStack it = Rune.getHotbarItem().clone();
@@ -109,15 +105,6 @@ public abstract class BaseRune implements Listener {
 		}
 	}
 	
-	public void gameEnd() {
-		Disable();
-	}
-	public void Enable() {
-		enabled=true;
-	}
-	public void Disable() {
-		enabled=false;
-	}
 	
 	public Player getPlayer() {
 		return player;
@@ -137,9 +124,5 @@ public abstract class BaseRune implements Listener {
 
 	public RunesList getRune() {
 		return Rune;
-	}
-	
-	public boolean isEnabled() {
-		return enabled;
 	}
 }
