@@ -34,10 +34,10 @@ import fr.vi5team.vi5.interfaces.Vi5Interfaces;
 public class Vi5Main extends JavaPlugin implements Listener {
 	
 	private ConfigManager cfgmanager;
-	private ArrayList<Game> gamesList= new ArrayList<Game>();
+	private final ArrayList<Game> gamesList= new ArrayList<Game>();
 	private PluginManager pmanager;
 	private ProtocolManager protocolManager;
-	private Vi5Interfaces InterfaceManager = new Vi5Interfaces(this);
+	private final Vi5Interfaces InterfaceManager = new Vi5Interfaces(this);
 	
 	@Override
 	public void onEnable() {
@@ -47,6 +47,7 @@ public class Vi5Main extends JavaPlugin implements Listener {
 		cfgmanager = new ConfigManager(this);
 		getCommand("vi5").setExecutor(new Vi5BaseCommand(this));
 		pmanager.registerEvents(this,this);
+		pmanager.registerEvents(InterfaceManager,this);
 	}
 	
 	public ConfigManager getCfgmanager() {
@@ -173,5 +174,9 @@ public class Vi5Main extends JavaPlugin implements Listener {
 
 	public PluginManager getPmanager() {
 		return pmanager;
+	}
+
+	public Vi5Interfaces getInterfaceManager() {
+		return InterfaceManager;
 	}
 }

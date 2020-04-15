@@ -7,7 +7,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -75,7 +77,29 @@ public class PlayerWrapper implements Listener {
 				//OPEN RUNE SELECTION
 				event.setCancelled(true);
 			}else if (itm.equals(TeamSelectionItem)) {
-				//OPEN TEAM SELECTION
+				game.getMainRef().getInterfaceManager().openGameMenu(player);
+				event.setCancelled(true);
+			}
+		}
+	}
+	@EventHandler
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		Action action = event.getAction();
+		Player p = event.getPlayer();
+		ItemStack itm = event.getItem();
+		if (action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)) {
+			if (itm.equals(readyItem)) {
+				if (ready) {
+					setReady(false);
+				}else {
+					setReady(true);
+				}
+				event.setCancelled(true);
+			}else if (itm.equals(runeSelectionItem)) {
+				//OPEN RUNE SELECTION
+				event.setCancelled(true);
+			}else if (itm.equals(TeamSelectionItem)) {
+				game.getMainRef().getInterfaceManager().openGameMenu(player);
 				event.setCancelled(true);
 			}
 		}
@@ -168,21 +192,24 @@ public class PlayerWrapper implements Listener {
 		ItemStack item = new ItemStack(Material.WHITE_BANNER);
 		switch (team) {
 		case GARDE:
-			item = new ItemStack(Material.CYAN_BANNER);
+			item = new ItemStack(Material.BLUE_BANNER);
+			player.sendMessage(ChatColor.BLUE+"You are now a guard");
 			break;
 		case VOLEUR:
 			item = new ItemStack(Material.RED_BANNER);
+			player.sendMessage(ChatColor.RED+"You are now a thief");
 			break;
 		case SPECTATEUR:
 			item = new ItemStack(Material.LIME_BANNER);
+			player.sendMessage(ChatColor.DARK_GREEN+"You are now a spectator");
 			break;
 		default:
 			break;
 		}
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.BLUE+"Team");
+		meta.setDisplayName(ChatColor.BLUE+"Game settings");
 		ArrayList<String> lore= new ArrayList<String>();
-		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select your team");
+		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select your team or launch game");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		TeamSelectionItem=item;

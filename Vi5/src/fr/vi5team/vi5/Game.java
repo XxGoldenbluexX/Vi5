@@ -9,6 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -215,10 +216,19 @@ public class Game implements Listener {
 		}
 	}
 	
-	public void start() {
+	public void start(boolean forced,CommandSender sender) {
 		//lancement de la partie, que les joueurs soient prêts ou non;
+		if (!forced) {
+			if (!is_playersReady()) {
+				sender.sendMessage("");
+				sender.sendMessage(ChatColor.RED+"Everyone is not ready!");
+				sender.sendMessage("");
+				return;
+			}
+		}
 		if (!loadMap(mapname)) {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
+			sender.sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
 			return;
 		}else {
 			totalObjVolés=0;
@@ -229,13 +239,11 @@ public class Game implements Listener {
 				wrap.gameStart();
 				if (wrap.getTeam()==Vi5Team.GARDE) {
 					p.teleport(gardeSpawn);
-					System.out.println(p.getName()+" teleported to guardSpawn");
 					p.setGameMode(GameMode.ADVENTURE);
 					wrap.setCurrentStatus(VoleurStatus.INSIDE);
 				}else if (wrap.getTeam()==Vi5Team.VOLEUR) {
 					wrap.setNbItemStealed((short) 0);
 					p.teleport(voleurMinimapSpawn);
-					System.out.println(p.getName()+" teleported to voleurSpawn");
 					hideVoleur(p);
 					nbVoleurAlive++;
 					p.setGameMode(GameMode.ADVENTURE);
@@ -243,7 +251,6 @@ public class Game implements Listener {
 				}else if (wrap.getTeam()==Vi5Team.SPECTATEUR) {
 					p.setGameMode(GameMode.SPECTATOR);
 					p.teleport(voleurMinimapSpawn);
-					System.out.println(p.getName()+" teleported to voleurSpawn");
 				}
 			}
 			for (MapObject o : mapObjects) {

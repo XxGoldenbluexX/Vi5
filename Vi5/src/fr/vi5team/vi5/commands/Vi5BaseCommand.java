@@ -176,15 +176,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			if (args.length>2) {
 				Game g = mainref.getGame(args[2]);
 				if (g!=null) {
-					if (g.is_playersReady()) {
-						g.start();
-						return true;
-					}else {
-						sender.sendMessage("");
-						sender.sendMessage(ChatColor.RED+"Everyone is not ready!");
-						sender.sendMessage("");
-						return true;
-					}
+					g.start(false,sender);
 				}else {
 					sender.sendMessage("");
 					sender.sendMessage(ChatColor.RED+"This game does not exist!");
@@ -201,7 +193,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			if (args.length>2) {
 				Game g = mainref.getGame(args[2]);
 				if (g!=null) {
-					g.start();
+					g.start(true,sender);
 					return true;
 				}else {
 					sender.sendMessage("");
@@ -258,7 +250,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			if(args.length>2) {
 				Game g = mainref.getGame(args[2]);
 				if (g!=null) {
-					g.start();
+					g.start(true,sender);
 					for(Player p:Bukkit.getOnlinePlayers()) {
 						if (g.hasPlayer(p)) {
 							p.sendMessage(ChatColor.RED+"Game has been restarted by: "+sender);
@@ -1055,7 +1047,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}
 						}else {
 							mainref.getPlayerWrapper(player).setTeam(Vi5Team.GARDE);
-							sender.sendMessage(ChatColor.GREEN+"You are now a guard");
 							return true;
 						}
 					case "thief":
@@ -1080,7 +1071,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}
 						}else {
 							mainref.getPlayerWrapper(player).setTeam(Vi5Team.VOLEUR);
-							sender.sendMessage(ChatColor.GREEN+"You are now a thief");
 							return true;
 						}
 					case "spectator":
@@ -1105,7 +1095,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 							}
 						}else {
 							mainref.getPlayerWrapper(player).setTeam(Vi5Team.SPECTATEUR);
-							sender.sendMessage(ChatColor.GREEN+"You are now a spectator");
 							return true;
 						}
 					default:
