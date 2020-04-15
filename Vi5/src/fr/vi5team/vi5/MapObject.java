@@ -45,9 +45,9 @@ public class MapObject implements Listener{
 		double playerx = playerloc.getX();
 		double playery = playerloc.getY();
 		double playerz = playerloc.getZ();
-		boolean xx = ( position.getBlockX()+xsize > playerx && playerx > position.getBlockX()-xsize);
-		boolean yy = ( position.getBlockY()+ysize > playery && playery > position.getBlockY()-ysize);
-		boolean zz = ( position.getBlockZ()+zsize > playerz && playerz > position.getBlockZ()-zsize);
+		boolean xx = ( position.getBlockX()+xsize >= playerx && playerx >= position.getBlockX()-xsize);
+		boolean yy = ( position.getBlockY()+ysize >= playery && playery >= position.getBlockY()-ysize);
+		boolean zz = ( position.getBlockZ()+zsize >= playerz && playerz >= position.getBlockZ()-zsize);
 		return (xx && yy && zz);//la ligne de code de 80m me stressait
 	}
 	public boolean isGuardOnPoint() {

@@ -89,10 +89,11 @@ public abstract class BaseRune implements Listener {
 	}
 	
 	public void gameStart() {
+		mainref.getPmanager().registerEvents(this, mainref);
 		switch (Rune.getType()) {
 		case PASSIF:
 			ItemStack it = Rune.getHotbarItem().clone();
-			it.addEnchantment(Enchantment.MENDING, 10);
+			it.addUnsafeEnchantment(Enchantment.MENDING, 10);
 			ItemMeta meta =  it.getItemMeta();
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			it.setItemMeta(meta);

@@ -58,7 +58,7 @@ public class Vi5Interfaces implements Listener{
 			Player player = (Player)hentity;
 			if (playersInterfaces.containsKey(player)) {
 				if (inventory.equals(playersInterfaces.get(player))) {
-					
+					event.setCancelled(true);
 				}
 			}
 		}

@@ -225,14 +225,17 @@ public class Game implements Listener {
 			nbVoleurAlive=0;
 			for (Player p : playersInGame.keySet()) {
 				PlayerWrapper wrap = playersInGame.get(p);
+				p.getInventory().clear();
 				wrap.gameStart();
 				if (wrap.getTeam()==Vi5Team.GARDE) {
 					p.teleport(gardeSpawn);
+					System.out.println(p.getName()+" teleported to guardSpawn");
 					p.setGameMode(GameMode.ADVENTURE);
 					wrap.setCurrentStatus(VoleurStatus.INSIDE);
 				}else if (wrap.getTeam()==Vi5Team.VOLEUR) {
 					wrap.setNbItemStealed((short) 0);
 					p.teleport(voleurMinimapSpawn);
+					System.out.println(p.getName()+" teleported to voleurSpawn");
 					hideVoleur(p);
 					nbVoleurAlive++;
 					p.setGameMode(GameMode.ADVENTURE);
@@ -240,6 +243,7 @@ public class Game implements Listener {
 				}else if (wrap.getTeam()==Vi5Team.SPECTATEUR) {
 					p.setGameMode(GameMode.SPECTATOR);
 					p.teleport(voleurMinimapSpawn);
+					System.out.println(p.getName()+" teleported to voleurSpawn");
 				}
 			}
 			for (MapObject o : mapObjects) {
@@ -431,6 +435,24 @@ public class Game implements Listener {
 
 	public ArrayList<MapObject> getMapObjects() {
 		return mapObjects;
+	}
+	public ArrayList<Player> getAllGarde(){
+		ArrayList<Player> l = new ArrayList<Player>();
+		for (Player p : playersInGame.keySet()) {
+			if (getPlayerWrapper(p).getTeam()==Vi5Team.GARDE) {
+				l.add(p);
+			}
+		}
+		return l;
+	}
+	public ArrayList<Player> getAllVoleur(){
+		ArrayList<Player> l = new ArrayList<Player>();
+		for (Player p : playersInGame.keySet()) {
+			if (getPlayerWrapper(p).getTeam()==Vi5Team.VOLEUR) {
+				l.add(p);
+			}
+		}
+		return l;
 	}
 
 	public void setMapObjects(ArrayList<MapObject> mapObjects) {

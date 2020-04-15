@@ -114,8 +114,8 @@ public class PlayerWrapper implements Listener {
 	}
 	
 	public void tickRunes() {
-		if (tertiaire!=null) {
-			tertiaire.tick();
+		if (primaire!=null) {
+			primaire.tick();
 		}
 		if (secondaire!=null) {
 			secondaire.tick();
@@ -250,6 +250,9 @@ public class PlayerWrapper implements Listener {
 	}
 	
 	public BaseRune makeRune(RunesList rune) {
+		if (rune==null) {
+			return null;
+		}
 		switch (rune) {
 		case INVI:
 			return new RuneInviSneak(game.getMainRef(),this,player);

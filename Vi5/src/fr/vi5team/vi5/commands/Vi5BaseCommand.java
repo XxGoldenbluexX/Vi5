@@ -147,7 +147,7 @@ public class Vi5BaseCommand implements CommandExecutor {
             	Player p;
             	if (args.length>3) {
             		p = Bukkit.getServer().getPlayer(args[3]);
-            		if (p.equals(null)) {
+            		if (p==null) {
             			sender.sendMessage("");
                     	sender.sendMessage(ChatColor.RED+"This player does not exist!");
                     	sender.sendMessage("");
@@ -219,8 +219,12 @@ public class Vi5BaseCommand implements CommandExecutor {
 			if (args.length>3) {
 				Game g = mainref.getGame(args[2]);
 				if (g!=null) {
-					g.setMapName(args[3]);
-					sender.sendMessage(ChatColor.GREEN+"Map has been set!");
+					if (mainref.getCfgmanager().getMapList().contains(args[3])) {
+						g.setMapName(args[3]);
+						sender.sendMessage(ChatColor.GREEN+"Map has been set!");
+					}else {
+						sender.sendMessage(ChatColor.RED+"This map doesnt exist!");
+					}
 					return true;
 				}else {
 					sender.sendMessage("");
