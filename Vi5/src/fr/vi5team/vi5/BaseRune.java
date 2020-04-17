@@ -15,10 +15,10 @@ import fr.vi5team.vi5.enums.RunesList;
 
 public abstract class BaseRune implements Listener {
 	
-	private final Player player;
-	private final PlayerWrapper wraper;
-	private final Vi5Main mainref;
-	private final RunesList Rune;
+	protected final Player player;
+	protected final PlayerWrapper wraper;
+	protected final Vi5Main mainref;
+	protected final RunesList Rune;
 	private int cooldown=0;
 	private final BukkitRunnable cooldownTimer = new BukkitRunnable() {
 		@Override
@@ -37,9 +37,11 @@ public abstract class BaseRune implements Listener {
 	
 	@EventHandler
 	public void onPlayerDrop(PlayerDropItemEvent event) {
-		if (event.getItemDrop().getItemStack().getType()==Rune.getHotbarItem().getType()) {
-			event.setCancelled(true);
-			cast();
+		if (event.getPlayer().equals(player)) {
+			if (event.getItemDrop().getItemStack().getType()==Rune.getHotbarItem().getType()) {
+				event.setCancelled(true);
+				cast();
+			}
 		}
 	}
 	

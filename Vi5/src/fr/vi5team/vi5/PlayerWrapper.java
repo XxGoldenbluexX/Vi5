@@ -45,7 +45,7 @@ public class PlayerWrapper implements Listener {
 	public PlayerWrapper(Game game, Player player) {
 		this.player=player;
 		this.game=game;
-		ItemStack item = new ItemStack(Material.EMERALD);
+		ItemStack item = new ItemStack(Material.ANVIL);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA+"Runes");
 		ArrayList<String> lore= new ArrayList<String>();
@@ -79,6 +79,9 @@ public class PlayerWrapper implements Listener {
 				event.setCancelled(true);
 			}else if (itm.equals(TeamSelectionItem)) {
 				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.TEAM);
+				event.setCancelled(true);
+			}else if (game.is_Started()) {
+				event.getItemDrop().remove();
 				event.setCancelled(true);
 			}
 		}

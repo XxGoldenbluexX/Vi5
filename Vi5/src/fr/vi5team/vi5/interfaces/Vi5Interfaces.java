@@ -66,51 +66,40 @@ public class Vi5Interfaces implements Listener{
 	public void openMenu(Player player,InterfaceType type) {
 		closeInterface(player);
 		playersInterfaceType.put(player, InterfaceType.MAIN);
-		Inventory inter = Bukkit.createInventory(null,9*3, ChatColor.LIGHT_PURPLE+mainref.getPlayerWrapper(player).getGame().getName());
+		Inventory inter=Bukkit.createInventory(null, 9);
 		PlayerWrapper wrap = mainref.getPlayerWrapper(player);
 		if (wrap==null) {
 			return;
 		}
+		Material teamglass=Material.WHITE_STAINED_GLASS_PANE;
+		switch (wrap.getTeam()) {
+		case GARDE:
+			teamglass=Material.BLUE_STAINED_GLASS_PANE;
+			break;
+		case SPECTATEUR:
+			teamglass=Material.LIME_STAINED_GLASS_PANE;
+			break;
+		case VOLEUR:
+			teamglass=Material.RED_STAINED_GLASS_PANE;
+			break;
+		default:
+			teamglass=Material.WHITE_STAINED_GLASS_PANE;
+			break;
+		}
 		switch (type) {
 		case MAIN:
-			Material teamglass=Material.WHITE_STAINED_GLASS_PANE;
-			switch (wrap.getTeam()) {
-			case GARDE:
-				teamglass=Material.BLUE_STAINED_GLASS_PANE;
-				break;
-			case SPECTATEUR:
-				teamglass=Material.LIME_STAINED_GLASS_PANE;
-				break;
-			case VOLEUR:
-				teamglass=Material.RED_STAINED_GLASS_PANE;
-				break;
-			default:
-				teamglass=Material.WHITE_STAINED_GLASS_PANE;
-				break;
-			}
-			ItemStack itm = makeGuiItem(false, teamglass, ChatColor.GOLD+"Runes Primaires", ChatColor.LIGHT_PURPLE+"Clickez ici pour choisir votre rune primaire");
+			ItemStack itm = new ItemStack(teamglass);
 			for (short i=0;i<9;i++) {
 				inter.setItem(i, itm);
 				inter.setItem(i+18, itm);
 			}
+			itm=makeGuiItem(false, Material.SUNFLOWER, ChatColor.GOLD+"Launch the game", )
 			break;
 		case TEAM:
 			break;
 		default:
 			break;
 		}
-		playersInterfaces.put(player, inter);
-	}
-	
-	public void openMainMenu(Player player,PlayerWrapper wrap) {
-		closeInterface(player);
-		Inventory inter = Bukkit.createInventory(null,9*3, ChatColor.LIGHT_PURPLE+mainref.getPlayerWrapper(player).getGame().getName());
-		inter.setItem(4, makeGuiItem(false,Material.SUNFLOWER,ChatColor.AQUA+"Launch the game"));
-		inter.setItem(19, makeGuiItem(false,Material.BLUE_BANNER,ChatColor.BLUE+"Join the Guards"));
-		inter.setItem(22, makeGuiItem(false,Material.LIME_BANNER,ChatColor.GREEN+"Join the Spectators"));
-		inter.setItem(25, makeGuiItem(false,Material.RED_BANNER,ChatColor.RED+"Join the Thiefs"));
-		player.openInventory(inter);
-		playersInterfaceType.put(player, InterfaceType.MAIN);
 		playersInterfaces.put(player, inter);
 	}
 
