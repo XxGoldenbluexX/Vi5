@@ -13,9 +13,11 @@ public enum RunesList {
 	INVI("Invisible",RunesType.PASSIF,RunesTiers.PRIMAIRE,
 			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Makes you invisible while sneaking"),//Item dans le menu
 			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Makes you invisible while sneaking")//Item dans la hotbar en jeu
+			),
+	WARD("Warder",RunesType.SPELL,RunesTiers.PRIMAIRE,
+			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Warder", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it!"),
+			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Warder", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it!")
 			);
-	
-	
 	//////////////////////////////////
 	private final String DisplayName;
 	private final RunesType Type;
