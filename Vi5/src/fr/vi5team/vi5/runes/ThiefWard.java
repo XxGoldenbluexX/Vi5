@@ -45,6 +45,7 @@ public class ThiefWard extends BaseRune {
 			thiefWard.setArms(false);
 			thiefWard.setCollidable(false);
 			thiefWard.setInvulnerable(true);
+			player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GREEN+"You have placed your ward, you'll be warned of thieves near it"));
 			isPlaced = true;
 		}
 	}
