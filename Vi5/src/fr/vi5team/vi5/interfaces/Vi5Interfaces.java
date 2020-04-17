@@ -86,11 +86,12 @@ public class Vi5Interfaces implements Listener{
 			teamglass=Material.WHITE_STAINED_GLASS_PANE;
 			break;
 		}
+		ItemStack itm;
 		switch (type) {
 		case MAIN:
 			/////
 			inter=Bukkit.createInventory(null, 27, ChatColor.GOLD+"SETTINGS");
-			ItemStack itm = new ItemStack(teamglass);
+			itm = new ItemStack(teamglass);
 			for (short i=0;i<9;i++) {
 				inter.setItem(i, itm);
 				inter.setItem(i+18, itm);
@@ -173,6 +174,40 @@ public class Vi5Interfaces implements Listener{
 			break;
 		/////
 		case TEAM:
+			inter=Bukkit.createInventory(null, 27, ChatColor.DARK_PURPLE+"Select your team");
+			itm = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+			inter.setItem(0, itm);
+			inter.setItem(1, itm);
+			inter.setItem(2, itm);
+			inter.setItem(9, itm);
+			inter.setItem(11, itm);
+			inter.setItem(18, itm);
+			inter.setItem(19, itm);
+			inter.setItem(20, itm);
+			itm = new ItemStack(Material.LIME_STAINED_GLASS_PANE);
+			inter.setItem(3, itm);
+			inter.setItem(4, itm);
+			inter.setItem(5, itm);
+			inter.setItem(12, itm);
+			inter.setItem(14, itm);
+			inter.setItem(21, itm);
+			inter.setItem(22, itm);
+			inter.setItem(23, itm);
+			itm = new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
+			inter.setItem(6, itm);
+			inter.setItem(7, itm);
+			inter.setItem(8, itm);
+			inter.setItem(15, itm);
+			inter.setItem(17, itm);
+			inter.setItem(24, itm);
+			inter.setItem(25, itm);
+			inter.setItem(26, itm);
+			itm = new ItemStack(Material.RED_BANNER);
+			inter.setItem(6, itm);
+			itm = new ItemStack(Material.GREEN_BANNER);
+			inter.setItem(6, itm);
+			itm = new ItemStack(Material.BLUE_BANNER);
+			inter.setItem(6, itm);
 			break;
 		default:
 			break;

@@ -34,6 +34,9 @@ public abstract class BaseRune implements Listener {
 	
 	public abstract void cast();
 	public abstract void tick();
+	public abstract void gameEnd();
+	public abstract void gameStart();
+	public abstract void enterZone();
 	
 	@EventHandler
 	public void onPlayerDrop(PlayerDropItemEvent event) {
@@ -90,8 +93,9 @@ public abstract class BaseRune implements Listener {
 		return new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE,cooldown);
 	}
 	
-	public void gameStart() {
+	public void Activate() {
 		mainref.getPmanager().registerEvents(this, mainref);
+		enterZone();
 		switch (Rune.getType()) {
 		case PASSIF:
 			ItemStack it = Rune.getHotbarItem().clone();

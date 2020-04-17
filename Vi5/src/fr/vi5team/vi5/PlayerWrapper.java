@@ -134,7 +134,28 @@ public class PlayerWrapper implements Listener {
 		}
 	}
 	
+	public void enterZone() {
+		if (primaire!=null) {
+			primaire.enterZone();
+		}
+		if (secondaire!=null) {
+			secondaire.enterZone();
+		}
+		if (tertiaire!=null) {
+			tertiaire.enterZone();
+		}
+	}
+	
 	public void gameEnd() {
+		if (primaire!=null) {
+			primaire.gameEnd();
+		}
+		if (secondaire!=null) {
+			secondaire.gameEnd();
+		}
+		if (tertiaire!=null) {
+			tertiaire.gameEnd();
+		}
 		primaire=null;
 		secondaire=null;
 		tertiaire=null;
