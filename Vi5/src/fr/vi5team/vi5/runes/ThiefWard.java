@@ -88,4 +88,21 @@ public class ThiefWard extends BaseRune {
 			}			
 		}
 	}
+	@Override
+	public void gameEnd() {
+		if(isPlaced) {
+			thiefWard.damage(thiefWard.getHealth());
+		}
+		// TODO Auto-generated method stub
+	}
+	@Override
+	public void gameStart() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void enterZone() {
+		// TODO Auto-generated method stub
+		
+	}
 }

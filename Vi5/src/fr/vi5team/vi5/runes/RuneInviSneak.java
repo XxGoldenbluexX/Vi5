@@ -51,4 +51,22 @@ public class RuneInviSneak extends BaseRune {
 			getPlayer().removePotionEffect(PotionEffectType.INVISIBILITY);
 		}
 	}
+
+	@Override
+	public void gameEnd() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gameStart() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void enterZone() {
+		// TODO Auto-generated method stub
+		
+	}
 }
