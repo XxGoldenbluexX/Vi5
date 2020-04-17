@@ -75,7 +75,7 @@ public class PlayerWrapper implements Listener {
 				event.getItemDrop().remove();
 				event.setCancelled(false);
 			}else if (itm.equals(menuItem)) {
-				//OPEN RUNE SELECTION
+				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.MAIN);
 				event.setCancelled(true);
 			}else if (itm.equals(TeamSelectionItem)) {
 				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.TEAM);
@@ -99,7 +99,7 @@ public class PlayerWrapper implements Listener {
 				}
 				event.setCancelled(true);
 			}else if (itm.equals(menuItem)) {
-				//OPEN RUNE SELECTION
+				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.MAIN);
 				event.setCancelled(true);
 			}else if (itm.equals(TeamSelectionItem)) {
 				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.TEAM);

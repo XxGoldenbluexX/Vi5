@@ -88,13 +88,85 @@ public class Vi5Interfaces implements Listener{
 		}
 		switch (type) {
 		case MAIN:
+			/////
 			ItemStack itm = new ItemStack(teamglass);
 			for (short i=0;i<9;i++) {
 				inter.setItem(i, itm);
 				inter.setItem(i+18, itm);
 			}
-			itm=makeGuiItem(false, Material.SUNFLOWER, ChatColor.GOLD+"Launch the game", )
+			switch (wrap.getTeam()){
+			case GARDE:
+				itm = new ItemStack(teamglass);
+				inter.setItem(9, itm);
+				itm=makeGuiItem(false, Material.SUNFLOWER, ChatColor.GOLD+"Launch the game", ChatColor.LIGHT_PURPLE+"Click here to launch the game");
+				inter.setItem(10, itm);
+				itm = new ItemStack(teamglass);
+				inter.setItem(11, itm);
+				if (wrap.is_ready()) {
+					itm=makeGuiItem(false, Material.EMERALD_BLOCK, ChatColor.GREEN+"Ready!", ChatColor.LIGHT_PURPLE+"Click here to set you not ready");
+					inter.setItem(12, itm);
+				}else {
+					itm=makeGuiItem(false, Material.REDSTONE_BLOCK, ChatColor.DARK_RED+"Not Ready", ChatColor.LIGHT_PURPLE+"Click here to set you ready");
+					inter.setItem(12, itm);
+				}
+				itm = new ItemStack(teamglass);
+				inter.setItem(13, itm);
+				itm=makeGuiItem(false, Material.ARMOR_STAND, ChatColor.GREEN+"Your Runes","",
+						ChatColor.GOLD+"Primaire: "+wrap.getGardePrimaire().getDisplayName(),
+						ChatColor.GOLD+"Secondaire: "+wrap.getGardeSecondaire().getDisplayName(),
+						ChatColor.GOLD+"Tertiaire: "+wrap.getGardeTertiaire().getDisplayName());
+				inter.setItem(14, itm);
+				itm = new ItemStack(teamglass);
+				inter.setItem(15, itm);
+				itm=makeGuiItem(false, Material.BLUE_BANNER, ChatColor.AQUA+"Change team",ChatColor.LIGHT_PURPLE+"Click here to change your team");
+				inter.setItem(16, itm);
+				itm = new ItemStack(teamglass);
+				inter.setItem(17, itm);
+				break;
+			case VOLEUR:
+				itm = new ItemStack(teamglass);
+				inter.setItem(9, itm);
+				itm=makeGuiItem(false, Material.SUNFLOWER, ChatColor.GOLD+"Launch the game", ChatColor.LIGHT_PURPLE+"Click here to launch the game");
+				inter.setItem(10, itm);
+				itm = new ItemStack(teamglass);
+				inter.setItem(11, itm);
+				if (wrap.is_ready()) {
+					itm=makeGuiItem(false, Material.EMERALD_BLOCK, ChatColor.GREEN+"Ready!", ChatColor.LIGHT_PURPLE+"Click here to set you not ready");
+					inter.setItem(12, itm);
+				}else {
+					itm=makeGuiItem(false, Material.REDSTONE_BLOCK, ChatColor.DARK_RED+"Not Ready", ChatColor.LIGHT_PURPLE+"Click here to set you ready");
+					inter.setItem(12, itm);
+				}
+				itm = new ItemStack(teamglass);
+				inter.setItem(13, itm);
+				itm=makeGuiItem(false, Material.ARMOR_STAND, ChatColor.GREEN+"Your Runes","",
+						ChatColor.GOLD+"Primaire: "+wrap.getVoleurPrimaire().getDisplayName(),
+						ChatColor.GOLD+"Secondaire: "+wrap.getVoleurSecondaire().getDisplayName(),
+						ChatColor.GOLD+"Tertiaire: "+wrap.getVoleurTertiaire().getDisplayName());
+				inter.setItem(14, itm);
+				itm = new ItemStack(teamglass);
+				inter.setItem(15, itm);
+				itm=makeGuiItem(false, Material.RED_BANNER, ChatColor.AQUA+"Change team",ChatColor.LIGHT_PURPLE+"Click here to change your team");
+				inter.setItem(16, itm);
+				itm = new ItemStack(teamglass);
+				inter.setItem(17, itm);
+				break;
+			case SPECTATEUR:
+				for (short i=9;i<18;i++) {
+					if (i==13) {
+						itm = new ItemStack(teamglass);
+						inter.setItem(i, itm);
+					}else{
+						itm=makeGuiItem(false, Material.GREEN_BANNER, ChatColor.AQUA+"Change team",ChatColor.LIGHT_PURPLE+"Click here to change your team");
+						inter.setItem(i, itm);
+					}
+				}
+				break;
+			default:
+				break;
+			}
 			break;
+		/////
 		case TEAM:
 			break;
 		default:
@@ -113,8 +185,51 @@ public class Vi5Interfaces implements Listener{
 			if (playersInterfaces.containsKey(player)) {
 				if (inventory.equals(playersInterfaces.get(player))) {
 					event.setCancelled(true);
+					PlayerWrapper wrap = mainref.getPlayerWrapper(player);
 					switch (playersInterfaceType.get(player)) {
 					case MAIN:
+						switch (itemClicked.getType()) {
+						case SUNFLOWER:
+							wrap.getGame().start(false, player);
+							closeInterface(player);
+							break;
+						case EMERALD_BLOCK:
+							wrap.setReady(false);
+							openMenu(player, InterfaceType.MAIN);
+							break;
+						case REDSTONE_BLOCK:
+							wrap.setReady(true);
+							openMenu(player, InterfaceType.MAIN);
+							break;
+						case ARMOR_STAND:
+							switch (wrap.getTeam()) {
+							case GARDE:
+								openMenu(player, InterfaceType.RUNES_GARDE);
+								break;
+							case SPECTATEUR:
+								break;
+							case VOLEUR:
+								openMenu(player, InterfaceType.RUNES_VOLEUR);
+								break;
+							default:
+								break;
+							}
+							break;
+						case BLUE_BANNER:
+							openMenu(player, InterfaceType.TEAM);
+							break;
+						case GREEN_BANNER:
+							openMenu(player, InterfaceType.TEAM);
+							break;
+						case RED_BANNER:
+							openMenu(player, InterfaceType.TEAM);
+							break;
+						case WHITE_BANNER:
+							openMenu(player, InterfaceType.TEAM);
+							break;
+						default:
+							break;
+						}
 						break;
 					case RUNES_GARDE:
 						break;
