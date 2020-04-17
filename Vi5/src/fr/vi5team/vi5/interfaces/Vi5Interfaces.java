@@ -177,6 +177,7 @@ public class Vi5Interfaces implements Listener{
 		default:
 			break;
 		}
+		player.openInventory(inter);
 		playersInterfaces.put(player, inter);
 	}
 
