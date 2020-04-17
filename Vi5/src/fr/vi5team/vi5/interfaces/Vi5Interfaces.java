@@ -89,7 +89,7 @@ public class Vi5Interfaces implements Listener{
 		switch (type) {
 		case MAIN:
 			/////
-			inter=Bukkit.createInventory(null, 27);
+			inter=Bukkit.createInventory(null, 27, ChatColor.GOLD+"SETTINGS");
 			ItemStack itm = new ItemStack(teamglass);
 			for (short i=0;i<9;i++) {
 				inter.setItem(i, itm);
@@ -201,11 +201,23 @@ public class Vi5Interfaces implements Listener{
 							break;
 						case EMERALD_BLOCK:
 							wrap.setReady(false);
-							openMenu(player, InterfaceType.MAIN);
+							if (wrap.is_ready()) {
+								ItemStack itm=makeGuiItem(false, Material.EMERALD_BLOCK, ChatColor.GREEN+"Ready!", ChatColor.LIGHT_PURPLE+"Click here to set you not ready");
+								inventory.setItem(12, itm);
+							}else {
+								ItemStack itm=makeGuiItem(false, Material.REDSTONE_BLOCK, ChatColor.DARK_RED+"Not Ready", ChatColor.LIGHT_PURPLE+"Click here to set you ready");
+								inventory.setItem(12, itm);
+							}
 							break;
 						case REDSTONE_BLOCK:
 							wrap.setReady(true);
-							openMenu(player, InterfaceType.MAIN);
+							if (wrap.is_ready()) {
+								ItemStack itm=makeGuiItem(false, Material.EMERALD_BLOCK, ChatColor.GREEN+"Ready!", ChatColor.LIGHT_PURPLE+"Click here to set you not ready");
+								inventory.setItem(12, itm);
+							}else {
+								ItemStack itm=makeGuiItem(false, Material.REDSTONE_BLOCK, ChatColor.DARK_RED+"Not Ready", ChatColor.LIGHT_PURPLE+"Click here to set you ready");
+								inventory.setItem(12, itm);
+							}
 							break;
 						case ARMOR_STAND:
 							switch (wrap.getTeam()) {
