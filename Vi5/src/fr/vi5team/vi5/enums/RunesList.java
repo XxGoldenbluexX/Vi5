@@ -66,19 +66,13 @@ public enum RunesList {
 	public ItemStack getHotbarItem() {
 		return HotbarItem;
 	}
-	public ArrayList<RunesList> getRunesList() {
-		ArrayList<RunesList> listRunes = new ArrayList<RunesList>();
-		for(RunesList rune : RunesList.values()){
-			listRunes.add(rune);
-		}
-		return listRunes;
-	}
+
 	public byte[] getNumberOfRunesByTier(){
 		byte runesNumber[] = new byte[3];
 		byte primaryNumber = 0;
 		byte secondaryNumber = 0;
 		byte tertiaryNumber = 0;
-		for(RunesList rune : getRunesList()) {
+		for(RunesList rune : RunesList.values()) {
 			if(rune.getTiers().equals(RunesTiers.PRIMAIRE)) {
 				primaryNumber++;
 			}

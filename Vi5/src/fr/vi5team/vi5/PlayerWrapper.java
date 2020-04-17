@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.vi5team.vi5.enums.InterfaceType;
 import fr.vi5team.vi5.enums.RunesList;
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
@@ -32,7 +33,7 @@ public class PlayerWrapper implements Listener {
 	boolean ready=false;
 	private final Player player;
 	private ItemStack readyItem;
-	private ItemStack runeSelectionItem;
+	private ItemStack menuItem;
 	private ItemStack TeamSelectionItem;
 	private RunesList voleurPrimaire=RunesList.INVI;
 	private RunesList voleurSecondaire=null;
@@ -51,7 +52,7 @@ public class PlayerWrapper implements Listener {
 		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select your runes");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
-		runeSelectionItem=item;
+		menuItem=item;
 		player.getInventory().setItem(1, item);
 		setReady(false);
 		setTeam(Vi5Team.GARDE);
@@ -73,11 +74,11 @@ public class PlayerWrapper implements Listener {
 				}
 				event.getItemDrop().remove();
 				event.setCancelled(false);
-			}else if (itm.equals(runeSelectionItem)) {
+			}else if (itm.equals(menuItem)) {
 				//OPEN RUNE SELECTION
 				event.setCancelled(true);
 			}else if (itm.equals(TeamSelectionItem)) {
-				game.getMainRef().getInterfaceManager().openGameMenu(player);
+				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.TEAM);
 				event.setCancelled(true);
 			}
 		}
@@ -94,11 +95,11 @@ public class PlayerWrapper implements Listener {
 					setReady(true);
 				}
 				event.setCancelled(true);
-			}else if (itm.equals(runeSelectionItem)) {
+			}else if (itm.equals(menuItem)) {
 				//OPEN RUNE SELECTION
 				event.setCancelled(true);
 			}else if (itm.equals(TeamSelectionItem)) {
-				game.getMainRef().getInterfaceManager().openGameMenu(player);
+				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.TEAM);
 				event.setCancelled(true);
 			}
 		}

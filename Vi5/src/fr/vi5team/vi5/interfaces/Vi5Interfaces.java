@@ -67,37 +67,34 @@ public class Vi5Interfaces implements Listener{
 		closeInterface(player);
 		playersInterfaceType.put(player, InterfaceType.MAIN);
 		Inventory inter = Bukkit.createInventory(null,9*3, ChatColor.LIGHT_PURPLE+mainref.getPlayerWrapper(player).getGame().getName());
+		PlayerWrapper wrap = mainref.getPlayerWrapper(player);
+		if (wrap==null) {
+			return;
+		}
 		switch (type) {
-		case GARDE_PRIMAIRE:
-			break;
-		case GARDE_SECONDAIRE:
-			break;
-		case GARDE_TERTAIRE:
-			break;
 		case MAIN:
-			ItemStack itm = makeGuiItem(false, Material.ORANGE_STAINED_GLASS_PANE, ChatColor.GOLD+"Runes Primaires", ChatColor.LIGHT_PURPLE+"Clickez ici pour choisir votre rune primaire");
-			for (short i=0;i<3;i++) {
-				inter.setItem(i, itm);
-				inter.setItem(i+9, itm);
+			Material teamglass=Material.WHITE_STAINED_GLASS_PANE;
+			switch (wrap.getTeam()) {
+			case GARDE:
+				teamglass=Material.BLUE_STAINED_GLASS_PANE;
+				break;
+			case SPECTATEUR:
+				teamglass=Material.LIME_STAINED_GLASS_PANE;
+				break;
+			case VOLEUR:
+				teamglass=Material.RED_STAINED_GLASS_PANE;
+				break;
+			default:
+				teamglass=Material.WHITE_STAINED_GLASS_PANE;
+				break;
 			}
-			itm = makeGuiItem(false, Material.PURPLE_STAINED_GLASS_PANE, ChatColor.GOLD+"Runes Secondaires", ChatColor.LIGHT_PURPLE+"Clickez ici pour choisir votre rune secondaire");
-			for (short i=3;i<6;i++) {
+			ItemStack itm = makeGuiItem(false, teamglass, ChatColor.GOLD+"Runes Primaires", ChatColor.LIGHT_PURPLE+"Clickez ici pour choisir votre rune primaire");
+			for (short i=0;i<9;i++) {
 				inter.setItem(i, itm);
-				inter.setItem(i+9, itm);
-			}
-			itm = makeGuiItem(false, Material.LIGHT_BLUE_STAINED_GLASS_PANE, ChatColor.GOLD+"Runes Tertiaires", ChatColor.LIGHT_PURPLE+"Clickez ici pour choisir votre rune tertiaire");
-			for (short i=6;i<9;i++) {
-				inter.setItem(i, itm);
-				inter.setItem(i+9, itm);
+				inter.setItem(i+18, itm);
 			}
 			break;
 		case TEAM:
-			break;
-		case VOLEUR_PRIMAIRE:
-			break;
-		case VOLEUR_SECONDAIRE:
-			break;
-		case VOLEUR_TERTIAIRE:
 			break;
 		default:
 			break;
@@ -128,21 +125,13 @@ public class Vi5Interfaces implements Listener{
 				if (inventory.equals(playersInterfaces.get(player))) {
 					event.setCancelled(true);
 					switch (playersInterfaceType.get(player)) {
-					case GARDE_PRIMAIRE:
-						break;
-					case GARDE_SECONDAIRE:
-						break;
-					case GARDE_TERTAIRE:
-						break;
 					case MAIN:
 						break;
+					case RUNES_GARDE:
+						break;
+					case RUNES_VOLEUR:
+						break;
 					case TEAM:
-						break;
-					case VOLEUR_PRIMAIRE:
-						break;
-					case VOLEUR_SECONDAIRE:
-						break;
-					case VOLEUR_TERTIAIRE:
 						break;
 					default:
 						break;
