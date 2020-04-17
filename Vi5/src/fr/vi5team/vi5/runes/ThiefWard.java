@@ -16,12 +16,15 @@ import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.RunesList;
 import fr.vi5team.vi5.enums.Vi5Team;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class ThiefWard extends BaseRune {
 	boolean isPlaced;
 	ArmorStand thiefWard;
 	Game g;
 	byte wardRange = 3;
+	byte glowNumber = 0;
 	HashMap<Player, PlayerWrapper> playersInGame;
 	public ThiefWard(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
@@ -65,11 +68,20 @@ public class ThiefWard extends BaseRune {
 				if(playersInGame.get(p).getTeam()==Vi5Team.VOLEUR) {
 					if(checkZone(p)) {
 						p.setGlowing(true);
+						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED+"! A Ward is spotting you, beware !"));
+						glowNumber++;
 					}
 					else {
 						if(p.isGlowing()) {
 							p.setGlowing(false);
+							glowNumber--;
+							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GREEN+"! You are no longer spotted !"));
 						}
+					}
+				}
+				if(playersInGame.get(p).getTeam()==Vi5Team.GARDE) {
+					if(glowNumber>0) {
+						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED+"! A Thief is being spotted !"));
 					}
 				}
 			}			
