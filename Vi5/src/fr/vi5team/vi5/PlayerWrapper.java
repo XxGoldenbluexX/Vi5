@@ -47,9 +47,9 @@ public class PlayerWrapper implements Listener {
 		this.game=game;
 		ItemStack item = new ItemStack(Material.ANVIL);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.AQUA+"Runes");
+		meta.setDisplayName(ChatColor.AQUA+"Settings");
 		ArrayList<String> lore= new ArrayList<String>();
-		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select your runes");
+		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select settings");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		menuItem=item;

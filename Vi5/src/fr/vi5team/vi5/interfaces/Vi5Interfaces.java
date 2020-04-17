@@ -89,6 +89,7 @@ public class Vi5Interfaces implements Listener{
 		switch (type) {
 		case MAIN:
 			/////
+			inter=Bukkit.createInventory(null, 27);
 			ItemStack itm = new ItemStack(teamglass);
 			for (short i=0;i<9;i++) {
 				inter.setItem(i, itm);
