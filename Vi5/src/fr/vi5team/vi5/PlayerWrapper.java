@@ -47,9 +47,9 @@ public class PlayerWrapper implements Listener {
 		this.game=game;
 		ItemStack item = new ItemStack(Material.ANVIL);
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.AQUA+"Runes");
+		meta.setDisplayName(ChatColor.AQUA+"Settings");
 		ArrayList<String> lore= new ArrayList<String>();
-		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select your runes");
+		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select settings");
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 		menuItem=item;
@@ -75,7 +75,7 @@ public class PlayerWrapper implements Listener {
 				event.getItemDrop().remove();
 				event.setCancelled(false);
 			}else if (itm.equals(menuItem)) {
-				//OPEN RUNE SELECTION
+				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.MAIN);
 				event.setCancelled(true);
 			}else if (itm.equals(TeamSelectionItem)) {
 				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.TEAM);
@@ -99,7 +99,7 @@ public class PlayerWrapper implements Listener {
 				}
 				event.setCancelled(true);
 			}else if (itm.equals(menuItem)) {
-				//OPEN RUNE SELECTION
+				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.MAIN);
 				event.setCancelled(true);
 			}else if (itm.equals(TeamSelectionItem)) {
 				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.TEAM);
