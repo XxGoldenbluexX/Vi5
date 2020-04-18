@@ -37,7 +37,7 @@ public class Cops extends BaseRune {
 	@Override
 	public void gameStart() {
 		ItemStack it = player.getInventory().getItem(1);
-		it.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2147483647);
+		it.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, Integer.MAX_VALUE);
 		player.getInventory().setItem(21, it);
 		// TODO Auto-generated method stub
 		
