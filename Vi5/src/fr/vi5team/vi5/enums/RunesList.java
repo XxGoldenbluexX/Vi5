@@ -15,8 +15,16 @@ public enum RunesList {
 			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Makes you invisible while sneaking")//Item dans la hotbar en jeu
 			),
 	WARD("Warder",RunesType.SPELL,RunesTiers.PRIMAIRE,
-			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Warder", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it!"),
-			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Warder", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it!")
+			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Warder", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it"),
+			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Warder", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it")
+			),
+	GUARDSPEED("Sprinter",RunesType.PASSIF,RunesTiers.TERTIAIRE,
+			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
+			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed is increased by 20%")
+			),
+	COPS("Cops",RunesType.PASSIF,RunesTiers.PRIMAIRE,
+			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cops", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves"),
+			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cops", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
 			);
 	//////////////////////////////////
 	private final String DisplayName;
