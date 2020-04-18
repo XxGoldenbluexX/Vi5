@@ -25,6 +25,18 @@ public enum RunesList {
 	COPS("Cops",RunesType.PASSIF,RunesTiers.PRIMAIRE,
 			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cops", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves"),
 			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cops", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
+			),
+	TOUGH("Tough",RunesType.PASSIF,RunesTiers.TERTIAIRE,
+			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GOLD+"Tough", ChatColor.LIGHT_PURPLE+"All damage get reduced by 20%"),
+			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GOLD+"Tough", ChatColor.LIGHT_PURPLE+"All damage are reduced by 20%")
+			),
+	DOUBLE_JUMP("DoubleJump",RunesType.PASSIF,RunesTiers.SECONDAIRE,
+			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.GOLD+"DoubleJump", ChatColor.LIGHT_PURPLE+"Get a second jump after the first one"),
+			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.GOLD+"DoubleJump", ChatColor.LIGHT_PURPLE+"Press jump twice to perform another jump")
+			),
+	SHADOW("Shadow",RunesType.SPELL,RunesTiers.SECONDAIRE,
+			makeDisplayItem(Material.COAL, ChatColor.GOLD+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!"),
+			makeDisplayItem(Material.COAL, ChatColor.GOLD+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!")
 			);
 	//////////////////////////////////
 	private final String DisplayName;
