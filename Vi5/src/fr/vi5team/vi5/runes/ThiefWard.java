@@ -29,12 +29,12 @@ public class ThiefWard extends BaseRune {
 	public ThiefWard(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
 		isPlaced = false;
-		g=wraper.getGame();
-		playersInGame = g.playersInGame();
 	}
 	@Override
 	public void cast() {
 		if(!isPlaced) {
+			g=wraper.getGame();
+			playersInGame = g.playersInGame();
 			Location ploc = player.getLocation();
 			thiefWard = (ArmorStand) ploc.getWorld().spawnEntity(ploc, EntityType.ARMOR_STAND);
 			thiefWard.setSmall(true);
@@ -92,6 +92,7 @@ public class ThiefWard extends BaseRune {
 	public void gameEnd() {
 		if(isPlaced) {
 			thiefWard.damage(thiefWard.getHealth());
+			isPlaced = false;
 		}
 		// TODO Auto-generated method stub
 	}
