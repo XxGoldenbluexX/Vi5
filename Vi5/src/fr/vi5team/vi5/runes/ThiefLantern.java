@@ -27,7 +27,6 @@ public class ThiefLantern extends BaseRune {
 	public ThiefLantern(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, RunesList.LANTERN);
 	}
-	
 	@SuppressWarnings("deprecation")
 	public void fillHashMap() {
 		Location ploc = player.getLocation();

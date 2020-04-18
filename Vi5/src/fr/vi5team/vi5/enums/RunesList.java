@@ -41,6 +41,10 @@ public enum RunesList {
 	LANTERN("Lantern",RunesType.SPELL,RunesTiers.SECONDAIRE,
 			makeDisplayItem(Material.LANTERN, ChatColor.GOLD+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you"),
 			makeDisplayItem(Material.LANTERN, ChatColor.GOLD+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you")
+			),
+	BUSH("Bush",RunesType.PASSIF,RunesTiers.PRIMAIRE,
+			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible"),
+			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible")
 			);
 	//////////////////////////////////
 	private final String DisplayName;
