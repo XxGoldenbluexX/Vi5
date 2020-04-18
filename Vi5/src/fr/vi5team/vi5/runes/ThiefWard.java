@@ -60,7 +60,6 @@ public class ThiefWard extends BaseRune {
 	}
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
 		if(isPlaced) {
 			for(Player p : playersInGame.keySet()) {
 				if(playersInGame.get(p).getTeam()==Vi5Team.VOLEUR) {
@@ -88,9 +87,8 @@ public class ThiefWard extends BaseRune {
 	@Override
 	public void gameEnd() {
 		if(isPlaced) {
-			thiefWard.damage(thiefWard.getHealth());
+			thiefWard.remove();
 		}
-		// TODO Auto-generated method stub
 	}
 	@Override
 	public void gameStart() {
@@ -98,12 +96,10 @@ public class ThiefWard extends BaseRune {
 		playersInGame = g.playersInGame();
 		glowNumber = 0;
 		isPlaced = false;
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void enterZone() {
-		// TODO Auto-generated method stub
 		
 	}
 }

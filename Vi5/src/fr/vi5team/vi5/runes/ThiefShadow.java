@@ -22,7 +22,7 @@ import fr.vi5team.vi5.enums.Vi5Team;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
-public class ThiefShadow extends BaseRune {
+public class ThiefShadow extends BaseRune{
 	boolean isPlaced;
 	Game g;
 	ArmorStand Shadow;
@@ -51,7 +51,7 @@ public class ThiefShadow extends BaseRune {
 		if(isPlaced) {
 			player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 2);
 			player.teleport(Shadow);
-			Shadow.damage(Shadow.getHealth());
+			Shadow.remove();
 			isPlaced=false;
 		}
 	}
@@ -61,7 +61,7 @@ public class ThiefShadow extends BaseRune {
 			Player p=event.getPlayer();
 			if(playersInGame.get(p).getTeam()==Vi5Team.GARDE) {
 				if(p.getLocation()==loc) {
-					Shadow.damage(Shadow.getHealth());
+					Shadow.remove();
 					player.setHealth(0);
 					player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GREEN+"You safely recalled on your shadow, "+ChatColor.RED+"but guards heard it!"));	
 					isPlaced=false;
@@ -79,7 +79,7 @@ public class ThiefShadow extends BaseRune {
 	public void gameEnd() {
 		// TODO Auto-generated method stub
 		if(isPlaced) {
-			Shadow.damage(Shadow.getHealth());
+			Shadow.remove();
 		}
 	}
 

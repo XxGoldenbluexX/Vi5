@@ -37,6 +37,10 @@ public enum RunesList {
 	SHADOW("Shadow",RunesType.SPELL,RunesTiers.SECONDAIRE,
 			makeDisplayItem(Material.COAL, ChatColor.GOLD+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!"),
 			makeDisplayItem(Material.COAL, ChatColor.GOLD+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!")
+			),
+	LANTERN("Lantern",RunesType.SPELL,RunesTiers.SECONDAIRE,
+			makeDisplayItem(Material.LANTERN, ChatColor.GOLD+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you"),
+			makeDisplayItem(Material.LANTERN, ChatColor.GOLD+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you")
 			);
 	//////////////////////////////////
 	private final String DisplayName;
