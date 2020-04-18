@@ -9,10 +9,10 @@ import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.RunesList;
 
-public class GuardCops extends BaseRune {
+public class GuardCop extends BaseRune {
 
-	public GuardCops(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
-		super(_mainref, _wraper, _player, RunesList.COPS);
+	public GuardCop(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
+		super(_mainref, _wraper, _player, RunesList.COP);
 		// TODO Auto-generated constructor stub
 	}
 

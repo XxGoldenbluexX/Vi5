@@ -22,9 +22,9 @@ public enum RunesList {
 			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
 			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed is increased by 20%")
 			),
-	COPS("Cops",RunesType.PASSIF,RunesTiers.PRIMAIRE,
-			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cops", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves"),
-			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cops", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
+	COP("Cop",RunesType.PASSIF,RunesTiers.PRIMAIRE,
+			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves"),
+			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
 			),
 	TOUGH("Tough",RunesType.PASSIF,RunesTiers.TERTIAIRE,
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GOLD+"Tough", ChatColor.LIGHT_PURPLE+"All damage get reduced by 20%"),
