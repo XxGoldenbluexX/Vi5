@@ -73,6 +73,9 @@ public class Vi5Main extends JavaPlugin implements Listener {
 		pmanager.registerEvents(g, this);
 		return g;
 	}
+	public void deleteGame(Game g) {
+		gamesList.remove(g);
+	}
 	public PlayerWrapper getPlayerWrapper(Player player) {
 		for (final Game game : gamesList) {
 			PlayerWrapper wrap = game.getPlayerWrapper(player);

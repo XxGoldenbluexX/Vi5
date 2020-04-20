@@ -12,8 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.sun.org.glassfish.gmbal.ParameterNames;
-
 import fr.vi5team.vi5.Game;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
@@ -399,7 +397,22 @@ public class Vi5BaseCommand implements CommandExecutor {
                 return true;
             }
 		case "delete":
-			break;
+			if(args.length>2) {
+				Game game = mainref.getGame(args[2]);
+				if(!(game==null)) {
+					mainref.deleteGame(game);
+					sender.sendMessage(ChatColor.GREEN+"This game has been succesfully deleted!");
+				}else {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This game does not exist!");
+					sender.sendMessage("");
+				}
+			}else {
+            	sender.sendMessage("");
+    			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game delete "+ChatColor.GOLD+"<GameName>");
+    			sender.sendMessage("");
+                return true;
+			}
 		case "list":
 			sender.sendMessage(ChatColor.DARK_GREEN+"Games: ");
 			for (Game g : mainref.getGamesList()) {
@@ -417,7 +430,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage("");
 			return true;
 		}
-		return false;
 	}
 	
 	public boolean mapCommand(CommandSender sender,String[] args) {
