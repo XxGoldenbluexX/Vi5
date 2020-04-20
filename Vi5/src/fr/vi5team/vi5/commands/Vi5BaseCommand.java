@@ -1,5 +1,7 @@
 package fr.vi5team.vi5.commands;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,6 +11,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+
+import com.sun.org.glassfish.gmbal.ParameterNames;
+
 import fr.vi5team.vi5.Game;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
@@ -17,9 +22,44 @@ import fr.vi5team.vi5.enums.Vi5Team;
 public class Vi5BaseCommand implements CommandExecutor {
 
 	private final Vi5Main mainref;
+	ArrayList<String> baseCommands = new ArrayList<String>();
+	ArrayList<String> gameCommands = new ArrayList<String>();
+	ArrayList<String> mapCommands = new ArrayList<String>();
+	ArrayList<String> teamCommands = new ArrayList<String>();
 	
 	public Vi5BaseCommand(Vi5Main main) {
 		mainref=main;
+		baseCommands.add("game");
+		baseCommands.add("map");
+		baseCommands.add("team");
+		baseCommands.add("glow");
+		
+		gameCommands.add("create");
+		gameCommands.add("join");
+		gameCommands.add("leave");
+		gameCommands.add("setMap");
+		gameCommands.add("list");
+		gameCommands.add("delete");
+		gameCommands.add("playerList");
+		gameCommands.add("ready");
+		gameCommands.add("start");
+		gameCommands.add("fstart");
+		gameCommands.add("restart");
+		gameCommands.add("stop");
+		
+		mapCommands.add("Objects");
+		mapCommands.add("Entrances");
+		mapCommands.add("Escapes");
+		mapCommands.add("create");
+		mapCommands.add("rename");
+		mapCommands.add("list");
+		mapCommands.add("delete");
+		mapCommands.add("setGuardSpawn");
+		mapCommands.add("setThiefMinimapSpawn");
+		
+		teamCommands.add("guard");
+		teamCommands.add("thief");
+		teamCommands.add("spectator");
 	}
 	public int StringToInt(String st) {
 		st.replaceAll("[^0-9]", "");
@@ -48,13 +88,48 @@ public class Vi5BaseCommand implements CommandExecutor {
 				Player player = (Player)sender;
 				mainref.packetGlowPlayer(player, Bukkit.getPlayer(args[1]));
 			}
-			break;
+			return true;
 		default:
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 "+"["+ChatColor.GOLD+"game"+ChatColor.WHITE+"/"+ChatColor.GOLD+"map"+ChatColor.WHITE+"/"+ChatColor.GOLD+"team"+ChatColor.WHITE+"/"+ChatColor.GOLD+"glow"+ChatColor.WHITE+"]");
+			return true;
 		}
-		return false;
 	}
-	
+	public List<String> onTabComplete(CommandSender sender, Command command, String arg2, String[] args){
+		if(args.length<1) {
+			return null;
+		}
+		if(args.length>1) {
+			if(args.length>2) {
+				return null;
+			}else {
+				switch (args[0]) {
+				case "game":
+					return returnFollowCMD(args, gameCommands, 1);
+				case "map":
+					return returnFollowCMD(args, mapCommands, 1);
+				case "team":
+					return returnFollowCMD(args, teamCommands, 1);
+				}
+			}
+		}else {
+			return returnFollowCMD(args, baseCommands, 0);
+		}
+		return null;
+	}
+	public ArrayList<String> returnFollowCMD(String[] args, ArrayList<String> cmdList, int argsPos){
+		ArrayList<String> afterCMD = new ArrayList<String>();
+		if(!args[argsPos].equals("")) {
+			for(String cmd : cmdList) {
+				if (cmd.toLowerCase().startsWith(args[argsPos].toLowerCase())) {
+					afterCMD.add(cmd);	
+				}
+			}
+		}else {
+			afterCMD = cmdList;
+		}
+		Collections.sort(afterCMD);
+		return afterCMD;
+	}
 	public boolean gameCommand(CommandSender sender,String[] args) {
 		if (args.length<2) {
 			sender.sendMessage("");
