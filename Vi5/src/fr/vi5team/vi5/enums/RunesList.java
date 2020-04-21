@@ -11,46 +11,52 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
+import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.runes.BaseRune;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
+import fr.vi5team.vi5.runes.Rune_surcharge;
 
 public enum RunesList {
 	
 	
-	INVI("Invisible",RunesType.PASSIF,RunesTiers.PRIMAIRE,
+	INVI("Invisible",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Makes you invisible while sneaking"),//Item dans le menu
 			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Makes you invisible while sneaking")//Item dans la hotbar en jeu
 			),
-	OMNI("Omnicapteur",RunesType.SPELL,RunesTiers.PRIMAIRE,
-			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Warder", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it"),
-			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Warder", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it")
+	OMNI("Omnicapteur",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Omnicapteur", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it"),
+			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Omnicapteur", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it")
 			),
-	GUARDSPEED("Sprinter",RunesType.PASSIF,RunesTiers.TERTIAIRE,
+	SURCHARGE("Surcharge",RunesType.SPELL,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
 			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed is increased by 20%")
 			),
-	COP("Cop",RunesType.PASSIF,RunesTiers.PRIMAIRE,
+	GUARDSPEED("Sprinter",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
+			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed is increased by 20%")
+			),
+	COP("Cop",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves"),
 			makeDisplayItem(Material.END_ROD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
 			),
-	TOUGH("Tough",RunesType.PASSIF,RunesTiers.TERTIAIRE,
+	TOUGH("Tough",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GOLD+"Tough", ChatColor.LIGHT_PURPLE+"All damage get reduced by 20%"),
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GOLD+"Tough", ChatColor.LIGHT_PURPLE+"All damage are reduced by 20%")
 			),
-	DOUBLE_JUMP("DoubleJump",RunesType.PASSIF,RunesTiers.SECONDAIRE,
+	DOUBLE_JUMP("DoubleJump",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.GOLD+"DoubleJump", ChatColor.LIGHT_PURPLE+"Get a second jump after the first one"),
 			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.GOLD+"DoubleJump", ChatColor.LIGHT_PURPLE+"Press jump twice to perform another jump")
 			),
-	SHADOW("Shadow",RunesType.SPELL,RunesTiers.SECONDAIRE,
+	SHADOW("Shadow",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.COAL, ChatColor.GOLD+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!"),
 			makeDisplayItem(Material.COAL, ChatColor.GOLD+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!")
 			),
-	LANTERN("Lantern",RunesType.SPELL,RunesTiers.SECONDAIRE,
+	LANTERN("Lantern",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.LANTERN, ChatColor.GOLD+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you"),
 			makeDisplayItem(Material.LANTERN, ChatColor.GOLD+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you")
 			),
-	BUSH("Bush",RunesType.PASSIF,RunesTiers.PRIMAIRE,
+	BUSH("Bush",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible"),
 			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible")
 			);
@@ -60,14 +66,16 @@ public enum RunesList {
 	private final RunesTiers Tiers;
 	private final ItemStack MenuItem;
 	private final ItemStack HotbarItem;
+	private final Vi5Team Team;
 	//////////////////////////////////
 	
-	RunesList (String _name,RunesType _type,RunesTiers _tiers, ItemStack _menuItem,ItemStack _hotbarItem){
+	RunesList (String _name,RunesType _type,RunesTiers _tiers,Vi5Team _team, ItemStack _menuItem,ItemStack _hotbarItem){
 		DisplayName=_name;
 		Type=_type;
 		Tiers=_tiers;
 		MenuItem=_menuItem;
 		HotbarItem=_hotbarItem;
+		Team=_team;
 	}
 	
 	//-----------------------------
@@ -104,6 +112,10 @@ public enum RunesList {
 	public ItemStack getHotbarItem() {
 		return HotbarItem;
 	}
+
+	public Vi5Team getTeam() {
+		return Team;
+	}
 	public BaseRune spawn(RunesList r,Vi5Main main,PlayerWrapper w,Player p) {
 		switch (r) {
 		case BUSH:
@@ -114,6 +126,8 @@ public enum RunesList {
 			break;
 		case GUARDSPEED:
 			break;
+		case SURCHARGE:
+			return new Rune_surcharge(main, w, p, r);
 		case INVI:
 			return new Rune_inviSneak(main, w, p, r);
 		case LANTERN:
@@ -128,5 +142,59 @@ public enum RunesList {
 			return null;
 		}
 		return null;
+	}
+	public static ArrayList<RunesList> getGardePrimaires(){
+		ArrayList<RunesList> l = new ArrayList<RunesList>();
+		for (RunesList r : RunesList.values()) {
+			if (r.getTeam()==Vi5Team.GARDE && r.getTiers()==RunesTiers.PRIMAIRE) {
+				l.add(r);
+			}
+		}
+		return l;
+	}
+	public static ArrayList<RunesList> getGardeSecondaires(){
+		ArrayList<RunesList> l = new ArrayList<RunesList>();
+		for (RunesList r : RunesList.values()) {
+			if (r.getTeam()==Vi5Team.GARDE && r.getTiers()==RunesTiers.SECONDAIRE) {
+				l.add(r);
+			}
+		}
+		return l;
+	}
+	public static ArrayList<RunesList> getGardeTertiaires(){
+		ArrayList<RunesList> l = new ArrayList<RunesList>();
+		for (RunesList r : RunesList.values()) {
+			if (r.getTeam()==Vi5Team.GARDE && r.getTiers()==RunesTiers.TERTIAIRE) {
+				l.add(r);
+			}
+		}
+		return l;
+	}
+	public static ArrayList<RunesList> getVoleurPrimaires(){
+		ArrayList<RunesList> l = new ArrayList<RunesList>();
+		for (RunesList r : RunesList.values()) {
+			if (r.getTeam()==Vi5Team.VOLEUR && r.getTiers()==RunesTiers.PRIMAIRE) {
+				l.add(r);
+			}
+		}
+		return l;
+	}
+	public static ArrayList<RunesList> getVoleurSecondaires(){
+		ArrayList<RunesList> l = new ArrayList<RunesList>();
+		for (RunesList r : RunesList.values()) {
+			if (r.getTeam()==Vi5Team.VOLEUR && r.getTiers()==RunesTiers.SECONDAIRE) {
+				l.add(r);
+			}
+		}
+		return l;
+	}
+	public static ArrayList<RunesList> getVoleurTertiaires(){
+		ArrayList<RunesList> l = new ArrayList<RunesList>();
+		for (RunesList r : RunesList.values()) {
+			if (r.getTeam()==Vi5Team.VOLEUR && r.getTiers()==RunesTiers.TERTIAIRE) {
+				l.add(r);
+			}
+		}
+		return l;
 	}
 }
