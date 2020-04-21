@@ -59,6 +59,22 @@ public enum RunesList {
 	BUSH("Bush",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible"),
 			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible")
+			),
+	BUILDER("Builder",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.STONE_BRICK_WALL, ChatColor.GOLD+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map"),
+			makeDisplayItem(Material.STONE_BRICK_WALL, ChatColor.GOLD+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map")
+			),
+	PECHEUR("Fisherman",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.FISHING_ROD, ChatColor.GOLD+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those thieves"),
+			makeDisplayItem(Material.FISHING_ROD, ChatColor.GOLD+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those thieves")
+			),
+	CROCHETEUR("Trickster",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls"),
+			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls")
+			),
+	SCANNER("Scanner",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in a large ray every x seconds"),
+			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in a large ray every x seconds")
 			);
 	//////////////////////////////////
 	private final String DisplayName;
@@ -138,6 +154,8 @@ public enum RunesList {
 			break;
 		case OMNI:
 			return new Rune_omniCapteur(main, w, p, r);
+		case BUILDER:
+			break;
 		default:
 			return null;
 		}
