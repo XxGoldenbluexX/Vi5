@@ -2,10 +2,18 @@ package fr.vi5team.vi5.enums;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.ChatColor;
+
+import fr.vi5team.vi5.PlayerWrapper;
+import fr.vi5team.vi5.Vi5Main;
+import fr.vi5team.vi5.runes.BaseRune;
+import fr.vi5team.vi5.runes.Rune_inviSneak;
+import fr.vi5team.vi5.runes.Rune_omniCapteur;
 
 public enum RunesList {
 	
@@ -14,7 +22,7 @@ public enum RunesList {
 			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Makes you invisible while sneaking"),//Item dans le menu
 			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Makes you invisible while sneaking")//Item dans la hotbar en jeu
 			),
-	WARD("Warder",RunesType.SPELL,RunesTiers.PRIMAIRE,
+	OMNI("Omnicapteur",RunesType.SPELL,RunesTiers.PRIMAIRE,
 			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Warder", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it"),
 			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Warder", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it")
 			),
@@ -24,7 +32,7 @@ public enum RunesList {
 			),
 	COP("Cop",RunesType.PASSIF,RunesTiers.PRIMAIRE,
 			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves"),
-			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
+			makeDisplayItem(Material.END_ROD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
 			),
 	TOUGH("Tough",RunesType.PASSIF,RunesTiers.TERTIAIRE,
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GOLD+"Tough", ChatColor.LIGHT_PURPLE+"All damage get reduced by 20%"),
@@ -63,7 +71,7 @@ public enum RunesList {
 	}
 	
 	//-----------------------------
-	public static ItemStack makeDisplayItem(Material m ,String nam, String... lo) {
+	private static ItemStack makeDisplayItem(Material m ,String nam, String... lo) {
 		ItemStack it=new ItemStack(m);
 		ItemMeta met = it.getItemMeta();
 		List<String> l = new ArrayList<String>();
@@ -96,30 +104,29 @@ public enum RunesList {
 	public ItemStack getHotbarItem() {
 		return HotbarItem;
 	}
-
-	public byte[] getNumberOfRunesByTier(){
-		byte runesNumber[] = new byte[3];
-		byte primaryNumber = 0;
-		byte secondaryNumber = 0;
-		byte tertiaryNumber = 0;
-		for(RunesList rune : RunesList.values()) {
-			if(rune.getTiers().equals(RunesTiers.PRIMAIRE)) {
-				primaryNumber++;
-			}
-			else {
-				if(rune.getTiers().equals(RunesTiers.SECONDAIRE)) {
-					secondaryNumber++;
-				}
-				else {
-					if(rune.getTiers().equals(RunesTiers.TERTIAIRE)) {
-						tertiaryNumber++;
-					}
-				}
-			}
+	public BaseRune spawn(RunesList r,Vi5Main main,PlayerWrapper w,Player p) {
+		switch (r) {
+		case BUSH:
+			break;
+		case COP:
+			break;
+		case DOUBLE_JUMP:
+			break;
+		case GUARDSPEED:
+			break;
+		case INVI:
+			return new Rune_inviSneak(main, w, p, r);
+		case LANTERN:
+			break;
+		case SHADOW:
+			break;
+		case TOUGH:
+			break;
+		case OMNI:
+			return new Rune_omniCapteur(main, w, p, r);
+		default:
+			return null;
 		}
-		runesNumber[0]=primaryNumber;
-		runesNumber[1]=secondaryNumber;
-		runesNumber[2]=tertiaryNumber;
-		return runesNumber;
+		return null;
 	}
 }

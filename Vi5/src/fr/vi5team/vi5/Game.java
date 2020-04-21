@@ -1,8 +1,10 @@
 package fr.vi5team.vi5;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.WeakHashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -18,6 +20,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
 
@@ -36,7 +39,7 @@ public class Game implements Listener {
 	private ArrayList<MapEnterZone> mapEnterZones=new ArrayList<MapEnterZone>();
 	private ArrayList<MapLeaveZone> mapLeaveZones=new ArrayList<MapLeaveZone>();
 	private BukkitRunnable gameTick;
-	private final HashMap<Player,PlayerWrapper> playersInGame = new HashMap<Player,PlayerWrapper>();
+	private final WeakHashMap<Player,PlayerWrapper> playersInGame = new WeakHashMap<Player,PlayerWrapper>();
 	//Liste des joueurs présents dans la partie et de leur wrapper
 	
 	public Game(Vi5Main main,ConfigManager cfgm,String _name) {
@@ -95,9 +98,19 @@ public class Game implements Listener {
 		if (hasPlayer(player)) {
 			PlayerWrapper wrap = playersInGame.get(player);
 			if (wrap.getTeam()==Vi5Team.VOLEUR && wrap.getCurrentStatus()==VoleurStatus.OUTSIDE) {
-				showPlayer(player);
 				wrap.setCurrentStatus(VoleurStatus.INSIDE);
+				wrap.enterZone();
 				player.sendMessage(ChatColor.GOLD+"You entered the complex");
+				showPlayer(player);
+				new BukkitRunnable() {
+
+					@Override
+					public void run() {
+						wrap.setUnSpottable(false);
+						player.sendMessage(ChatColor.LIGHT_PURPLE+""+ChatColor.UNDERLINE+"You are now spottable");
+					}
+					
+				}.runTaskLater(mainref, 200);
 			}
 		}
 	}
@@ -237,6 +250,14 @@ public class Game implements Listener {
 				PlayerWrapper wrap = playersInGame.get(p);
 				p.getInventory().clear();
 				wrap.gameStart();
+				wrap.setOmnispotted(false);
+				wrap.setGlow(false);
+				wrap.setDecouvert(false);
+				wrap.setUnGlowable(false);
+				wrap.setInvisible(false);
+				wrap.setInsondable(false);
+				wrap.setJammed(false);
+				wrap.setUnSpottable(false);
 				if (wrap.getTeam()==Vi5Team.GARDE) {
 					p.teleport(gardeSpawn);
 					p.setGameMode(GameMode.ADVENTURE);
@@ -248,6 +269,7 @@ public class Game implements Listener {
 					nbVoleurAlive++;
 					p.setGameMode(GameMode.ADVENTURE);
 					wrap.setCurrentStatus(VoleurStatus.OUTSIDE);
+					wrap.setUnSpottable(true);
 				}else if (wrap.getTeam()==Vi5Team.SPECTATEUR) {
 					p.setGameMode(GameMode.SPECTATOR);
 					p.teleport(voleurMinimapSpawn);
@@ -443,7 +465,7 @@ public class Game implements Listener {
 	public ArrayList<MapObject> getMapObjects() {
 		return mapObjects;
 	}
-	public ArrayList<Player> getAllGarde(){
+	public ArrayList<Player> getGardeList(){
 		ArrayList<Player> l = new ArrayList<Player>();
 		for (Player p : playersInGame.keySet()) {
 			if (getPlayerWrapper(p).getTeam()==Vi5Team.GARDE) {
@@ -452,7 +474,7 @@ public class Game implements Listener {
 		}
 		return l;
 	}
-	public ArrayList<Player> getAllVoleur(){
+	public ArrayList<Player> getVoleurList(){
 		ArrayList<Player> l = new ArrayList<Player>();
 		for (Player p : playersInGame.keySet()) {
 			if (getPlayerWrapper(p).getTeam()==Vi5Team.VOLEUR) {
@@ -460,6 +482,9 @@ public class Game implements Listener {
 			}
 		}
 		return l;
+	}
+	public Set<Player> getPlayerList(){
+		return playersInGame.keySet();
 	}
 
 	public void setMapObjects(ArrayList<MapObject> mapObjects) {
@@ -495,24 +520,10 @@ public class Game implements Listener {
 	public void setMapLeaveZones(ArrayList<MapLeaveZone> mapLeaveZones) {
 		this.mapLeaveZones = mapLeaveZones;
 	}
-	public HashMap<Player, PlayerWrapper> playersInGame() {
+	public WeakHashMap<Player, PlayerWrapper> playersInGame() {
 		return playersInGame;
-	}
-	public ArrayList<Player> playersInGamePlayers(){
-		ArrayList<Player> playerList = new ArrayList<Player>();
-		for (Player p : playersInGame().keySet()) {
-			playerList.add(p);
-		}
-		return playerList;
 	}
 	public Vi5Main getMainRef() {
 		return mainref;
-	}
-	public ArrayList<PlayerWrapper> playersInGameWrapper(){
-		ArrayList<PlayerWrapper> wrapperList = new ArrayList<PlayerWrapper>();
-		for (PlayerWrapper wrap : playersInGame().values()) {
-			wrapperList.add(wrap);
-		}
-		return wrapperList;
 	}
 }

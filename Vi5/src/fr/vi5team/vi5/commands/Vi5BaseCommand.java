@@ -143,7 +143,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			if(args.length>2) {
 				Game g = mainref.getGame(args[2]);
 				sender.sendMessage(ChatColor.BLUE+"Player list for "+args[2]+ChatColor.BLUE+":");
-				for(Player p : g.playersInGamePlayers()) {
+				for(Player p : g.getPlayerList()) {
 					String playerName=p.getName();
 					if(g.is_Started()) {
 						sender.sendMessage(playerName+ChatColor.BLUE+", Status: "+ChatColor.GOLD+"[IN_GAME]");

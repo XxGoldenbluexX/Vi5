@@ -12,12 +12,14 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import fr.vi5team.vi5.enums.InterfaceType;
 import fr.vi5team.vi5.enums.RunesList;
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
-import fr.vi5team.vi5.runes.RuneInviSneak;
+import fr.vi5team.vi5.runes.BaseRune;
 
 public class PlayerWrapper implements Listener {
 	
@@ -38,9 +40,20 @@ public class PlayerWrapper implements Listener {
 	private RunesList voleurPrimaire=RunesList.INVI;
 	private RunesList voleurSecondaire=null;
 	private RunesList voleurTertiaire=null;
-	private RunesList gardePrimaire=null;
+	private RunesList gardePrimaire=RunesList.OMNI;
 	private RunesList gardeSecondaire=null;
 	private RunesList gardeTertiaire=null;
+	
+	//Status variables
+	private boolean omnispotted=false;
+	private boolean invisible=false;
+	private boolean glow=false;
+	private boolean decouvert=false;
+	private boolean unGlowable=false;
+	private boolean insondable=false;
+	private boolean jammed=false;
+	private boolean unSpottable=false;
+	//
 	
 	public PlayerWrapper(Game game, Player player) {
 		this.player=player;
@@ -107,8 +120,13 @@ public class PlayerWrapper implements Listener {
 			}
 		}
 	}
+	public boolean isSondable() {
+		return (!unSpottable && (!insondable || omnispotted));
+	}
 	
 	public void gameStart() {
+		player.setWalkSpeed(0.2f);
+		player.setAllowFlight(false);
 		switch (team) {
 		case GARDE:
 			primaire=makeRune(gardePrimaire);
@@ -162,6 +180,26 @@ public class PlayerWrapper implements Listener {
 	}
 	
 	public void tickRunes() {
+		//EFFECTS
+		if (invisible && !decouvert && !omnispotted) {
+			if (!player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,Integer.MAX_VALUE,0,false,false,true));
+			}
+		}else {
+			if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+				player.removePotionEffect(PotionEffectType.INVISIBILITY);
+			}
+		}
+		if (glow && (!unGlowable || omnispotted) && !unSpottable) {
+			if (!player.hasPotionEffect(PotionEffectType.GLOWING)) {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,Integer.MAX_VALUE,0,false,false,true));
+			}
+		}else {
+			if (player.hasPotionEffect(PotionEffectType.GLOWING)) {
+				player.removePotionEffect(PotionEffectType.GLOWING);
+			}
+		}
+		//RUNES
 		if (primaire!=null) {
 			primaire.tick();
 		}
@@ -304,11 +342,7 @@ public class PlayerWrapper implements Listener {
 		if (rune==null) {
 			return null;
 		}
-		switch (rune) {
-		case INVI:
-			return new RuneInviSneak(game.getMainRef(),this,player);
-		}
-		return null;
+		return rune.spawn(rune,game.getMainRef(),this,player);
 	}
 
 	public RunesList getVoleurPrimaire() {
@@ -357,5 +391,69 @@ public class PlayerWrapper implements Listener {
 
 	public void setGardeTertiaire(RunesList gardeTertiaire) {
 		this.gardeTertiaire = gardeTertiaire;
+	}
+
+	public boolean isOmnispotted() {
+		return omnispotted;
+	}
+
+	public void setOmnispotted(boolean omnispotted) {
+		this.omnispotted = omnispotted;
+	}
+
+	public boolean isInvisible() {
+		return invisible;
+	}
+
+	public void setInvisible(boolean invisible) {
+		this.invisible = invisible;
+	}
+
+	public boolean isGlow() {
+		return glow;
+	}
+
+	public void setGlow(boolean glow) {
+		this.glow = glow;
+	}
+
+	public boolean isDecouvert() {
+		return decouvert;
+	}
+
+	public void setDecouvert(boolean decouvert) {
+		this.decouvert = decouvert;
+	}
+
+	public boolean isUnGlowable() {
+		return unGlowable;
+	}
+
+	public void setUnGlowable(boolean inGlowable) {
+		this.unGlowable = inGlowable;
+	}
+
+	public boolean isInsondable() {
+		return insondable;
+	}
+
+	public void setInsondable(boolean insondable) {
+		this.insondable = insondable;
+	}
+
+	public boolean isJammed() {
+		return jammed;
+	}
+
+	public void setJammed(boolean jammed) {
+		this.jammed = jammed;
+	}
+
+	public boolean isUnSpottable() {
+		return unSpottable;
+	}
+
+	public void setUnSpottable(boolean unSpottable) {
+		this.unSpottable = unSpottable;
 	}
 }
