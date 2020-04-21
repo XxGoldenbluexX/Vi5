@@ -107,23 +107,25 @@ public class PlayerWrapper implements Listener {
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		Action action = event.getAction();
 		ItemStack itm = event.getItem();
-		if (action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)) {
-			if (itm==null) {
-				return;
-			}
-			if (itm.equals(readyItem)) {
-				if (ready) {
-					setReady(false);
-				}else {
-					setReady(true);
+		if (event.getPlayer().equals(player)) {
+			if (action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)) {
+				if (itm==null) {
+					return;
 				}
-				event.setCancelled(true);
-			}else if (itm.equals(menuItem)) {
-				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.MAIN);
-				event.setCancelled(true);
-			}else if (itm.equals(TeamSelectionItem)) {
-				game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.TEAM);
-				event.setCancelled(true);
+				if (itm.equals(readyItem)) {
+					if (ready) {
+						setReady(false);
+					}else {
+						setReady(true);
+					}
+					event.setCancelled(true);
+				}else if (itm.equals(menuItem)) {
+					game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.MAIN);
+					event.setCancelled(true);
+				}else if (itm.equals(TeamSelectionItem)) {
+					game.getMainRef().getInterfaceManager().openMenu(player, InterfaceType.TEAM);
+					event.setCancelled(true);
+				}
 			}
 		}
 	}
@@ -276,7 +278,7 @@ public class PlayerWrapper implements Listener {
 			break;
 		}
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.BLUE+"Game settings");
+		meta.setDisplayName(ChatColor.BLUE+"Team");
 		ArrayList<String> lore= new ArrayList<String>();
 		lore.add(ChatColor.LIGHT_PURPLE+"Drop this to select your team or launch game");
 		meta.setLore(lore);
