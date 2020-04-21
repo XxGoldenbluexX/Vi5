@@ -54,6 +54,8 @@ public class Game implements Listener {
 			PlayerWrapper wrap = playersInGame.get(p);
 			wrap.gameEnd();
 			p.setGameMode(GameMode.SPECTATOR);
+			wrap.setReady(false);
+			wrap.showMenuHotbar();
 		}
 		messagePlayersInGame(ChatColor.GOLD+"La partie est terminée!");
 		messagePlayersInGame(ChatColor.GOLD+"Les voleurs se sont enfuit avec "+ChatColor.AQUA+totalObjVolés+ChatColor.GOLD+" objects!");
@@ -250,6 +252,7 @@ public class Game implements Listener {
 			nbVoleurAlive=0;
 			for (Player p : playersInGame.keySet()) {
 				PlayerWrapper wrap = playersInGame.get(p);
+				wrap.setReady(false);
 				p.getInventory().clear();
 				wrap.gameStart();
 				wrap.setOmnispotted(false);
@@ -277,6 +280,7 @@ public class Game implements Listener {
 					p.teleport(voleurMinimapSpawn);
 				}
 			}
+			System.out.println("nbVoleurAlive="+nbVoleurAlive);
 			for (MapObject o : mapObjects) {
 				o.setBlock();
 			}

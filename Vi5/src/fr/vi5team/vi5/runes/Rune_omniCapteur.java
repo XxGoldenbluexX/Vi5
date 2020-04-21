@@ -1,6 +1,7 @@
 package fr.vi5team.vi5.runes;
 
 import java.util.ArrayList;
+import java.util.WeakHashMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,6 +14,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.RunesList;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class Rune_omniCapteur extends BaseRune {
 
@@ -20,8 +23,7 @@ public class Rune_omniCapteur extends BaseRune {
 	private static final double OMNI_SQUARED_RANGE=16;
 	private static final double OMNI_SQUARED_PICK_UP_RANGE=4;
 	private byte nbOmni=MAX_OMNI;
-	private final ArrayList<ArmorStand> omniList = new ArrayList<ArmorStand>();
-	private final ArrayList<Player> playerOmnied = new ArrayList<Player>();
+	private final WeakHashMap<ArmorStand,ArrayList<Player>> omniSpotList = new WeakHashMap<ArmorStand,ArrayList<Player>>();
 	
 	public Rune_omniCapteur(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
@@ -34,6 +36,7 @@ public class Rune_omniCapteur extends BaseRune {
 		if (n!=null) {
 			n.remove();
 			nbOmni++;
+			omniSpotList.remove(n);
 			showAdaptedHotbarItem();
 		}else {
 			if (nbOmni>=1) {
@@ -44,7 +47,7 @@ public class Rune_omniCapteur extends BaseRune {
 					omni.setArms(false);
 					omni.setMarker(true);
 					omni.setSmall(true);
-					omniList.add(omni);
+					omniSpotList.put(omni,new ArrayList<Player>());
 					nbOmni--;
 					showAdaptedHotbarItem();
 				}
@@ -73,7 +76,7 @@ public class Rune_omniCapteur extends BaseRune {
 	
 	private ArmorStand omniPickUpNear() {
 		ArrayList<ArmorStand> l = new ArrayList<ArmorStand>();
-		for (ArmorStand a : omniList) {
+		for (ArmorStand a : omniSpotList.keySet()) {
 			if (player.getLocation().distanceSquared(a.getLocation())<=OMNI_SQUARED_PICK_UP_RANGE) {
 				l.add(a);
 			}
@@ -97,19 +100,19 @@ public class Rune_omniCapteur extends BaseRune {
 	@Override
 	public void tick() {
 		if (!wraper.isJammed()) {
-			for (ArmorStand omni : omniList) {
+			for (ArmorStand omni : omniSpotList.keySet()) {
 				for (Player p : wraper.getGame().getVoleurInsideList()) {
-					if (!playerOmnied.contains(p) && p.getLocation().distanceSquared(omni.getLocation())<=OMNI_SQUARED_RANGE) {
-						playerOmnied.add(p);
+					if (!omniSpotList.get(omni).contains(p) && p.getLocation().distanceSquared(omni.getLocation())<=OMNI_SQUARED_RANGE) {
+						omniSpotList.get(omni).add(p);
 						PlayerWrapper wrap = wraper.getGame().getPlayerWrapper(p);
 						wrap.setGlow(true);
 						wrap.setOmnispotted(true);
 						if (wrap.isSondable()) {
-							player.sendMessage(ChatColor.RED+"A player is spotted!");
+							player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GOLD+"A thief has been spotted!"));
 						}
-					}else if (playerOmnied.contains(p) && p.getLocation().distanceSquared(omni.getLocation())>OMNI_SQUARED_RANGE){
+					}else if (omniSpotList.get(omni).contains(p) && p.getLocation().distanceSquared(omni.getLocation())>OMNI_SQUARED_RANGE){
 						PlayerWrapper wrap = wraper.getGame().getPlayerWrapper(p);
-						playerOmnied.remove(p);
+						omniSpotList.get(omni).remove(p);
 						wrap.setGlow(false);
 						wrap.setOmnispotted(false);
 					}
@@ -120,10 +123,9 @@ public class Rune_omniCapteur extends BaseRune {
 
 	@Override
 	public void gameEnd() {
-		for (ArmorStand omni : omniList) {
+		for (ArmorStand omni : omniSpotList.keySet()) {
 			omni.remove();
-			omniList.clear();
-			playerOmnied.clear();
+			omniSpotList.clear();
 		}
 	}
 

@@ -58,6 +58,14 @@ public class PlayerWrapper implements Listener {
 	public PlayerWrapper(Game game, Player player) {
 		this.player=player;
 		this.game=game;
+		ready=false;
+		showMenuHotbar();
+	}
+	
+	public Game getGame() {
+		return game;
+	}
+	public void showMenuHotbar() {
 		ItemStack item = new ItemStack(Material.ANVIL);
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.AQUA+"Settings");
@@ -67,12 +75,8 @@ public class PlayerWrapper implements Listener {
 		item.setItemMeta(meta);
 		menuItem=item;
 		player.getInventory().setItem(1, item);
-		setReady(false);
-		setTeam(Vi5Team.GARDE);
-	}
-	
-	public Game getGame() {
-		return game;
+		setReady(ready);
+		setTeam(team);
 	}
 	
 	@EventHandler
@@ -104,6 +108,9 @@ public class PlayerWrapper implements Listener {
 		Action action = event.getAction();
 		ItemStack itm = event.getItem();
 		if (action.equals(Action.RIGHT_CLICK_AIR)||action.equals(Action.RIGHT_CLICK_BLOCK)) {
+			if (itm==null) {
+				return;
+			}
 			if (itm.equals(readyItem)) {
 				if (ready) {
 					setReady(false);
