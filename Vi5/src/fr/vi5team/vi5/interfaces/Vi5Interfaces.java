@@ -66,7 +66,7 @@ public class Vi5Interfaces implements Listener{
 	
 	public void openMenu(Player player,InterfaceType type) {
 		closeInterface(player);
-		playersInterfaceType.put(player, InterfaceType.MAIN);
+		playersInterfaceType.put(player, type);
 		Inventory inter=Bukkit.createInventory(null, 9);
 		PlayerWrapper wrap = mainref.getPlayerWrapper(player);
 		if (wrap==null) {
@@ -228,6 +228,9 @@ public class Vi5Interfaces implements Listener{
 				if (inventory.equals(playersInterfaces.get(player))) {
 					event.setCancelled(true);
 					PlayerWrapper wrap = mainref.getPlayerWrapper(player);
+					if (itemClicked==null) {
+						return;
+					}
 					switch (playersInterfaceType.get(player)) {
 					case MAIN:
 						switch (itemClicked.getType()) {
