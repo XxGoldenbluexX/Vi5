@@ -48,6 +48,8 @@ public class Rune_omniCapteur extends BaseRune {
 					nbOmni--;
 					showAdaptedHotbarItem();
 				}
+			}else {
+				showAdaptedHotbarItem();
 			}
 		}
 	}
@@ -96,7 +98,7 @@ public class Rune_omniCapteur extends BaseRune {
 	public void tick() {
 		if (!wraper.isJammed()) {
 			for (ArmorStand omni : omniList) {
-				for (Player p : wraper.getGame().getVoleurList()) {
+				for (Player p : wraper.getGame().getVoleurInsideList()) {
 					if (!playerOmnied.contains(p) && p.getLocation().distanceSquared(omni.getLocation())<=OMNI_SQUARED_RANGE) {
 						playerOmnied.add(p);
 						PlayerWrapper wrap = wraper.getGame().getPlayerWrapper(p);

@@ -107,6 +107,7 @@ public class Game implements Listener {
 					@Override
 					public void run() {
 						wrap.setUnSpottable(false);
+						if (wrap.getCurrentStatus()==VoleurStatus.INSIDE);
 						player.sendMessage(ChatColor.LIGHT_PURPLE+""+ChatColor.UNDERLINE+"You are now spottable");
 					}
 					
@@ -122,6 +123,7 @@ public class Game implements Listener {
 			if(wrap.getTeam()==Vi5Team.VOLEUR) {
 				messagePlayersInGame(ChatColor.RED+player.getName()+" died with "+ChatColor.GREEN+wrap.getNbItemStealed()+ChatColor.GOLD+" object(s)!");
 				player.setGameMode(GameMode.SPECTATOR);
+				wrap.setCurrentStatus(VoleurStatus.ESCAPED);
 				nbVoleurAlive--;
 				if (nbVoleurAlive<=0) {
 					endGame();
@@ -469,6 +471,15 @@ public class Game implements Listener {
 		ArrayList<Player> l = new ArrayList<Player>();
 		for (Player p : playersInGame.keySet()) {
 			if (getPlayerWrapper(p).getTeam()==Vi5Team.GARDE) {
+				l.add(p);
+			}
+		}
+		return l;
+	}
+	public ArrayList<Player> getVoleurInsideList(){
+		ArrayList<Player> l = new ArrayList<Player>();
+		for (Player p : playersInGame.keySet()) {
+			if (getPlayerWrapper(p).getTeam()==Vi5Team.VOLEUR && getPlayerWrapper(p).getCurrentStatus()==VoleurStatus.INSIDE) {
 				l.add(p);
 			}
 		}
