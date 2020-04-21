@@ -63,11 +63,12 @@ public class Vi5Interfaces implements Listener{
 			return false;
 		}
 	}
-	
 	public void openMenu(Player player,InterfaceType type) {
+		openMenu(player,type,Bukkit.createInventory(null, 27, ChatColor.GOLD+"SETTINGS"));
+	};
+	public void openMenu(Player player,InterfaceType type, Inventory inter) {
 		closeInterface(player);
 		playersInterfaceType.put(player, type);
-		Inventory inter=Bukkit.createInventory(null, 9);
 		PlayerWrapper wrap = mainref.getPlayerWrapper(player);
 		if (wrap==null) {
 			return;
@@ -91,7 +92,7 @@ public class Vi5Interfaces implements Listener{
 		switch (type) {
 		case MAIN:
 			/////
-			inter=Bukkit.createInventory(null, 27, ChatColor.GOLD+"SETTINGS");
+			inter.clear();
 			itm = new ItemStack(teamglass);
 			for (short i=0;i<9;i++) {
 				inter.setItem(i, itm);
@@ -160,7 +161,7 @@ public class Vi5Interfaces implements Listener{
 				break;
 			case SPECTATEUR:
 				for (short i=9;i<18;i++) {
-					if (i==13) {
+					if (i!=13) {
 						itm = new ItemStack(teamglass);
 						inter.setItem(i, itm);
 					}else{
@@ -175,7 +176,7 @@ public class Vi5Interfaces implements Listener{
 			break;
 		/////
 		case TEAM:
-			inter=Bukkit.createInventory(null, 27, ChatColor.DARK_PURPLE+"Select your team");
+			inter.clear();
 			itm = new ItemStack(Material.RED_STAINED_GLASS_PANE);
 			inter.setItem(0, itm);
 			inter.setItem(1, itm);
@@ -261,28 +262,28 @@ public class Vi5Interfaces implements Listener{
 						case ARMOR_STAND:
 							switch (wrap.getTeam()) {
 							case GARDE:
-								openMenu(player, InterfaceType.RUNES_GARDE);
+								openMenu(player, InterfaceType.RUNES_GARDE,inventory);
 								break;
 							case SPECTATEUR:
 								break;
 							case VOLEUR:
-								openMenu(player, InterfaceType.RUNES_VOLEUR);
+								openMenu(player, InterfaceType.RUNES_VOLEUR,inventory);
 								break;
 							default:
 								break;
 							}
 							break;
 						case BLUE_BANNER:
-							openMenu(player, InterfaceType.TEAM);
+							openMenu(player, InterfaceType.TEAM,inventory);
 							break;
 						case GREEN_BANNER:
-							openMenu(player, InterfaceType.TEAM);
+							openMenu(player, InterfaceType.TEAM,inventory);
 							break;
 						case RED_BANNER:
-							openMenu(player, InterfaceType.TEAM);
+							openMenu(player, InterfaceType.TEAM,inventory);
 							break;
 						case WHITE_BANNER:
-							openMenu(player, InterfaceType.TEAM);
+							openMenu(player, InterfaceType.TEAM,inventory);
 							break;
 						default:
 							break;
@@ -315,7 +316,7 @@ public class Vi5Interfaces implements Listener{
 						default:
 							break;
 						}
-						openMenu(player, InterfaceType.MAIN);
+						openMenu(player, InterfaceType.MAIN,inventory);
 						break;
 					default:
 						break;
