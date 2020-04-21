@@ -20,6 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.InterfaceType;
+import fr.vi5team.vi5.enums.Vi5Team;
 
 public class Vi5Interfaces implements Listener{
 	
@@ -203,11 +204,11 @@ public class Vi5Interfaces implements Listener{
 			inter.setItem(25, itm);
 			inter.setItem(26, itm);
 			itm = new ItemStack(Material.RED_BANNER);
-			inter.setItem(6, itm);
+			inter.setItem(10, itm);
 			itm = new ItemStack(Material.GREEN_BANNER);
-			inter.setItem(6, itm);
+			inter.setItem(13, itm);
 			itm = new ItemStack(Material.BLUE_BANNER);
-			inter.setItem(6, itm);
+			inter.setItem(16, itm);
 			break;
 		default:
 			break;
@@ -289,6 +290,29 @@ public class Vi5Interfaces implements Listener{
 					case RUNES_VOLEUR:
 						break;
 					case TEAM:
+						switch (itemClicked.getType()) {
+						case RED_BANNER:
+							wrap.setTeam(Vi5Team.VOLEUR);
+							break;
+						case RED_STAINED_GLASS_PANE:
+							wrap.setTeam(Vi5Team.VOLEUR);
+							break;
+						case GREEN_BANNER:
+							wrap.setTeam(Vi5Team.SPECTATEUR);
+							break;
+						case LIME_STAINED_GLASS_PANE:
+							wrap.setTeam(Vi5Team.SPECTATEUR);
+							break;
+						case BLUE_BANNER:
+							wrap.setTeam(Vi5Team.GARDE);
+							break;
+						case BLUE_STAINED_GLASS_PANE:
+							wrap.setTeam(Vi5Team.GARDE);
+							break;
+						default:
+							break;
+						}
+						openMenu(player, InterfaceType.MAIN);
 						break;
 					default:
 						break;
