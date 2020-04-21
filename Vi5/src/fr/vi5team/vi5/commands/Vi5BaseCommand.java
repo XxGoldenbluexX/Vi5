@@ -48,6 +48,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 		mapCommands.add("Objects");
 		mapCommands.add("Entrances");
 		mapCommands.add("Escapes");
+		mapCommands.add("Walls");
 		mapCommands.add("create");
 		mapCommands.add("rename");
 		mapCommands.add("list");
@@ -438,7 +439,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map "+ChatColor.GOLD+"...");
 			sender.sendMessage("["+ChatColor.GOLD+"create"+ChatColor.WHITE+"/"+ChatColor.GOLD+"rename"+ChatColor.WHITE+"/"+ChatColor.GOLD+"list"+ChatColor.WHITE+"/"+ChatColor.GOLD+"delete"+ChatColor.WHITE+"]");
 			sender.sendMessage("["+ChatColor.GOLD+"setGuardSpawn"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setThiefMinimapSpawn"+ChatColor.WHITE+"]");
-			sender.sendMessage("["+ChatColor.GOLD+"Objects"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Entrances"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Escapes"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"Objects"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Entrances"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Escapes"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Walls"+ChatColor.WHITE+"]");
 			sender.sendMessage("");
 			return true;
 		}
@@ -464,6 +465,183 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage("["+ChatColor.GOLD+"setEscapeLoc"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setEscapeSize"+ChatColor.WHITE+"]");
 			sender.sendMessage("");
 			return true;
+		case "Walls":
+			sender.sendMessage("");
+			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map "+ChatColor.GOLD+"...");
+			sender.sendMessage("["+ChatColor.GOLD+"addWall"+ChatColor.WHITE+"/"+ChatColor.WHITE+"/"+ChatColor.GOLD+"removeWall"+ChatColor.GOLD+"setWallCorner1"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setWallCorner2"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setWallIndication"+ChatColor.WHITE+"]");
+			sender.sendMessage(ChatColor.RED+"WARNING: Those are the walls used for guards' second ability "+ChatColor.LIGHT_PURPLE+ChatColor.UNDERLINE+"BUILDER"+ChatColor.RED+" which allow them to place additionnal walls on the map!");
+			sender.sendMessage(ChatColor.ITALIC+""+ChatColor.BLUE+"By default, Purpur will be set under walls for the guards to activate them. If you want to change ALL those blocks: "+ChatColor.WHITE+"/vi5 map setWallIndication "+ChatColor.GOLD+"<MapName>");
+			sender.sendMessage("");
+			return true;
+		case "addWall":
+			if(args.length>3) {
+				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
+				if(cfg==null) {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This map does not exist!");
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map create "+ChatColor.GOLD+"<MapName>");
+					sender.sendMessage("");
+					return true;
+				}
+				List<String> wallsList = mainref.getCfgmanager().getMapWallsList(args[2]);
+				if (wallsList.contains(args[3])) {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This wall already exist for map: "+ChatColor.GOLD+args[2]);
+					sender.sendMessage("");
+					return true;
+				}else {
+					wallsList.add(args[3]);
+					mainref.getCfgmanager().setMapEscapesList(args[2], wallsList);
+					sender.sendMessage(ChatColor.GREEN+"Map wall ("+ChatColor.GOLD+args[3]+ChatColor.GREEN+") has been created on map: "+ChatColor.GOLD+args[2]+ChatColor.GREEN+" !");
+					return true;
+				}
+			} else {
+				sender.sendMessage("");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map addWall "+ChatColor.GOLD+"<MapName> <WallName>");
+				sender.sendMessage("");
+				return true;
+			}
+		case "removeWall":
+			if(args.length>3) {
+				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
+				if(cfg==null) {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This map does not exist!");
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map create "+ChatColor.GOLD+"<MapName>");
+					sender.sendMessage("");
+					return true;
+				}
+				List<String> wallList = mainref.getCfgmanager().getMapWallsList(args[2]);
+				if (wallList.contains(args[3])) {
+					wallList.remove(args[3]);
+					mainref.getCfgmanager().setMapWallsList(args[2], wallList);
+					cfg.set("mapWalls."+args[3], null);
+					sender.sendMessage(ChatColor.GREEN+"Wall removed!");
+					return true;
+				}else {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This Wall does not exist on map: "+ChatColor.GOLD+args[2]);
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addWall "+ChatColor.GOLD+"<MapName> <WallName>");
+					sender.sendMessage("");
+					return true;
+				}
+			}else {
+				sender.sendMessage("");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map removeWall "+ChatColor.GOLD+"<MapName> <WallName>");
+				sender.sendMessage("");
+				return true;
+			}
+		case "setWallCorner1":
+			if(args.length>3) {
+				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
+				if (cfg==null) {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This map does not exist!");
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map create "+ChatColor.GOLD+"<MapName>");
+					sender.sendMessage("");
+					return true;
+				}
+				if (mainref.getCfgmanager().getMapWallsList(args[2]).contains(args[3])) {
+					if (sender instanceof Player) {
+						Player p = (Player)sender;
+						Block block = p.getTargetBlock(null, 10);
+						cfg.set("mapWalls."+args[3]+".firstCorner", block.getLocation());
+						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+						sender.sendMessage(ChatColor.GREEN+"Wall's first corner location set!");
+						return true;
+					}else {
+						sender.sendMessage(ChatColor.RED+"You need to be a player in order to use this command!");
+						return true;
+					}
+				}else {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This wall does not exist on map: "+ChatColor.GOLD+args[2]);
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addWall "+ChatColor.GOLD+"<MapName> <WallName>");
+					sender.sendMessage("");
+					return true;
+				}
+			}else {
+				sender.sendMessage("");
+				sender.sendMessage("usage: /vi5 map setWallCorner1 <MapName> <WallName>");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setWallCorner1 "+ChatColor.GOLD+"<MapName> <WallName>");
+				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set on the block you are looking at "+ChatColor.RED+"!");
+				sender.sendMessage("");
+				return true;
+			}
+		case "setWallCorner2":
+			if(args.length>3) {
+				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
+				if (cfg==null) {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This map does not exist!");
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map create "+ChatColor.GOLD+"<MapName>");
+					sender.sendMessage("");
+					return true;
+				}
+				if (mainref.getCfgmanager().getMapWallsList(args[2]).contains(args[3])) {
+					if (sender instanceof Player) {
+						Player p = (Player)sender;
+						Block block = p.getTargetBlock(null, 10);
+						cfg.set("mapWalls."+args[3]+".secondCorner", block.getLocation());
+						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+						sender.sendMessage(ChatColor.GREEN+"Wall's second corner location set!");
+						return true;
+					}else {
+						sender.sendMessage(ChatColor.RED+"You need to be a player in order to use this command!");
+						return true;
+					}
+				}else {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This wall does not exist on map: "+ChatColor.GOLD+args[2]);
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addWall "+ChatColor.GOLD+"<MapName> <WallName>");
+					sender.sendMessage("");
+					return true;
+				}
+			}else {
+				sender.sendMessage("");
+				sender.sendMessage("usage: /vi5 map setWallCorner2 <MapName> <WallName>");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setWallCorner2 "+ChatColor.GOLD+"<MapName> <WallName>");
+				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set on the block you are looking at "+ChatColor.RED+"!");
+				sender.sendMessage("");
+				return true;
+			}
+		case "setWallIndication":
+			if(args.length>3) {
+				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
+				if (cfg==null) {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This map does not exist!");
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map create "+ChatColor.GOLD+"<MapName>");
+					sender.sendMessage("");
+					return true;
+				}
+				if (mainref.getCfgmanager().getMapWallsList(args[2]).contains(args[3])) {
+					if (sender instanceof Player) {
+						Player p = (Player)sender;
+						Block block= p.getTargetBlock(null, 10);
+						cfg.set("mapWalls.blocksUnder", block.getType());
+						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+						sender.sendMessage(ChatColor.GREEN+"Blocks under ALL walls of this map set!");
+						return true;
+					}else {
+						sender.sendMessage(ChatColor.RED+"You need to be a player in order to use this command!");
+						return true;
+					}
+				}else {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This wall does not exist on map: "+ChatColor.GOLD+args[2]);
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addWall "+ChatColor.GOLD+"<MapName> <WallName>");
+					sender.sendMessage("");
+					return true;
+				}
+			}else {
+				sender.sendMessage("");
+				sender.sendMessage("usage: /vi5 map setWallIndication <MapName>");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setWallIndication "+ChatColor.GOLD+"<MapName>");
+				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"The block you are looking at will be set under ALL of this map walls "+ChatColor.RED+"!");
+				sender.sendMessage("");
+				return true;
+			}
 		case "create":
 			if (args.length>2) {
 				mainref.getCfgmanager().createMapConfig(args[2]);
@@ -1023,7 +1201,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map removeMapEntrance "+ChatColor.GOLD+"<MapName> <EntranceName>");
 				sender.sendMessage("");
 				return true;
-			}	
+			}
 		case "removeEscape":
 			if(args.length>=3) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);

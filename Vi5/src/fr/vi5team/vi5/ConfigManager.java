@@ -158,4 +158,22 @@ public class ConfigManager {
 		}
 		return false;
 	}
+	public List<String> getMapWallsList(String mapName){
+		YamlConfiguration cfg = getMapConfig(mapName);
+		List<String> list = null;
+		if (cfg!=null) {
+			list = cfg.getStringList("wallList");
+		}
+		return list;
+	}
+	public boolean setMapWallsList(String mapName,List<String> list) {
+		YamlConfiguration cfg = getMapConfig(mapName);
+		if (cfg!=null) {
+			cfg.set("wallList", list);
+			saveMapConfig(mapName, cfg);
+			return true;
+		}
+		return false;
+	}
+	
 }
