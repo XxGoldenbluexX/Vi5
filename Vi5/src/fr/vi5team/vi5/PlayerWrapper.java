@@ -265,14 +265,17 @@ public class PlayerWrapper implements Listener {
 		case GARDE:
 			item = new ItemStack(Material.BLUE_BANNER);
 			player.sendMessage(ChatColor.BLUE+"You are now a guard");
+			player.setPlayerListName(ChatColor.BLUE+player.getName());
 			break;
 		case VOLEUR:
 			item = new ItemStack(Material.RED_BANNER);
 			player.sendMessage(ChatColor.RED+"You are now a thief");
+			player.setPlayerListName(ChatColor.RED+player.getName());
 			break;
 		case SPECTATEUR:
 			item = new ItemStack(Material.LIME_BANNER);
 			player.sendMessage(ChatColor.DARK_GREEN+"You are now a spectator");
+			player.setPlayerListName(ChatColor.GREEN+player.getName());
 			break;
 		default:
 			break;

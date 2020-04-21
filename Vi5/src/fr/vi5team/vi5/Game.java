@@ -182,6 +182,7 @@ public class Game implements Listener {
 	public void onPlayerLeave(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 		removePlayer(player);
+		player.setPlayerListName(player.getName());
 		return;
 	}
 
@@ -263,6 +264,7 @@ public class Game implements Listener {
 				wrap.setInsondable(false);
 				wrap.setJammed(false);
 				wrap.setUnSpottable(false);
+				p.setAllowFlight(false);
 				if (wrap.getTeam()==Vi5Team.GARDE) {
 					p.teleport(gardeSpawn);
 					p.setGameMode(GameMode.ADVENTURE);
