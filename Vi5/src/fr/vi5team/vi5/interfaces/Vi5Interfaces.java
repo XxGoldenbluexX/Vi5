@@ -67,7 +67,6 @@ public class Vi5Interfaces implements Listener{
 		openMenu(player,type,Bukkit.createInventory(null, 27, ChatColor.GOLD+"SETTINGS"));
 	};
 	public void openMenu(Player player,InterfaceType type, Inventory inter) {
-		closeInterface(player);
 		playersInterfaceType.put(player, type);
 		PlayerWrapper wrap = mainref.getPlayerWrapper(player);
 		if (wrap==null) {
