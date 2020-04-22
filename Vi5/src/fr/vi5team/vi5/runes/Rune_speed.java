@@ -27,6 +27,7 @@ public class Rune_speed extends BaseRune {
 
 	@Override
 	public void gameStart() {
+		Activate();
 		player.setWalkSpeed(0.24f);
 	}
 
