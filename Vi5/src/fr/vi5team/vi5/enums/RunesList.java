@@ -15,6 +15,7 @@ import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.runes.BaseRune;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
+import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
 
 public enum RunesList {
@@ -32,7 +33,7 @@ public enum RunesList {
 			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Give an insane amount of movement speed and strength","20"+ChatColor.LIGHT_PURPLE+"s cooldown"),
 			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Drop it to have an insane amount of movement speed and strength")
 			),
-	GUARDSPEED("Sprinter",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
+	SPEED("Sprinter",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
 			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed is increased by 20%")
 			),
@@ -140,8 +141,8 @@ public enum RunesList {
 			break;
 		case DOUBLE_JUMP:
 			break;
-		case GUARDSPEED:
-			break;
+		case SPEED:
+			return new Rune_speed(main, w, p, r);
 		case SURCHARGE:
 			return new Rune_surcharge(main, w, p, r);
 		case INVI:
