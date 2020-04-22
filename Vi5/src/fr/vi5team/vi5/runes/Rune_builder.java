@@ -29,7 +29,6 @@ public class Rune_builder extends BaseRune{
 	private WeakHashMap<Player,String> playerOnWall = new WeakHashMap<Player,String>();
 	public Rune_builder(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -169,9 +168,9 @@ public class Rune_builder extends BaseRune{
 			zInvert=true;
 			zDiff=zDiff*-1;
 		}
-		for (Double x = (double) 0; x<=xDiff; x++) {
-			for (Double y = (double) 0; y<=yDiff; y++) {
-				for (Double z = (double) 0; z<=zDiff; z++) {
+		for (Double x =0d; x<=xDiff; x++) {
+			for (Double y =0d; y<=yDiff; y++) {
+				for (Double z =0d; z<=zDiff; z++) {
 					if(xInvert) {
 						toAddX=-x;
 					}else {
