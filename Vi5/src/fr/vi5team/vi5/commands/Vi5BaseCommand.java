@@ -432,7 +432,11 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.DARK_GREEN+"Games: ");
 			for (Game g : mainref.getGamesList()) {
 				sender.sendMessage("");
-				sender.sendMessage(ChatColor.AQUA+"- "+g.getName()+ChatColor.LIGHT_PURPLE+" ("+g.getMapName()+")");
+				if(g.is_Started()) {
+					sender.sendMessage(ChatColor.AQUA+"- "+g.getName()+ChatColor.LIGHT_PURPLE+" ("+g.getMapName()+")"+ChatColor.GREEN+" [IN PROGRESS]");
+				}else {
+					sender.sendMessage(ChatColor.AQUA+"- "+g.getName()+ChatColor.LIGHT_PURPLE+" ("+g.getMapName()+")"+ChatColor.RED+" []");	
+				}
 				sender.sendMessage("");
 			}
 			return true;
