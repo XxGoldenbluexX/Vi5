@@ -214,7 +214,6 @@ public class Rune_builder extends BaseRune{
 
 	@Override
 	public void enterZone() {
-		// TODO Auto-generated method stub
 		
 	}
 
