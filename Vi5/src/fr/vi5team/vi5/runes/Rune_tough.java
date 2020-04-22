@@ -1,9 +1,8 @@
 package fr.vi5team.vi5.runes;
 
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.entity.Player;
-
-import com.sun.xml.internal.stream.Entity;
 
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
@@ -11,6 +10,8 @@ import fr.vi5team.vi5.enums.RunesList;
 
 public class Rune_tough extends BaseRune {
 
+	private AttributeModifier modifier;
+	
 	public Rune_tough(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
 		// TODO Auto-generated constructor stub
@@ -30,7 +31,7 @@ public class Rune_tough extends BaseRune {
 
 	@Override
 	public void gameEnd() {
-		player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+		player.getAttribute(Attribute.GENERIC_MAX_HEALTH).removeModifier(modifier);
 		player.setHealth(20);
 		// TODO Auto-generated method stub
 		
@@ -44,7 +45,8 @@ public class Rune_tough extends BaseRune {
 	@Override
 	public void enterZone() {
 		Activate();
-		player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(24);
+		modifier=new AttributeModifier("Rune_tough",4,AttributeModifier.Operation.ADD_NUMBER);
+		player.getAttribute(Attribute.GENERIC_MAX_HEALTH).addModifier(modifier);
 		player.setHealth(24);
 		// TODO Auto-generated method stub
 		
