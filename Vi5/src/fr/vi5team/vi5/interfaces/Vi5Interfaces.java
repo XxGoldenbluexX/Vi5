@@ -117,8 +117,8 @@ public class Vi5Interfaces implements Listener{
 				if (wrap.getGardePrimaire()!=null && wrap.getGardeSecondaire()!=null && wrap.getGardeTertiaire()!=null) {
 					itm=makeGuiItem(false, Material.ARMOR_STAND, ChatColor.GREEN+"Your Runes","",
 							ChatColor.GOLD+"Primaire: "+wrap.getGardePrimaire().getDisplayName(),
-							ChatColor.GOLD+"Secondaire: "+wrap.getGardeSecondaire().getDisplayName(),
-							ChatColor.GOLD+"Tertiaire: "+wrap.getGardeTertiaire().getDisplayName());
+							ChatColor.LIGHT_PURPLE+"Secondaire: "+wrap.getGardeSecondaire().getDisplayName(),
+							ChatColor.GREEN+"Tertiaire: "+wrap.getGardeTertiaire().getDisplayName());
 				}
 				inter.setItem(14, itm);
 				itm = new ItemStack(teamglass);
@@ -147,8 +147,8 @@ public class Vi5Interfaces implements Listener{
 				if (wrap.getVoleurPrimaire()!=null && wrap.getVoleurSecondaire()!=null && wrap.getVoleurTertiaire()!=null) {
 					itm=makeGuiItem(false, Material.ARMOR_STAND, ChatColor.GREEN+"Your Runes","",
 							ChatColor.GOLD+"Primaire: "+wrap.getVoleurPrimaire().getDisplayName(),
-							ChatColor.GOLD+"Secondaire: "+wrap.getVoleurSecondaire().getDisplayName(),
-							ChatColor.GOLD+"Tertiaire: "+wrap.getVoleurTertiaire().getDisplayName());
+							ChatColor.LIGHT_PURPLE+"Secondaire: "+wrap.getVoleurSecondaire().getDisplayName(),
+							ChatColor.GREEN+"Tertiaire: "+wrap.getVoleurTertiaire().getDisplayName());
 				}
 				inter.setItem(14, itm);
 				itm = new ItemStack(teamglass);

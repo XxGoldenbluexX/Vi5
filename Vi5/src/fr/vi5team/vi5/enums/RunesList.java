@@ -13,10 +13,13 @@ import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.runes.BaseRune;
+import fr.vi5team.vi5.runes.Rune_builder;
+import fr.vi5team.vi5.runes.Rune_doubleJump;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
 import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
+import fr.vi5team.vi5.runes.Rune_tough;
 
 public enum RunesList {
 	
@@ -135,32 +138,23 @@ public enum RunesList {
 	}
 	public BaseRune spawn(RunesList r,Vi5Main main,PlayerWrapper w,Player p) {
 		switch (r) {
-		case BUSH:
-			break;
-		case COP:
-			break;
 		case DOUBLE_JUMP:
-			break;
+			return new Rune_doubleJump(main, w, p, r);
 		case SPEED:
 			return new Rune_speed(main, w, p, r);
 		case SURCHARGE:
 			return new Rune_surcharge(main, w, p, r);
 		case INVI:
 			return new Rune_inviSneak(main, w, p, r);
-		case LANTERN:
-			break;
-		case SHADOW:
-			break;
 		case TOUGH:
-			break;
+			return new Rune_tough(main, w, p, r);
 		case OMNI:
 			return new Rune_omniCapteur(main, w, p, r);
 		case BUILDER:
-			break;
+			return new Rune_builder(main, w, p, r);
 		default:
 			return null;
 		}
-		return null;
 	}
 	public static ArrayList<RunesList> getGardePrimaires(){
 		ArrayList<RunesList> l = new ArrayList<RunesList>();
