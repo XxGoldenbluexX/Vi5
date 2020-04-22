@@ -54,6 +54,8 @@ public class Game implements Listener {
 		gameTick.cancel();
 		for (Player p : playersInGame.keySet()) {
 			PlayerWrapper wrap = playersInGame.get(p);
+			p.getInventory().clear();
+			p.getActivePotionEffects().clear();
 			wrap.gameEnd();
 			p.setGameMode(GameMode.SPECTATOR);
 			wrap.setReady(false);

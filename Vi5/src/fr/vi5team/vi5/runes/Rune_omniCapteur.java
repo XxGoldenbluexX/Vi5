@@ -132,7 +132,9 @@ public class Rune_omniCapteur extends BaseRune {
 
 	@Override
 	public void gameEnd() {
+		System.out.println("endOmni");
 		for (ArmorStand omni : omniSpotList.keySet()) {
+			System.out.println(omni.getName()+" deleted");
 			omni.remove();
 			omniSpotList.clear();
 		}
