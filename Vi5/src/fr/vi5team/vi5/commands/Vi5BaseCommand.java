@@ -16,6 +16,7 @@ import fr.vi5team.vi5.Game;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
+import sun.rmi.transport.proxy.CGIHandler;
 
 public class Vi5BaseCommand implements CommandExecutor {
 
@@ -232,6 +233,12 @@ public class Vi5BaseCommand implements CommandExecutor {
             	}
                 if (!mainref.isPlayerIngame(p)) {
                     Game g = mainref.getGame(args[2]);
+                    if(g==null) {
+                    	sender.sendMessage("");
+                    	sender.sendMessage(ChatColor.RED+"This game does not exist!");
+                    	sender.sendMessage("");
+                        return true;
+                    }
                     g.addPlayer(p);
                     return true;
                 }else {
@@ -401,12 +408,19 @@ public class Vi5BaseCommand implements CommandExecutor {
 			if(args.length>2) {
 				Game game = mainref.getGame(args[2]);
 				if(!(game==null)) {
-					mainref.deleteGame(game);
-					sender.sendMessage(ChatColor.GREEN+"This game has been succesfully deleted!");
+					if(!game.is_Started()) {
+						mainref.deleteGame(game);
+						sender.sendMessage(ChatColor.GREEN+"This game has been succesfully deleted!");
+					}else {
+						sender.sendMessage("");
+						sender.sendMessage(ChatColor.RED+"This game is in progress. Use: "+ChatColor.WHITE+"/vi5 game stop "+ChatColor.GOLD+"<GameName>");
+						sender.sendMessage("");
+					}
 				}else {
 					sender.sendMessage("");
 					sender.sendMessage(ChatColor.RED+"This game does not exist!");
 					sender.sendMessage("");
+					return true;
 				}
 			}else {
             	sender.sendMessage("");
