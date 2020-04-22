@@ -27,7 +27,7 @@ public class Rune_tough extends BaseRune {
 
 	@Override
 	public void gameEnd() {
-		player.setHealth(10);
+		player.setHealth(20);
 		// TODO Auto-generated method stub
 		
 	}
@@ -40,7 +40,7 @@ public class Rune_tough extends BaseRune {
 	@Override
 	public void enterZone() {
 		Activate();
-		player.setHealth(12);
+		player.setHealth(24);
 		// TODO Auto-generated method stub
 		
 	}
