@@ -42,8 +42,8 @@ public class Game implements Listener {
 	private ArrayList<MapLeaveZone> mapLeaveZones=new ArrayList<MapLeaveZone>();
 	private BukkitRunnable gameTick;
 	private final WeakHashMap<Player,PlayerWrapper> playersInGame = new WeakHashMap<Player,PlayerWrapper>();
-	//Liste des joueurs présents dans la partie et de leur wrapper
-	
+	public WeakHashMap<String,ArrayList<Location>> wallsInMapLocationsList = new WeakHashMap<String,ArrayList<Location>>();
+	public WeakHashMap<String,ArrayList<Double>> wallsInMapCenterList = new WeakHashMap<String,ArrayList<Double>>();
 	public Game(Vi5Main main,ConfigManager cfgm,String _name) {
 		mainref=main;
 		cfgManager=cfgm;
@@ -235,7 +235,23 @@ public class Game implements Listener {
 			obj.Tick();
 		}
 	}
-	
+	public void loadMapWalls() {
+		List<String> wallList = mainref.getCfgmanager().getMapWallsList(mapname);
+		YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(mapname);
+		for(String wallName : wallList) {
+			ArrayList<Location> bothCorner = new ArrayList<Location>();
+			Location loc1 = (Location) cfg.get("mapWalls.firstCorner");
+			Location loc2 = (Location) cfg.get("mapWalls.secondCorner");
+			bothCorner.add(loc1);
+			bothCorner.add(loc2);
+			wallsInMapLocationsList.put(wallName, bothCorner);
+			ArrayList<Double> centerLoc = new ArrayList<Double>();
+			centerLoc.add(loc1.getX()+(loc2.getX()-loc1.getX())/2);
+			centerLoc.add(loc1.getY()+(loc2.getY()-loc1.getY())/2);
+			centerLoc.add(loc1.getZ()+(loc2.getZ()-loc1.getZ())/2);
+			wallsInMapCenterList.put(wallName, centerLoc);
+		}
+	}
 	public void start(boolean forced,CommandSender sender) {
 		//lancement de la partie, que les joueurs soient prêts ou non;
 		if (!forced) {
@@ -253,6 +269,7 @@ public class Game implements Listener {
 		}else {
 			totalObjVolés=0;
 			nbVoleurAlive=0;
+			loadMapWalls();
 			for (Player p : playersInGame.keySet()) {
 				PlayerWrapper wrap = playersInGame.get(p);
 				wrap.setReady(false);

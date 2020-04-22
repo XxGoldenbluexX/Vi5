@@ -468,9 +468,9 @@ public class Vi5BaseCommand implements CommandExecutor {
 		case "Walls":
 			sender.sendMessage("");
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map "+ChatColor.GOLD+"...");
-			sender.sendMessage("["+ChatColor.GOLD+"addWall"+ChatColor.WHITE+"/"+ChatColor.WHITE+"/"+ChatColor.GOLD+"removeWall"+ChatColor.GOLD+"setWallCorner1"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setWallCorner2"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setWallIndication"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"addWall"+ChatColor.WHITE+"/"+ChatColor.WHITE+"/"+ChatColor.GOLD+"removeWall"+ChatColor.GOLD+"setWallCorner1"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setWallCorner2"+ChatColor.WHITE+"]");
 			sender.sendMessage(ChatColor.RED+"WARNING: Those are the walls used for guards' second ability "+ChatColor.LIGHT_PURPLE+ChatColor.UNDERLINE+"BUILDER"+ChatColor.RED+" which allow them to place additionnal walls on the map!");
-			sender.sendMessage(ChatColor.ITALIC+""+ChatColor.BLUE+"By default, Purpur will be set under walls for the guards to activate them. If you want to change ALL those blocks: "+ChatColor.WHITE+"/vi5 map setWallIndication "+ChatColor.GOLD+"<MapName>");
+			sender.sendMessage(ChatColor.ITALIC+""+ChatColor.BLUE+"Consider placing obvious blocks under the walls to clarify their locations");
 			sender.sendMessage("");
 			return true;
 		case "addWall":
@@ -602,43 +602,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("usage: /vi5 map setWallCorner2 <MapName> <WallName>");
 				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setWallCorner2 "+ChatColor.GOLD+"<MapName> <WallName>");
 				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set on the block you are looking at "+ChatColor.RED+"!");
-				sender.sendMessage("");
-				return true;
-			}
-		case "setWallIndication":
-			if(args.length>3) {
-				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
-				if (cfg==null) {
-					sender.sendMessage("");
-					sender.sendMessage(ChatColor.RED+"This map does not exist!");
-					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map create "+ChatColor.GOLD+"<MapName>");
-					sender.sendMessage("");
-					return true;
-				}
-				if (mainref.getCfgmanager().getMapWallsList(args[2]).contains(args[3])) {
-					if (sender instanceof Player) {
-						Player p = (Player)sender;
-						Block block= p.getTargetBlock(null, 10);
-						cfg.set("mapWalls.blocksUnder", block.getType());
-						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
-						sender.sendMessage(ChatColor.GREEN+"Blocks under ALL walls of this map set!");
-						return true;
-					}else {
-						sender.sendMessage(ChatColor.RED+"You need to be a player in order to use this command!");
-						return true;
-					}
-				}else {
-					sender.sendMessage("");
-					sender.sendMessage(ChatColor.RED+"This wall does not exist on map: "+ChatColor.GOLD+args[2]);
-					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addWall "+ChatColor.GOLD+"<MapName> <WallName>");
-					sender.sendMessage("");
-					return true;
-				}
-			}else {
-				sender.sendMessage("");
-				sender.sendMessage("usage: /vi5 map setWallIndication <MapName>");
-				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setWallIndication "+ChatColor.GOLD+"<MapName>");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"The block you are looking at will be set under ALL of this map walls "+ChatColor.RED+"!");
 				sender.sendMessage("");
 				return true;
 			}

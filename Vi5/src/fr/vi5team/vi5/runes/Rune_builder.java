@@ -1,18 +1,17 @@
 package fr.vi5team.vi5.runes;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.WeakHashMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.vi5team.vi5.Game;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.RunesList;
@@ -31,7 +30,6 @@ public class Rune_builder extends BaseRune{
 		super(_mainref, _wraper, _player, _rune);
 		// TODO Auto-generated constructor stub
 	}
-
 	@Override
 	public void cast() {
 		if(NB_WALLS<MAX_WALLS) {
@@ -210,23 +208,9 @@ public class Rune_builder extends BaseRune{
 	public void gameStart() {
 		Activate();
 		showAdaptedHotbarItem();
-		String mapName = wraper.getGame().getMapName();
-		List<String> wallList = mainref.getCfgmanager().getMapWallsList(mapName);
-		YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(mapName);
-		for(String wallName : wallList) {
-			ArrayList<Location> bothCorner = new ArrayList<Location>();
-			Location loc1 = (Location) cfg.get("mapWalls.firstCorner");
-			Location loc2 = (Location) cfg.get("mapWalls.secondCorner");
-			bothCorner.add(loc1);
-			bothCorner.add(loc2);
-			wallsInMapLocationsList.put(wallName, bothCorner);
-			ArrayList<Double> centerLoc = new ArrayList<Double>();
-			centerLoc.add(loc1.getX()+(loc2.getX()-loc1.getX())/2);
-			centerLoc.add(loc1.getY()+(loc2.getY()-loc1.getY())/2);
-			centerLoc.add(loc1.getZ()+(loc2.getZ()-loc1.getZ())/2);
-			wallsInMapCenterList.put(wallName, centerLoc);
-		}
-			
+		Game game = wraper.getGame();
+		wallsInMapLocationsList = game.wallsInMapLocationsList;
+		wallsInMapCenterList = game.wallsInMapCenterList;
 	}
 
 	@Override
