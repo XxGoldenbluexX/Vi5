@@ -41,7 +41,7 @@ public class PlayerWrapper implements Listener {
 	private RunesList voleurSecondaire=null;
 	private RunesList voleurTertiaire=null;
 	private RunesList gardePrimaire=RunesList.OMNI;
-	private RunesList gardeSecondaire=null;
+	private RunesList gardeSecondaire=RunesList.SURCHARGE;
 	private RunesList gardeTertiaire=null;
 	
 	//Status variables
@@ -210,13 +210,13 @@ public class PlayerWrapper implements Listener {
 		}
 		//RUNES
 		if (primaire!=null) {
-			primaire.tick();
+			primaire.pretick();
 		}
 		if (secondaire!=null) {
-			secondaire.tick();
+			secondaire.pretick();
 		}
 		if (tertiaire!=null) {
-			tertiaire.tick();
+			tertiaire.pretick();
 		}
 	}
 	

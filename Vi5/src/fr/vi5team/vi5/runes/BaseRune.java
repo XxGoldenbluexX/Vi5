@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
@@ -42,22 +41,17 @@ public abstract class BaseRune implements Listener {
 	 */
 	private float cooldown=0;
 	/**
-	 * BukkitRunnable qui sert a calculer le coolodown
-	 */
-	private final BukkitRunnable cooldownTimer = new BukkitRunnable() {
-		@Override
-		public void run() {cooldownTick();}
-	};
-	/**
 	 * Réference a l'item qui représente actuellement la rune dans la hotbar
 	 */
 	private ItemStack castItem;
+	private ItemStack hotbarItem;
 	public BaseRune(Vi5Main _mainref,PlayerWrapper _wraper, Player _player,RunesList _rune) {
 		player=_player;
 		wraper=_wraper;
 		mainref=_mainref;
 		Rune=_rune;
 		castItem=Rune.getHotbarItem();
+		hotbarItem=castItem;
 	}
 
 	public abstract void cast();
@@ -69,24 +63,29 @@ public abstract class BaseRune implements Listener {
 	@EventHandler
 	public void onPlayerDrop(PlayerDropItemEvent event) {
 		if (event.getPlayer().equals(player)) {
-			if (event.getItemDrop().getItemStack().equals(castItem)) {
+			if (event.getItemDrop().getItemStack().equals(hotbarItem)) {
 				switch (Rune.getType()) {
 				case PASSIF:
 					event.setCancelled(true);
 					break;
 				case SPELL:
+					if (event.getItemDrop().getItemStack().equals(castItem)) {
 					event.getItemDrop().remove();
 					event.setCancelled(false);
+					cast();
+					}else {
+						event.setCancelled(true);
+					}
 					break;
 				default:
 					break;
 				}
-				cast();
 			}
 		}
 	}
-	public void showHotbarItem() {
+	public void showCastItem() {
 		player.getInventory().setItem(Rune.getTiers().getInventorySlot(), castItem);
+		hotbarItem=castItem;
 		return;
 	}
 	/**
@@ -98,29 +97,43 @@ public abstract class BaseRune implements Listener {
 	public void setCastItem(ItemStack it) {
 		castItem=it;
 	}
+	public void pretick() {
+		cooldownTick();
+		tick();
+	}
 	private void setCooldownItem() {
-		ItemStack it = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE,Math.round(cooldown));
+		ItemStack it = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE,Math.max(Math.floorDiv(Math.round((cooldown+1)*10), 10),1));
 		ItemMeta meta = it.getItemMeta();
-		meta.setDisplayName(ChatColor.RED+Rune.getDisplayName()+": "+cooldown);
+		meta.setDisplayName(ChatColor.RED+Rune.getDisplayName()+": "+(float)Math.round(cooldown*10)/10f);
 		it.setItemMeta(meta);
+		hotbarItem=it;
 		player.getInventory().setItem(Rune.getTiers().getInventorySlot(), it);
 	}
 	public void Activate() {
 		mainref.getPmanager().registerEvents(this,mainref);
-		showHotbarItem();
+		showCastItem();
+	}
+	public void setCooldown(float _cooldown) {
+		cooldown=_cooldown;
+		cooldownTick();
 	}
 	private void cooldownTick() {
-		cooldown--;
-		if (cooldown<=0) {
-			cooldown=0;
-			showHotbarItem();
-		}else {
-			setCooldownItem();
-			if (cooldown<1) {
-				cooldownTimer.runTaskLater(mainref,(long)(cooldown*20));
+		if (cooldown>0) {
+			cooldown-=0.05;
+			if (cooldown<=0) {
+				cooldown=0;
+				showCastItem();
 			}else {
-				cooldownTimer.runTaskLater(mainref,20L);
+				setCooldownItem();
 			}
 		}
+	}
+
+	public ItemStack getHotbarItem() {
+		return hotbarItem;
+	}
+
+	public void setHotbarItem(ItemStack hotbarItem) {
+		this.hotbarItem = hotbarItem;
 	}
 }

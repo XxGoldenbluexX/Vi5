@@ -5,6 +5,8 @@ import java.util.WeakHashMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -27,7 +29,6 @@ public class Rune_omniCapteur extends BaseRune {
 	
 	public Rune_omniCapteur(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -37,7 +38,10 @@ public class Rune_omniCapteur extends BaseRune {
 			n.remove();
 			nbOmni++;
 			omniSpotList.remove(n);
+			setCooldown(2);
 			showAdaptedHotbarItem();
+			player.getWorld().playSound(player.getLocation(),Sound.BLOCK_LADDER_HIT, SoundCategory.MASTER, 0.8f, 2f);
+			player.getWorld().playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_HAT, SoundCategory.MASTER, 1f, 0.1f);
 		}else {
 			if (nbOmni>=1) {
 				ArmorStand omni = (ArmorStand) player.getWorld().spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
@@ -50,6 +54,8 @@ public class Rune_omniCapteur extends BaseRune {
 					omniSpotList.put(omni,new ArrayList<Player>());
 					nbOmni--;
 					showAdaptedHotbarItem();
+					player.getWorld().playSound(player.getLocation(),Sound.ENTITY_VEX_HURT, SoundCategory.MASTER, 2f, 0.1f);
+					player.getWorld().playSound(player.getLocation(),Sound.ITEM_FLINTANDSTEEL_USE, SoundCategory.MASTER, 2f, 0.1f);
 				}
 			}else {
 				showAdaptedHotbarItem();
@@ -71,7 +77,7 @@ public class Rune_omniCapteur extends BaseRune {
 			item.setItemMeta(meta);
 		}
 		setCastItem(item);
-		showHotbarItem();
+		showCastItem();
 	}
 	
 	private ArmorStand omniPickUpNear() {
@@ -107,6 +113,9 @@ public class Rune_omniCapteur extends BaseRune {
 						PlayerWrapper wrap = wraper.getGame().getPlayerWrapper(p);
 						wrap.setGlow(true);
 						wrap.setOmnispotted(true);
+						player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.MASTER, 0.3f, 0.1f);
+						player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_COW_BELL, SoundCategory.MASTER, 2f, 0.5f);
+						player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER, 2f, 0.1f);
 						if (wrap.isSondable()) {
 							player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GOLD+"A thief has been spotted!"));
 						}
@@ -137,8 +146,6 @@ public class Rune_omniCapteur extends BaseRune {
 
 	@Override
 	public void enterZone() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

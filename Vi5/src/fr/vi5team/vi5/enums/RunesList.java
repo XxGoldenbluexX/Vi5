@@ -28,9 +28,9 @@ public enum RunesList {
 			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Omnicapteur", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it"),
 			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Omnicapteur", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it")
 			),
-	SURCHARGE("Surcharge",RunesType.SPELL,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
-			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed is increased by 20%")
+	SURCHARGE("Surcharge",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Give an insane amount of movement speed and strength","20"+ChatColor.LIGHT_PURPLE+"s cooldown"),
+			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Drop it to have an insane amount of movement speed and strength")
 			),
 	GUARDSPEED("Sprinter",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
