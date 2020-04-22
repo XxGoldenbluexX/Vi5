@@ -141,6 +141,7 @@ public class Rune_omniCapteur extends BaseRune {
 	@Override
 	public void gameStart() {
 		Activate();
+		showAdaptedHotbarItem();
 		nbOmni=MAX_OMNI;
 	}
 

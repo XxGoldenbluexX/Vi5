@@ -42,7 +42,7 @@ public class PlayerWrapper implements Listener {
 	private RunesList voleurTertiaire=null;
 	private RunesList gardePrimaire=RunesList.OMNI;
 	private RunesList gardeSecondaire=RunesList.SURCHARGE;
-	private RunesList gardeTertiaire=null;
+	private RunesList gardeTertiaire=RunesList.SPEED;
 	
 	//Status variables
 	private boolean omnispotted=false;

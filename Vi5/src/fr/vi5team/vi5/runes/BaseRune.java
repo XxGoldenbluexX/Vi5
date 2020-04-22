@@ -45,6 +45,7 @@ public abstract class BaseRune implements Listener {
 	 */
 	private ItemStack castItem;
 	private ItemStack hotbarItem;
+	private ItemStack cooldownItem;
 	public BaseRune(Vi5Main _mainref,PlayerWrapper _wraper, Player _player,RunesList _rune) {
 		player=_player;
 		wraper=_wraper;
@@ -52,6 +53,7 @@ public abstract class BaseRune implements Listener {
 		Rune=_rune;
 		castItem=Rune.getHotbarItem();
 		hotbarItem=castItem;
+		cooldownItem = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
 	}
 
 	public abstract void cast();
@@ -63,13 +65,13 @@ public abstract class BaseRune implements Listener {
 	@EventHandler
 	public void onPlayerDrop(PlayerDropItemEvent event) {
 		if (event.getPlayer().equals(player)) {
-			if (event.getItemDrop().getItemStack().equals(hotbarItem)) {
+			if (event.getItemDrop().getItemStack().isSimilar(hotbarItem)) {
 				switch (Rune.getType()) {
 				case PASSIF:
 					event.setCancelled(true);
 					break;
 				case SPELL:
-					if (event.getItemDrop().getItemStack().equals(castItem)) {
+					if (event.getItemDrop().getItemStack().isSimilar(castItem)) {
 					event.getItemDrop().remove();
 					event.setCancelled(false);
 					cast();
@@ -102,12 +104,12 @@ public abstract class BaseRune implements Listener {
 		tick();
 	}
 	private void setCooldownItem() {
-		ItemStack it = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE,Math.max(Math.floorDiv(Math.round((cooldown+1)*10), 10),1));
-		ItemMeta meta = it.getItemMeta();
+		cooldownItem.setAmount(Math.max(Math.floorDiv(Math.round((cooldown+1)*10), 10),1));
+		ItemMeta meta = cooldownItem.getItemMeta();
 		meta.setDisplayName(ChatColor.RED+Rune.getDisplayName()+": "+(float)Math.round(cooldown*10)/10f);
-		it.setItemMeta(meta);
-		hotbarItem=it;
-		player.getInventory().setItem(Rune.getTiers().getInventorySlot(), it);
+		cooldownItem.setItemMeta(meta);
+		hotbarItem=cooldownItem;
+		player.getInventory().setItem(Rune.getTiers().getInventorySlot(), cooldownItem);
 	}
 	public void Activate() {
 		mainref.getPmanager().registerEvents(this,mainref);
