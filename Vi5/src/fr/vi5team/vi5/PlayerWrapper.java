@@ -38,8 +38,8 @@ public class PlayerWrapper implements Listener {
 	private ItemStack menuItem;
 	private ItemStack TeamSelectionItem;
 	private RunesList voleurPrimaire=RunesList.INVI;
-	private RunesList voleurSecondaire=null;
-	private RunesList voleurTertiaire=null;
+	private RunesList voleurSecondaire=RunesList.DOUBLE_JUMP;
+	private RunesList voleurTertiaire=RunesList.TOUGH;
 	private RunesList gardePrimaire=RunesList.OMNI;
 	private RunesList gardeSecondaire=RunesList.SURCHARGE;
 	private RunesList gardeTertiaire=RunesList.SPEED;
