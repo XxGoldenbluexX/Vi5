@@ -34,7 +34,6 @@ public class Rune_tough extends BaseRune {
 
 	@Override
 	public void gameStart() {
-		// TODO Auto-generated method stub
 		
 	}
 
