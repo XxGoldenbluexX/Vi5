@@ -20,6 +20,7 @@ import fr.vi5team.vi5.runes.Rune_doubleJump;
 import fr.vi5team.vi5.runes.Rune_fisherman;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
+import fr.vi5team.vi5.runes.Rune_scanner;
 import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
 import fr.vi5team.vi5.runes.Rune_tough;
@@ -161,6 +162,8 @@ public enum RunesList {
 			return new Rune_fisherman(main, w, p, r);
 		case BUSH:
 			return new Rune_bush(main, w, p, r);
+		case SCANNER:
+			return new Rune_scanner(main, w, p, r);
 		default:
 			return null;
 		}
