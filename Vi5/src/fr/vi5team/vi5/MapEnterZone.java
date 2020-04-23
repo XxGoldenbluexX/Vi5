@@ -22,9 +22,9 @@ public class MapEnterZone implements Listener {
 		Player player = event.getPlayer();
 		if (game.hasPlayer(player)) {
 			if (game.getPlayerWrapper(player).getTeam()==Vi5Team.VOLEUR && game.getPlayerWrapper(player).getCurrentStatus()==VoleurStatus.OUTSIDE) {
-				if (loc.getX()<=ploc.getX() && ploc.getX()<=loc.getX()+size.getX()) {
-					if (loc.getY()<=ploc.getY() && ploc.getY()<=loc.getY()+size.getY()) {
-						if (loc.getZ()<=ploc.getZ() && ploc.getZ()<=loc.getZ()+size.getZ()) {
+				if (loc.getX()>=ploc.getX()-size.getX() && ploc.getX()<=loc.getX()+size.getX()) {
+					if (loc.getY()>=ploc.getY()-size.getY() && ploc.getY()<=loc.getY()+size.getY()) {
+						if (loc.getZ()>=ploc.getZ()-size.getZ() && ploc.getZ()<=loc.getZ()+size.getZ()) {
 							game.playerEnterMap(player);
 						}else {
 							return;
