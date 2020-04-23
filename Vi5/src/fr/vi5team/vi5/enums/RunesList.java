@@ -14,6 +14,7 @@ import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.runes.BaseRune;
 import fr.vi5team.vi5.runes.Rune_builder;
+import fr.vi5team.vi5.runes.Rune_bush;
 import fr.vi5team.vi5.runes.Rune_crocheteur;
 import fr.vi5team.vi5.runes.Rune_doubleJump;
 import fr.vi5team.vi5.runes.Rune_fisherman;
@@ -158,6 +159,8 @@ public enum RunesList {
 			return new Rune_crocheteur(main, w, p, r);
 		case PECHEUR:
 			return new Rune_fisherman(main, w, p, r);
+		case BUSH:
+			return new Rune_bush(main, w, p, r);
 		default:
 			return null;
 		}
