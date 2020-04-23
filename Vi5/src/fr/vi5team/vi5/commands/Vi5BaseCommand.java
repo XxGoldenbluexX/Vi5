@@ -473,7 +473,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage("");
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map "+ChatColor.GOLD+"...");
 			sender.sendMessage("["+ChatColor.GOLD+"addMapEntrance"+ChatColor.WHITE+"/"+ChatColor.GOLD+"entranceList"+ChatColor.WHITE+"/"+ChatColor.GOLD+"removeMapEntrance"+ChatColor.WHITE+"]");
-			sender.sendMessage("["+ChatColor.GOLD+"setEntranceBlock"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setEntranceLoc"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setEntranceSize"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"setEntranceLoc"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setEntranceSize"+ChatColor.WHITE+"]");
 			sender.sendMessage("");
 			return true;
 		case "Escapes":	
@@ -754,7 +754,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}else {
 					l.add(args[3]);
 					mainref.getCfgmanager().setObjectNamesList(args[2], l);
-					sender.sendMessage(ChatColor.GREEN+"Map ("+ChatColor.GOLD+args[2]+ChatColor.GREEN+") has been created!");
+					sender.sendMessage(ChatColor.GREEN+"Map object ("+ChatColor.GOLD+args[3]+ChatColor.GREEN+") has been created!");
 					return true;
 				}
 			}else {
@@ -877,6 +877,8 @@ public class Vi5BaseCommand implements CommandExecutor {
 					cfg.set("mapObjects."+args[3]+".sizey", StringToInt(args[5]));
 					cfg.set("mapObjects."+args[3]+".sizez", StringToInt(args[6]));
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+					sender.sendMessage(ChatColor.GREEN+"Object's size set");
+					
 					return true;
 				}else {
 					sender.sendMessage("");
@@ -1046,44 +1048,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("");
 				return true;
 			}
-		case "setEntranceBlock":
-			if(args.length>3) {
-				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
-				if (cfg==null) {
-					sender.sendMessage("");
-					sender.sendMessage(ChatColor.RED+"This map does not exist!");
-					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map create "+ChatColor.GOLD+"<MapName>");
-					sender.sendMessage("");
-					return true;
-				}
-				if (mainref.getCfgmanager().getMapEntrancesList(args[2]).contains(args[3])) {
-					if (sender instanceof Player) {
-						Player p = (Player)sender;
-						cfg.set("mapEntrances."+args[3]+".blockLocation", p.getLocation());
-						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
-						sender.sendMessage(ChatColor.GREEN+"Entrance's teleport location set!");
-						return true;
-					}else {
-						sender.sendMessage("");
-						sender.sendMessage(ChatColor.RED+"You need to be a player in order to use this command!");
-						sender.sendMessage("");
-						return true;
-					}
-				}else {
-					sender.sendMessage("");
-					sender.sendMessage(ChatColor.RED+"This entrance does not exist on map: "+ChatColor.GOLD+args[2]);
-					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addEntrance "+ChatColor.GOLD+"<MapName> <EntranceName>");
-					sender.sendMessage("");
-					return true;
-				}
-			}else {
-				sender.sendMessage("");
-				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setEntranceBlock "+ChatColor.GOLD+"<MapName> <EntranceName>");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Position will be set where you are standing "+ChatColor.RED+"!");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"This will be where you will be teleported when spawning "+ChatColor.RED+"!");
-				sender.sendMessage("");
-				return true;
-			}	
 		case "setEntranceLoc":
 			if(args.length>3) {
 				if (mainref.getCfgmanager().getMapEntrancesList(args[2]).contains(args[3])) {
