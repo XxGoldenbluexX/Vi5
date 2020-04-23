@@ -134,9 +134,7 @@ public class Game implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
-		System.out.println("UN JOUEUR EST MORT");
 		if (hasPlayer(player) && started) {
-			System.out.println("WTF");
 			PlayerWrapper wrap = playersInGame.get(player);
 			if(wrap.getTeam()==Vi5Team.VOLEUR) {
 				System.out.println("UN VOLEUR EST MORT");
