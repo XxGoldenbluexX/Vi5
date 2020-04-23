@@ -164,9 +164,16 @@ public enum RunesList {
 			return new Rune_bush(main, w, p, r);
 		case SCANNER:
 			return new Rune_scanner(main, w, p, r);
+		case COP:
+			break;
+		case LANTERN:
+			break;
+		case SHADOW:
+			break;
 		default:
-			return null;
+			break;
 		}
+		return null;
 	}
 	public static ArrayList<RunesList> getGardePrimaires(){
 		ArrayList<RunesList> l = new ArrayList<RunesList>();

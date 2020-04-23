@@ -17,7 +17,7 @@ public class Rune_scanner extends BaseRune{
 	@Override
 	public void cast() {
 		for(Player p : wraper.getGame().getGardeList()) {
-			player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 140, 1, false, false, true));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 140, 1, false, false, true));
 		setCooldown(25);
 		}
 	}

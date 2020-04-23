@@ -129,7 +129,7 @@ public class Game implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
-		if (hasPlayer(player)) {
+		if (hasPlayer(player) && started) {
 			PlayerWrapper wrap = playersInGame.get(player);
 			if(wrap.getTeam()==Vi5Team.VOLEUR) {
 				messagePlayersInGame(ChatColor.RED+player.getName()+" died with "+ChatColor.GREEN+wrap.getNbItemStealed()+ChatColor.GOLD+" object(s)!");
@@ -139,6 +139,9 @@ public class Game implements Listener {
 				if (nbVoleurAlive<=0) {
 					endGame();
 				}
+			}else if (wrap.getTeam()==Vi5Team.GARDE) {
+				player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+				player.teleport(gardeSpawn);
 			}
 		}
 	}
