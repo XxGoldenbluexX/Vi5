@@ -46,9 +46,13 @@ public class Rune_inviSneak extends BaseRune{
 		if (isSneaking) {
 			if (guardNear() || wraper.isJammed()) {
 				player.getWorld().playSound(player.getLocation(),Sound.BLOCK_LAVA_EXTINGUISH, SoundCategory.MASTER, 0.1f, 2f);
-				wraper.setInvisible(false);
+				if (wraper.isInvisible()) {
+					wraper.setInvisible(false);
+				}
 			}else {
-				wraper.setInvisible(true);
+				if (!wraper.isInvisible()) {
+					wraper.setInvisible(true);
+				}
 			}
 		}
 	}
