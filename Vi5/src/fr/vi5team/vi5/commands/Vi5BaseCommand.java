@@ -877,6 +877,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 					cfg.set("mapObjects."+args[3]+".sizey", StringToInt(args[5]));
 					cfg.set("mapObjects."+args[3]+".sizez", StringToInt(args[6]));
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+					return true;
 				}else {
 					sender.sendMessage("");
 					sender.sendMessage(ChatColor.RED+"This object does not exist on map: "+ChatColor.GOLD+args[2]);
