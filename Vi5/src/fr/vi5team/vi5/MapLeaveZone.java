@@ -23,15 +23,15 @@ public class MapLeaveZone implements Listener {
 		Player player = event.getPlayer();
 		if (game.hasPlayer(player)) {
 			if (game.getPlayerWrapper(player).getCurrentStatus()==VoleurStatus.INSIDE) {
-				if (loc.getX()>=ploc.getX()-size.getX() && ploc.getX()<=loc.getX()+size.getX()) {
-					if (loc.getY()>=ploc.getY()-size.getY() && ploc.getY()<=loc.getY()+size.getY()) {
-						if (loc.getZ()>=ploc.getZ()-size.getZ() && ploc.getZ()<=loc.getZ()+size.getZ()) {
+				if (loc.getX()-size.getX()<=ploc.getX() && ploc.getX()<=loc.getX()+size.getX()) {
+					if (loc.getY()-size.getY()<=ploc.getY() && ploc.getY()<=loc.getY()+size.getY()) {
+						if (loc.getZ()-size.getZ()<=ploc.getZ() && ploc.getZ()<=loc.getZ()+size.getZ()) {
 							if (game.getPlayerWrapper(player).getTeam()==Vi5Team.VOLEUR) {
 								if (!game.getPlayerWrapper(player).isLeaveCooldown()) {
 									game.playerLeaveMap(player);
 								}else {
 									event.setCancelled(true);
-									player.sendMessage(ChatColor.DARK_RED+"You can leave now!");
+									player.sendMessage(ChatColor.DARK_RED+"You can't leave now!");
 								}
 								return;
 							}else if (game.getPlayerWrapper(player).getTeam()==Vi5Team.GARDE) {
