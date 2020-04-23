@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -75,6 +76,31 @@ public abstract class BaseRune implements Listener {
 					if (event.getItemDrop().getItemStack().isSimilar(castItem)) {
 					event.getItemDrop().remove();
 					event.setCancelled(false);
+					cast();
+					}else {
+						event.setCancelled(true);
+					}
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+	@EventHandler
+	public void onPlayerInteract(PlayerInteractEvent event) {
+		if (event.getItem()==null) {
+			return;
+		}
+		if (event.getPlayer().equals(player)) {
+			if (event.getItem().isSimilar(hotbarItem)) {
+				switch (Rune.getType()) {
+				case PASSIF:
+					event.setCancelled(true);
+					break;
+				case SPELL:
+					if (event.getItem().isSimilar(castItem)) {
+					event.setCancelled(true);
 					cast();
 					}else {
 						event.setCancelled(true);
