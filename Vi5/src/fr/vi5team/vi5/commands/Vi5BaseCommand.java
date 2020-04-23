@@ -3,6 +3,7 @@ package fr.vi5team.vi5.commands;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -16,7 +17,6 @@ import fr.vi5team.vi5.Game;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
-import sun.rmi.transport.proxy.CGIHandler;
 
 public class Vi5BaseCommand implements CommandExecutor {
 
@@ -144,7 +144,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 		case "playerList":
 			if(args.length>2) {
 				Game g = mainref.getGame(args[2]);
-				sender.sendMessage(ChatColor.BLUE+"Player list for "+args[2]+ChatColor.BLUE+":");
+				sender.sendMessage(ChatColor.GOLD+"Player(s)"+ChatColor.BLUE+ChatColor.UNDERLINE+"list for "+args[2]+ChatColor.BLUE+":");
 				for(Player p : g.getPlayerList()) {
 					String playerName=p.getName();
 					if(g.is_Started()) {
@@ -152,9 +152,9 @@ public class Vi5BaseCommand implements CommandExecutor {
 					}else {
 						PlayerWrapper wrap = mainref.getPlayerWrapper(p);
 						if(wrap.is_ready()) {
-							sender.sendMessage(playerName+ChatColor.BLUE+", Status: "+ChatColor.GREEN+"[READY]");	
+							sender.sendMessage(ChatColor.GOLD+playerName+ChatColor.WHITE+", Status: "+ChatColor.GREEN+"[READY]");	
 						}else {
-							sender.sendMessage(playerName+ChatColor.BLUE+", Status: "+ChatColor.RED+"[NOT READY]");
+							sender.sendMessage(ChatColor.GOLD+playerName+ChatColor.WHITE+", Status: "+ChatColor.RED+"[NOT READY]");
 						}
 					}
 				}
@@ -334,7 +334,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 					g.start(true,sender);
 					for(Player p:Bukkit.getOnlinePlayers()) {
 						if (g.hasPlayer(p)) {
-							p.sendMessage(ChatColor.RED+"Game has been restarted by: "+sender);
+							p.sendMessage(ChatColor.RED+"Game has been restarted by: "+sender.getName());
 						}
 					}
 					return true;
@@ -356,7 +356,8 @@ public class Vi5BaseCommand implements CommandExecutor {
 				if (!game.is_Started()) {
 					for(Player p:Bukkit.getOnlinePlayers()) {
 						if (game.hasPlayer(p)) {
-							p.sendMessage(ChatColor.RED+"Game has been forcefully stopped by: "+sender);
+							sender.sendMessage(ChatColor.GREEN+"Game has been stopped");
+							p.sendMessage(ChatColor.RED+"Game has been forcefully stopped by: "+sender.getName());
 							PlayerWrapper wrap = mainref.getPlayerWrapper(p);
 							wrap.resetItemStealed();
 						}
@@ -374,10 +375,10 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage("");
 			return true;
 		case "leave":
-            if(args.length>2) {
+            if(args.length>1) {
             	Player p;
-            	if (args.length>3) {
-            		p = Bukkit.getServer().getPlayer(args[3]);
+            	if (args.length>2) {
+            		p = Bukkit.getServer().getPlayer(args[2]);
             		if (p.equals(null)) {
             			sender.sendMessage("");
                     	sender.sendMessage(ChatColor.RED+"This player does not exist!");
@@ -388,9 +389,9 @@ public class Vi5BaseCommand implements CommandExecutor {
             		p = (Player)sender;
             	}
                 if (mainref.isPlayerIngame(p)) {
-                    Game g = mainref.getGame(args[2]);
+                    Game g = mainref.getPlayerWrapper(p).getGame();
                     g.removePlayer(p);
-                    sender.sendMessage(p.getName()+ChatColor.GREEN+") left this game!");
+                    sender.sendMessage(p.getName()+ChatColor.GREEN+" left this game!");
                     return true;
                 }else {
                 	sender.sendMessage("");
@@ -400,7 +401,7 @@ public class Vi5BaseCommand implements CommandExecutor {
                 }
             }else {
             	sender.sendMessage("");
-    			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game leave "+ChatColor.GOLD+"<GameName> (PlayerName)");
+    			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game leave "+ChatColor.GOLD+"(PlayerName)");
     			sender.sendMessage("");
                 return true;
             }
@@ -473,7 +474,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage("");
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map "+ChatColor.GOLD+"...");
 			sender.sendMessage("["+ChatColor.GOLD+"addMapEntrance"+ChatColor.WHITE+"/"+ChatColor.GOLD+"entranceList"+ChatColor.WHITE+"/"+ChatColor.GOLD+"removeMapEntrance"+ChatColor.WHITE+"]");
-			sender.sendMessage("["+ChatColor.GOLD+"setEntranceBlock"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setEntranceLoc"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setEntranceSize"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"setEntranceLoc"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setEntranceSize"+ChatColor.WHITE+"]");
 			sender.sendMessage("");
 			return true;
 		case "Escapes":	
@@ -754,7 +755,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}else {
 					l.add(args[3]);
 					mainref.getCfgmanager().setObjectNamesList(args[2], l);
-					sender.sendMessage(ChatColor.GREEN+"Map ("+ChatColor.GOLD+args[2]+ChatColor.GREEN+") has been created!");
+					sender.sendMessage(ChatColor.GREEN+"Map object ("+ChatColor.GOLD+args[3]+ChatColor.GREEN+") has been created!");
 					return true;
 				}
 			}else {
@@ -877,6 +878,8 @@ public class Vi5BaseCommand implements CommandExecutor {
 					cfg.set("mapObjects."+args[3]+".sizey", StringToInt(args[5]));
 					cfg.set("mapObjects."+args[3]+".sizez", StringToInt(args[6]));
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
+					sender.sendMessage(ChatColor.GREEN+"Object's size set");
+					
 					return true;
 				}else {
 					sender.sendMessage("");
@@ -1046,44 +1049,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("");
 				return true;
 			}
-		case "setEntranceBlock":
-			if(args.length>3) {
-				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
-				if (cfg==null) {
-					sender.sendMessage("");
-					sender.sendMessage(ChatColor.RED+"This map does not exist!");
-					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map create "+ChatColor.GOLD+"<MapName>");
-					sender.sendMessage("");
-					return true;
-				}
-				if (mainref.getCfgmanager().getMapEntrancesList(args[2]).contains(args[3])) {
-					if (sender instanceof Player) {
-						Player p = (Player)sender;
-						cfg.set("mapEntrances."+args[3]+".blockLocation", p.getLocation());
-						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
-						sender.sendMessage(ChatColor.GREEN+"Entrance's teleport location set!");
-						return true;
-					}else {
-						sender.sendMessage("");
-						sender.sendMessage(ChatColor.RED+"You need to be a player in order to use this command!");
-						sender.sendMessage("");
-						return true;
-					}
-				}else {
-					sender.sendMessage("");
-					sender.sendMessage(ChatColor.RED+"This entrance does not exist on map: "+ChatColor.GOLD+args[2]);
-					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map addEntrance "+ChatColor.GOLD+"<MapName> <EntranceName>");
-					sender.sendMessage("");
-					return true;
-				}
-			}else {
-				sender.sendMessage("");
-				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setEntranceBlock "+ChatColor.GOLD+"<MapName> <EntranceName>");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Position will be set where you are standing "+ChatColor.RED+"!");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"This will be where you will be teleported when spawning "+ChatColor.RED+"!");
-				sender.sendMessage("");
-				return true;
-			}	
 		case "setEntranceLoc":
 			if(args.length>3) {
 				if (mainref.getCfgmanager().getMapEntrancesList(args[2]).contains(args[3])) {
@@ -1255,8 +1220,15 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("");
 				return true;
 			}
+			default:
+				sender.sendMessage("");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map "+ChatColor.GOLD+"...");
+				sender.sendMessage("["+ChatColor.GOLD+"create"+ChatColor.WHITE+"/"+ChatColor.GOLD+"rename"+ChatColor.WHITE+"/"+ChatColor.GOLD+"list"+ChatColor.WHITE+"/"+ChatColor.GOLD+"delete"+ChatColor.WHITE+"]");
+				sender.sendMessage("["+ChatColor.GOLD+"setGuardSpawn"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setThiefMinimapSpawn"+ChatColor.WHITE+"]");
+				sender.sendMessage("["+ChatColor.GOLD+"Objects"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Entrances"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Escapes"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Walls"+ChatColor.WHITE+"]");
+				sender.sendMessage("");
+				return true;
 		}
-		return false;
 	}
 	
 	public boolean teamCommand(CommandSender sender,String[] args) {
