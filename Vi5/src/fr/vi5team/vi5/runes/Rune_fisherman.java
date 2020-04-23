@@ -24,7 +24,6 @@ public class Rune_fisherman extends BaseRune{
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
 		
 	}
 
