@@ -30,6 +30,7 @@ public class PlayerWrapper implements Listener {
 	private short nbItemStealed=0;
 	private VoleurStatus currentStatus=VoleurStatus.OUTSIDE;
 	private boolean enterStealCooldown=true;
+	private boolean leaveCooldown=true;
 	
 	private final Game game;//référence a la game ou le joueur appartient, null si il n'en a pas
 	boolean ready=false;
@@ -467,5 +468,13 @@ public class PlayerWrapper implements Listener {
 
 	public void setUnSpottable(boolean unSpottable) {
 		this.unSpottable = unSpottable;
+	}
+
+	public boolean isLeaveCooldown() {
+		return leaveCooldown;
+	}
+
+	public void setLeaveCooldown(boolean leaveCooldown) {
+		this.leaveCooldown = leaveCooldown;
 	}
 }

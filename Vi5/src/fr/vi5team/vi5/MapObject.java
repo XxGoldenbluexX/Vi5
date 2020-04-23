@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
@@ -109,6 +110,14 @@ public class MapObject implements Listener{
 		gameref.titleTeam(Vi5Team.GARDE, ChatColor.RED+"An object has been stolen", "", 5, 20, 20);
 		gameref.titleTeam(Vi5Team.VOLEUR, ChatColor.RED+objectName+ChatColor.GOLD+" stole", ChatColor.GOLD+"by "+ChatColor.AQUA+player.getName(), 5, 20, 20);
 		gameref.launchCaptureDelay();
+		wrap.setLeaveCooldown(true);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				player.sendMessage(ChatColor.DARK_GREEN+"You can leave the complex");
+				wrap.setLeaveCooldown(false);
+			}
+		}.runTaskLater(gameref.getMainRef(), 600);
 	}
 		
 	public MapObject(Game game, String _objectName, Location _position, Location _blockPosition,BlockData bdata,Material _blockType,int sizex,int sizey,int sizez) {

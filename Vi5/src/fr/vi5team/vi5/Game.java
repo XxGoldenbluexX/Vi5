@@ -113,13 +113,17 @@ public class Game implements Listener {
 				wrap.enterZone();
 				player.sendMessage(ChatColor.GOLD+"You entered the complex");
 				showPlayer(player);
+				wrap.setUnSpottable(true);
+				wrap.setLeaveCooldown(true);
 				new BukkitRunnable() {
 
 					@Override
 					public void run() {
-						wrap.setUnSpottable(false);
-						if (wrap.getCurrentStatus()==VoleurStatus.INSIDE);
-						player.sendMessage(ChatColor.LIGHT_PURPLE+""+ChatColor.UNDERLINE+"You are now spottable");
+						if (wrap.getCurrentStatus()==VoleurStatus.INSIDE) {
+							wrap.setUnSpottable(false);
+							player.sendMessage(ChatColor.LIGHT_PURPLE+""+ChatColor.UNDERLINE+"You are now spottable");
+							wrap.setLeaveCooldown(false);
+						}
 					}
 					
 				}.runTaskLater(mainref, 200);

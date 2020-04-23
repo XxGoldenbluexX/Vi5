@@ -1,5 +1,6 @@
 package fr.vi5team.vi5;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,7 +27,12 @@ public class MapLeaveZone implements Listener {
 					if (loc.getY()<=ploc.getY() && ploc.getY()<=loc.getY()+size.getY()) {
 						if (loc.getZ()<=ploc.getZ() && ploc.getZ()<=loc.getZ()+size.getZ()) {
 							if (game.getPlayerWrapper(player).getTeam()==Vi5Team.VOLEUR) {
-								game.playerLeaveMap(player);
+								if (!game.getPlayerWrapper(player).isLeaveCooldown()) {
+									game.playerLeaveMap(player);
+								}else {
+									event.setCancelled(true);
+									player.sendMessage(ChatColor.DARK_RED+"You can leave now!");
+								}
 								return;
 							}else if (game.getPlayerWrapper(player).getTeam()==Vi5Team.GARDE) {
 								event.setCancelled(true);
