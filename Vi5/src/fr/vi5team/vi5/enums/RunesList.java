@@ -14,6 +14,7 @@ import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.runes.BaseRune;
 import fr.vi5team.vi5.runes.Rune_builder;
+import fr.vi5team.vi5.runes.Rune_crocheteur;
 import fr.vi5team.vi5.runes.Rune_doubleJump;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
@@ -152,6 +153,8 @@ public enum RunesList {
 			return new Rune_omniCapteur(main, w, p, r);
 		case BUILDER:
 			return new Rune_builder(main, w, p, r);
+		case CROCHETEUR:
+			return new Rune_crocheteur(main, w, p, r);
 		default:
 			return null;
 		}
