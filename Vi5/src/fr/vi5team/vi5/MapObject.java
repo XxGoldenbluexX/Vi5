@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -118,6 +119,10 @@ public class MapObject implements Listener{
 				wrap.setLeaveCooldown(false);
 			}
 		}.runTaskLater(gameref.getMainRef(), 600);
+	}
+	
+	public void unregisterEvents() {
+		HandlerList.unregisterAll(this);
 	}
 		
 	public MapObject(Game game, String _objectName, Location _position, Location _blockPosition,BlockData bdata,Material _blockType,int sizex,int sizey,int sizez) {

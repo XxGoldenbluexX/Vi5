@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
@@ -58,6 +59,10 @@ public class MapLeaveZone implements Listener {
 		loc=_loc;
 		size=_size;
 		game=_game;
+	}
+	
+	public void unregisterEvents() {
+		HandlerList.unregisterAll(this);
 	}
 
 	public Location getLoc() {

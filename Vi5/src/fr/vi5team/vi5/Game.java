@@ -54,6 +54,18 @@ public class Game implements Listener {
 	public void endGame() {
 		started=false;
 		gameTick.cancel();
+		for (MapObject o : mapObjects) {
+			o.unregisterEvents();
+		}
+		mapObjects.clear();
+		for (MapEnterZone o : mapEnterZones) {
+			o.unregisterEvents();
+		}
+		mapEnterZones.clear();
+		for (MapLeaveZone o : mapLeaveZones) {
+			o.unregisterEvents();
+		}
+		mapLeaveZones.clear();
 		for (Player p : playersInGame.keySet()) {
 			PlayerWrapper wrap = playersInGame.get(p);
 			p.getInventory().clear();
