@@ -89,7 +89,7 @@ public class MapObject implements Listener{
 								return;
 							}
 							captureLevel+=2;
-							float percent = ((float)captureLevel/(float)MAX_CAPTURE_LEVEL)*100f;
+							int percent = Math.floorDiv(captureLevel*100,MAX_CAPTURE_LEVEL);
 							p.sendTitle("", ChatColor.DARK_GREEN+"Capturing "+ChatColor.RED+ChatColor.UNDERLINE+objectName+" : "+percent+"%", 0, 2, 0);
 						}else {
 							capture(p,wrap);

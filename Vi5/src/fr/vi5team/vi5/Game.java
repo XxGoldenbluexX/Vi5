@@ -134,9 +134,12 @@ public class Game implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
+		System.out.println("UN JOUEUR EST MORT");
 		if (hasPlayer(player) && started) {
+			System.out.println("WTF");
 			PlayerWrapper wrap = playersInGame.get(player);
 			if(wrap.getTeam()==Vi5Team.VOLEUR) {
+				System.out.println("UN VOLEUR EST MORT");
 				messagePlayersInGame(ChatColor.RED+player.getName()+" died with "+ChatColor.GREEN+wrap.getNbItemStealed()+ChatColor.GOLD+" object(s)!");
 				player.setGameMode(GameMode.SPECTATOR);
 				wrap.setCurrentStatus(VoleurStatus.ESCAPED);
@@ -284,6 +287,7 @@ public class Game implements Listener {
 		}else {
 			totalObjVolés=0;
 			nbVoleurAlive=0;
+			started=true;
 			loadMapWalls();
 			for (Player p : playersInGame.keySet()) {
 				PlayerWrapper wrap = playersInGame.get(p);
