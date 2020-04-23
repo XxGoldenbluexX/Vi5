@@ -20,6 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.InterfaceType;
+import fr.vi5team.vi5.enums.RunesList;
 import fr.vi5team.vi5.enums.Vi5Team;
 
 public class Vi5Interfaces implements Listener{
@@ -210,6 +211,169 @@ public class Vi5Interfaces implements Listener{
 			itm = new ItemStack(Material.BLUE_BANNER);
 			inter.setItem(16, itm);
 			break;
+		/////
+		case RUNES_GARDE:
+			if (inter.getSize()!=54) {
+				inter = Bukkit.createInventory(null, 54, ChatColor.BLUE+"Runes");
+			}else {
+				inter.clear();
+			}
+			itm = makeGuiItem(false, Material.ANVIL, ChatColor.DARK_RED+"BACK");
+			inter.setItem(0, itm);
+			itm = makeGuiItem(false,teamglass, ChatColor.BLUE+"Guard Runes");
+			for (byte i=1;i<6;i++) {
+				inter.setItem(i*9, itm);
+			}
+			itm = makeGuiItem(false, Material.ORANGE_STAINED_GLASS_PANE, ChatColor.GOLD+"Primary Runes");
+			inter.setItem(1, itm);
+			inter.setItem(10, itm);
+			itm = makeGuiItem(false, Material.MAGENTA_STAINED_GLASS_PANE, ChatColor.GOLD+"Secondary Runes");
+			inter.setItem(19, itm);
+			inter.setItem(28, itm);
+			itm = makeGuiItem(false, Material.LIME_STAINED_GLASS_PANE, ChatColor.GOLD+"Tertiary Runes");
+			inter.setItem(37, itm);
+			inter.setItem(46, itm);
+			//LA CA VA CHIER
+			ArrayList<RunesList> l = RunesList.getGardePrimaires();
+			byte spot=2;
+			for (byte i=0;i<l.size();i++) {
+				if (spot==9) {
+					spot+=2;
+				}
+				if (spot==18) {
+					break;
+				}
+				ItemStack itms = l.get(i).getMenuItem().clone();
+				if (wrap.getGardePrimaire()==l.get(i)) {
+					itms.addUnsafeEnchantment(Enchantment.MENDING,1);
+					ItemMeta meta = itms.getItemMeta();
+					meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					itms.setItemMeta(meta);
+				}
+				inter.setItem(spot,itms);
+				spot++;
+			};
+			l = RunesList.getGardeSecondaires();
+			spot=20;
+			for (byte i=0;i<l.size();i++) {
+				if (spot==27) {
+					spot+=2;
+				}
+				if (spot==36) {
+					break;
+				}
+				ItemStack itms = l.get(i).getMenuItem().clone();
+				if (wrap.getGardeSecondaire()==l.get(i)) {
+					itms.addUnsafeEnchantment(Enchantment.MENDING,1);
+					ItemMeta meta = itms.getItemMeta();
+					meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					itms.setItemMeta(meta);
+				}
+				inter.setItem(spot,itms);
+				spot++;
+			}
+			l = RunesList.getGardeTertiaires();
+			spot=38;
+			for (byte i=0;i<l.size();i++) {
+				if (spot==45) {
+					spot+=2;
+				}
+				if (spot==54) {
+					break;
+				}
+				ItemStack itms = l.get(i).getMenuItem().clone();
+				if (wrap.getGardeTertiaire()==l.get(i)) {
+					itms.addUnsafeEnchantment(Enchantment.MENDING,1);
+					ItemMeta meta = itms.getItemMeta();
+					meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					itms.setItemMeta(meta);
+				}
+				inter.setItem(spot,itms);
+				spot++;
+			}
+			break;
+		/////
+		case RUNES_VOLEUR:
+			if (inter.getSize()!=54) {
+				inter = Bukkit.createInventory(null, 54, ChatColor.BLUE+"Runes");
+			}else {
+				inter.clear();
+			}
+			itm = makeGuiItem(false, Material.ANVIL, ChatColor.DARK_RED+"BACK");
+			inter.setItem(0, itm);
+			itm = makeGuiItem(false,teamglass, ChatColor.BLUE+"Thief Runes");
+			for (byte i=1;i<6;i++) {
+				inter.setItem(i*9, itm);
+			}
+			itm = makeGuiItem(false, Material.ORANGE_STAINED_GLASS_PANE, ChatColor.GOLD+"Primary Runes");
+			inter.setItem(1, itm);
+			inter.setItem(10, itm);
+			itm = makeGuiItem(false, Material.MAGENTA_STAINED_GLASS_PANE, ChatColor.GOLD+"Secondary Runes");
+			inter.setItem(19, itm);
+			inter.setItem(28, itm);
+			itm = makeGuiItem(false, Material.LIME_STAINED_GLASS_PANE, ChatColor.GOLD+"Tertiary Runes");
+			inter.setItem(37, itm);
+			inter.setItem(46, itm);
+			//LA CA VA CHIER
+			ArrayList<RunesList> lv = RunesList.getVoleurPrimaires();
+			byte spott=2;
+			for (byte i=0;i<lv.size();i++) {
+				if (spott==9) {
+					spott+=2;
+				}
+				if (spott==18) {
+					break;
+				}
+				ItemStack itms = lv.get(i).getMenuItem().clone();
+				if (wrap.getVoleurPrimaire()==lv.get(i)) {
+					itms.addUnsafeEnchantment(Enchantment.MENDING,1);
+					ItemMeta meta = itms.getItemMeta();
+					meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					itms.setItemMeta(meta);
+				}
+				inter.setItem(spott,itms);
+				spott++;
+			};
+			lv = RunesList.getVoleurSecondaires();
+			spott=20;
+			for (byte i=0;i<lv.size();i++) {
+				if (spott==27) {
+					spott+=2;
+				}
+				if (spott==36) {
+					break;
+				}
+				ItemStack itms = lv.get(i).getMenuItem().clone();
+				if (wrap.getVoleurSecondaire()==lv.get(i)) {
+					itms.addUnsafeEnchantment(Enchantment.MENDING,1);
+					ItemMeta meta = itms.getItemMeta();
+					meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					itms.setItemMeta(meta);
+				}
+				inter.setItem(spott,itms);
+				spott++;
+			}
+			lv = RunesList.getVoleurTertiaires();
+			spott=38;
+			for (byte i=0;i<lv.size();i++) {
+				if (spott==45) {
+					spott+=2;
+				}
+				if (spott==54) {
+					break;
+				}
+				ItemStack itms = lv.get(i).getMenuItem().clone();
+				if (wrap.getVoleurTertiaire()==lv.get(i)) {
+					itms.addUnsafeEnchantment(Enchantment.MENDING,1);
+					ItemMeta meta = itms.getItemMeta();
+					meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+					itms.setItemMeta(meta);
+				}
+				inter.setItem(spott,itms);
+				spott++;
+			}
+			break;
+		/////
 		default:
 			break;
 		}
@@ -289,8 +453,58 @@ public class Vi5Interfaces implements Listener{
 						}
 						break;
 					case RUNES_GARDE:
+						switch (itemClicked.getType()) {
+						case ANVIL:
+							closeInterface(player);
+							openMenu(player, InterfaceType.MAIN);
+						default:
+							break;
+						}
+						for (RunesList r : RunesList.values()) {
+							if (itemClicked.isSimilar(r.getMenuItem())) {
+								switch (r.getTiers()) {
+								case PRIMAIRE:
+									wrap.setGardePrimaire(r);
+									break;
+								case SECONDAIRE:
+									wrap.setGardeSecondaire(r);
+									break;
+								case TERTIAIRE:
+									wrap.setGardeTertiaire(r);
+									break;
+								default:
+									break;
+								}
+								openMenu(player, InterfaceType.RUNES_GARDE, inventory);
+							}
+						}
 						break;
 					case RUNES_VOLEUR:
+						switch (itemClicked.getType()) {
+						case ANVIL:
+							closeInterface(player);
+							openMenu(player, InterfaceType.MAIN);
+						default:
+							break;
+						}
+						for (RunesList r : RunesList.values()) {
+							if (itemClicked.isSimilar(r.getMenuItem())) {
+								switch (r.getTiers()) {
+								case PRIMAIRE:
+									wrap.setVoleurPrimaire(r);
+									break;
+								case SECONDAIRE:
+									wrap.setVoleurSecondaire(r);
+									break;
+								case TERTIAIRE:
+									wrap.setVoleurTertiaire(r);
+									break;
+								default:
+									break;
+								}
+								openMenu(player, InterfaceType.RUNES_VOLEUR, inventory);
+							}
+						}
 						break;
 					case TEAM:
 						switch (itemClicked.getType()) {

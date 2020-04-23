@@ -10,6 +10,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -57,6 +59,9 @@ public class Game implements Listener {
 			p.getInventory().clear();
 			p.getActivePotionEffects().clear();
 			wrap.gameEnd();
+			for (AttributeModifier m : p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getModifiers()) {
+				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).removeModifier(m);
+			}
 			p.setGameMode(GameMode.SPECTATOR);
 			wrap.setReady(false);
 			wrap.showMenuHotbar();
@@ -287,6 +292,9 @@ public class Game implements Listener {
 				wrap.setUnSpottable(false);
 				p.setAllowFlight(false);
 				p.getActivePotionEffects().clear();
+				for (AttributeModifier m : p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getModifiers()) {
+					p.getAttribute(Attribute.GENERIC_MAX_HEALTH).removeModifier(m);
+				}
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 10, false, false, false));
 				if (wrap.getTeam()==Vi5Team.GARDE) {
 					p.teleport(gardeSpawn);

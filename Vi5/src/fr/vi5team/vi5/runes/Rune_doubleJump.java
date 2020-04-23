@@ -12,8 +12,6 @@ import fr.vi5team.vi5.enums.RunesList;
 
 public class Rune_doubleJump extends BaseRune {
 	
-	private boolean canDoubleJump=false;
-
 	public Rune_doubleJump(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
 	}
@@ -22,12 +20,10 @@ public class Rune_doubleJump extends BaseRune {
 	public void onToogleFly(PlayerToggleFlightEvent event) {
 		if (event.getPlayer().equals(player)) {
 			event.setCancelled(true);
-			if (canDoubleJump) {
-				player.setVelocity(player.getLocation().getDirection().multiply(0.1).setY(0.1));
-				player.playSound(player.getLocation(),Sound.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT, 0.3f, 1.5f);
-				player.playSound(player.getLocation(),Sound.ITEM_HOE_TILL, SoundCategory.AMBIENT, 1f, 0.1f);
-				canDoubleJump=false;
-			}
+			player.setVelocity(player.getVelocity().setY(0.5));
+			player.playSound(player.getLocation(),Sound.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT, 0.3f, 1.5f);
+			player.playSound(player.getLocation(),Sound.ITEM_HOE_TILL, SoundCategory.AMBIENT, 1f, 0.1f);
+			player.setAllowFlight(false);
 		}
 	}
 	
@@ -38,7 +34,7 @@ public class Rune_doubleJump extends BaseRune {
 	@Override
 	public void tick() {
 		if (player.isOnGround()) {
-			canDoubleJump=true;
+			player.setAllowFlight(true);
 		}
 	}
 
@@ -54,7 +50,6 @@ public class Rune_doubleJump extends BaseRune {
 	@Override
 	public void enterZone() {
 		Activate();
-		player.setAllowFlight(true);
 	}
 
 }

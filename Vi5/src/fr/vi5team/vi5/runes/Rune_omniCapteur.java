@@ -113,10 +113,10 @@ public class Rune_omniCapteur extends BaseRune {
 						PlayerWrapper wrap = wraper.getGame().getPlayerWrapper(p);
 						wrap.setGlow(true);
 						wrap.setOmnispotted(true);
-						player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.MASTER, 0.3f, 0.1f);
-						player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_COW_BELL, SoundCategory.MASTER, 2f, 0.5f);
-						player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER, 2f, 0.1f);
 						if (wrap.isSondable()) {
+							player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.MASTER, 0.3f, 0.1f);
+							player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_COW_BELL, SoundCategory.MASTER, 2f, 0.5f);
+							player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER, 2f, 0.1f);
 							player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GOLD+"A thief has been spotted!"));
 						}
 					}else if (omniSpotList.get(omni).contains(p) && p.getLocation().distanceSquared(omni.getLocation())>OMNI_SQUARED_RANGE){
