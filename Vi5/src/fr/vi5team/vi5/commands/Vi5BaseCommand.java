@@ -1032,7 +1032,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				List<String> entrancesList = mainref.getCfgmanager().getMapEntrancesList(args[2]);
 				if (entrancesList.contains(args[3])) {
 					sender.sendMessage("");
-					sender.sendMessage(ChatColor.RED+"This escape already exist for map: "+ChatColor.GOLD+args[2]);
+					sender.sendMessage(ChatColor.RED+"This entrance already exist for map: "+ChatColor.GOLD+args[2]);
 					sender.sendMessage("");
 					return true;
 				}else {
