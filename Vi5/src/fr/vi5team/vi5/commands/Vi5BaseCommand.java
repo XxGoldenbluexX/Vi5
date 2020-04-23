@@ -3,6 +3,7 @@ package fr.vi5team.vi5.commands;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -16,7 +17,6 @@ import fr.vi5team.vi5.Game;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
-import sun.rmi.transport.proxy.CGIHandler;
 
 public class Vi5BaseCommand implements CommandExecutor {
 
@@ -144,7 +144,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 		case "playerList":
 			if(args.length>2) {
 				Game g = mainref.getGame(args[2]);
-				sender.sendMessage(ChatColor.BLUE+"Player list for "+args[2]+ChatColor.BLUE+":");
+				sender.sendMessage(ChatColor.GOLD+"Player(s)"+ChatColor.BLUE+ChatColor.UNDERLINE+"list for "+args[2]+ChatColor.BLUE+":");
 				for(Player p : g.getPlayerList()) {
 					String playerName=p.getName();
 					if(g.is_Started()) {
@@ -152,9 +152,9 @@ public class Vi5BaseCommand implements CommandExecutor {
 					}else {
 						PlayerWrapper wrap = mainref.getPlayerWrapper(p);
 						if(wrap.is_ready()) {
-							sender.sendMessage(playerName+ChatColor.BLUE+", Status: "+ChatColor.GREEN+"[READY]");	
+							sender.sendMessage(ChatColor.GOLD+playerName+ChatColor.WHITE+", Status: "+ChatColor.GREEN+"[READY]");	
 						}else {
-							sender.sendMessage(playerName+ChatColor.BLUE+", Status: "+ChatColor.RED+"[NOT READY]");
+							sender.sendMessage(ChatColor.GOLD+playerName+ChatColor.WHITE+", Status: "+ChatColor.RED+"[NOT READY]");
 						}
 					}
 				}
@@ -334,7 +334,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 					g.start(true,sender);
 					for(Player p:Bukkit.getOnlinePlayers()) {
 						if (g.hasPlayer(p)) {
-							p.sendMessage(ChatColor.RED+"Game has been restarted by: "+sender);
+							p.sendMessage(ChatColor.RED+"Game has been restarted by: "+sender.getName());
 						}
 					}
 					return true;
@@ -356,7 +356,8 @@ public class Vi5BaseCommand implements CommandExecutor {
 				if (!game.is_Started()) {
 					for(Player p:Bukkit.getOnlinePlayers()) {
 						if (game.hasPlayer(p)) {
-							p.sendMessage(ChatColor.RED+"Game has been forcefully stopped by: "+sender);
+							sender.sendMessage(ChatColor.GREEN+"Game has been stopped");
+							p.sendMessage(ChatColor.RED+"Game has been forcefully stopped by: "+sender.getName());
 							PlayerWrapper wrap = mainref.getPlayerWrapper(p);
 							wrap.resetItemStealed();
 						}
@@ -374,10 +375,10 @@ public class Vi5BaseCommand implements CommandExecutor {
 			sender.sendMessage("");
 			return true;
 		case "leave":
-            if(args.length>2) {
+            if(args.length>1) {
             	Player p;
-            	if (args.length>3) {
-            		p = Bukkit.getServer().getPlayer(args[3]);
+            	if (args.length>2) {
+            		p = Bukkit.getServer().getPlayer(args[2]);
             		if (p.equals(null)) {
             			sender.sendMessage("");
                     	sender.sendMessage(ChatColor.RED+"This player does not exist!");
@@ -388,9 +389,9 @@ public class Vi5BaseCommand implements CommandExecutor {
             		p = (Player)sender;
             	}
                 if (mainref.isPlayerIngame(p)) {
-                    Game g = mainref.getGame(args[2]);
+                    Game g = mainref.getPlayerWrapper(p).getGame();
                     g.removePlayer(p);
-                    sender.sendMessage(p.getName()+ChatColor.GREEN+") left this game!");
+                    sender.sendMessage(p.getName()+ChatColor.GREEN+" left this game!");
                     return true;
                 }else {
                 	sender.sendMessage("");
@@ -400,7 +401,7 @@ public class Vi5BaseCommand implements CommandExecutor {
                 }
             }else {
             	sender.sendMessage("");
-    			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game leave "+ChatColor.GOLD+"<GameName> (PlayerName)");
+    			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game leave "+ChatColor.GOLD+"(PlayerName)");
     			sender.sendMessage("");
                 return true;
             }
@@ -1219,8 +1220,15 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("");
 				return true;
 			}
+			default:
+				sender.sendMessage("");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map "+ChatColor.GOLD+"...");
+				sender.sendMessage("["+ChatColor.GOLD+"create"+ChatColor.WHITE+"/"+ChatColor.GOLD+"rename"+ChatColor.WHITE+"/"+ChatColor.GOLD+"list"+ChatColor.WHITE+"/"+ChatColor.GOLD+"delete"+ChatColor.WHITE+"]");
+				sender.sendMessage("["+ChatColor.GOLD+"setGuardSpawn"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setThiefMinimapSpawn"+ChatColor.WHITE+"]");
+				sender.sendMessage("["+ChatColor.GOLD+"Objects"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Entrances"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Escapes"+ChatColor.WHITE+"/"+ChatColor.GOLD+"Walls"+ChatColor.WHITE+"]");
+				sender.sendMessage("");
+				return true;
 		}
-		return false;
 	}
 	
 	public boolean teamCommand(CommandSender sender,String[] args) {
