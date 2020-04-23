@@ -566,8 +566,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				if (mainref.getCfgmanager().getMapWallsList(args[2]).contains(args[3])) {
 					if (sender instanceof Player) {
 						Player p = (Player)sender;
-						Block block = p.getTargetBlock(null, 10);
-						cfg.set("mapWalls."+args[3]+".firstCorner", block.getLocation());
+						cfg.set("mapWalls."+args[3]+".firstCorner", p.getLocation());
 						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
 						sender.sendMessage(ChatColor.GREEN+"Wall's first corner location set!");
 						return true;
@@ -586,7 +585,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("");
 				sender.sendMessage("usage: /vi5 map setWallCorner1 <MapName> <WallName>");
 				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setWallCorner1 "+ChatColor.GOLD+"<MapName> <WallName>");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set on the block you are looking at "+ChatColor.RED+"!");
+				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set where you are standing. Please stand in a 'perfect location' like x.0 or x.5 "+ChatColor.RED+"!");
 				sender.sendMessage("");
 				return true;
 			}
@@ -603,8 +602,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				if (mainref.getCfgmanager().getMapWallsList(args[2]).contains(args[3])) {
 					if (sender instanceof Player) {
 						Player p = (Player)sender;
-						Block block = p.getTargetBlock(null, 10);
-						cfg.set("mapWalls."+args[3]+".secondCorner", block.getLocation());
+						cfg.set("mapWalls."+args[3]+".secondCorner", p.getLocation());
 						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
 						sender.sendMessage(ChatColor.GREEN+"Wall's second corner location set!");
 						return true;
@@ -623,7 +621,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("");
 				sender.sendMessage("usage: /vi5 map setWallCorner2 <MapName> <WallName>");
 				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setWallCorner2 "+ChatColor.GOLD+"<MapName> <WallName>");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set on the block you are looking at "+ChatColor.RED+"!");
+				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set where you are standing. Please stand in a 'perfect location' like x.0 or x.5 "+ChatColor.RED+"!");
 				sender.sendMessage("");
 				return true;
 			}
@@ -801,8 +799,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				if (mainref.getCfgmanager().getObjectNamesList(args[2]).contains(args[3])) {
 					if (sender instanceof Player) {
 						Player p = (Player)sender;
-						Block blockCenter = p.getTargetBlock(null, 10);
-						cfg.set("mapObjects."+args[3]+".centerLocation", blockCenter.getLocation());
+						cfg.set("mapObjects."+args[3]+".centerLocation", p.getLocation());
 						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
 						sender.sendMessage(ChatColor.GREEN+"Object's center location set!");
 						return true;
@@ -820,8 +817,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			}else {
 				sender.sendMessage("");
 				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setObjLoc "+ChatColor.GOLD+"<MapName> <ObjectName>");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set on the block you are looking at "+ChatColor.RED+"!");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"This location is the center of the capture zone "+ChatColor.RED+"!");
+				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set where you are standing. Please stand in a 'perfect location' like x.0 or x.5 "+ChatColor.RED+"!");
 				sender.sendMessage("");
 				return true;
 			}
@@ -968,8 +964,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							return true;
 						}
 						Player player = (Player)sender;
-						Block blockCenter = player.getTargetBlock(null, 10);
-						cfg.set("mapEscapes."+args[3]+".centerLocation", blockCenter.getLocation());
+						cfg.set("mapEscapes."+args[3]+".centerLocation", player.getLocation());
 						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
 						sender.sendMessage(ChatColor.GREEN+"Escape's center location set!");
 						return true;
@@ -989,7 +984,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			} else {
 				sender.sendMessage("");
 				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setEscapeLoc "+ChatColor.GOLD+"<MapName> <EscapeName>");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set on the block you are looking at "+ChatColor.RED+"!");
+				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set where you are standing. Please stand in a 'perfect location' like x.0 or x.5 "+ChatColor.RED+"!");
 				sender.sendMessage("");
 				return true;
 			}
@@ -1065,8 +1060,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 							return true;
 						}
 						Player player = (Player)sender;
-						Block blockCenter = player.getTargetBlock(null, 10);
-						cfg.set("mapEntrances."+args[3]+".centerLocation", blockCenter.getLocation());
+						cfg.set("mapEntrances."+args[3]+".centerLocation", player.getLocation());
 						mainref.getCfgmanager().saveMapConfig(args[2], cfg);
 						sender.sendMessage(ChatColor.GREEN+"Entrance's center location set!");
 						return true;
@@ -1086,7 +1080,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			} else {
 				sender.sendMessage("");
 				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setEntranceLoc "+ChatColor.GOLD+"<MapName> <EntranceName>");
-				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set on the block you are looking at "+ChatColor.RED+"!");
+				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set where you are standing. Please stand in a 'perfect location' like x.0 or x.5 "+ChatColor.RED+"!");
 				sender.sendMessage("");
 				return true;
 			}
