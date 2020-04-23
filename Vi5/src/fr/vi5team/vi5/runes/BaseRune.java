@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -103,6 +104,10 @@ public abstract class BaseRune implements Listener {
 		cooldownTick();
 		tick();
 	}
+	public void preGameEnd() {
+		gameEnd();
+		unregisterEvents();
+	}
 	private void setCooldownItem() {
 		cooldownItem.setAmount(Math.max(Math.floorDiv(Math.round((cooldown+1)*10), 10),1));
 		ItemMeta meta = cooldownItem.getItemMeta();
@@ -129,6 +134,9 @@ public abstract class BaseRune implements Listener {
 				setCooldownItem();
 			}
 		}
+	}
+	private void unregisterEvents() {
+		HandlerList.unregisterAll(this);
 	}
 
 	public ItemStack getHotbarItem() {

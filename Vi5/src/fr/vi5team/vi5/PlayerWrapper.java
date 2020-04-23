@@ -176,13 +176,13 @@ public class PlayerWrapper implements Listener {
 	
 	public void gameEnd() {
 		if (primaire!=null) {
-			primaire.gameEnd();
+			primaire.preGameEnd();
 		}
 		if (secondaire!=null) {
-			secondaire.gameEnd();
+			secondaire.preGameEnd();
 		}
 		if (tertiaire!=null) {
-			tertiaire.gameEnd();
+			tertiaire.preGameEnd();
 		}
 		primaire=null;
 		secondaire=null;

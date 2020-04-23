@@ -63,6 +63,7 @@ public class Game implements Listener {
 				p.getAttribute(Attribute.GENERIC_MAX_HEALTH).removeModifier(m);
 			}
 			p.setGameMode(GameMode.SPECTATOR);
+			p.setAllowFlight(true);
 			wrap.setReady(false);
 			wrap.showMenuHotbar();
 		}
