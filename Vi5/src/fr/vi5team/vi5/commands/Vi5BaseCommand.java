@@ -391,7 +391,10 @@ public class Vi5BaseCommand implements CommandExecutor {
                 if (mainref.isPlayerIngame(p)) {
                     Game g = mainref.getPlayerWrapper(p).getGame();
                     g.removePlayer(p);
-                    sender.sendMessage(p.getName()+ChatColor.GREEN+" left this game!");
+                    if(p!=sender) {
+                    	sender.sendMessage(p.getName()+ChatColor.GREEN+" left his game!");
+                    }
+                    p.sendMessage(ChatColor.RED+"You leaved the game you were in!");
                     return true;
                 }else {
                 	sender.sendMessage("");
