@@ -3,8 +3,6 @@ package fr.vi5team.vi5.runes;
 import java.util.ArrayList;
 
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -31,6 +29,7 @@ public class Rune_bush extends BaseRune{
 		bushMaterial.add(Material.TALL_GRASS);
 		bushMaterial.add(Material.LARGE_FERN);
 		bushMaterial.add(Material.PEONY);
+		bushMaterial.add(Material.LILAC);
 	}
 	private boolean guardNear() {
 		for (Player p : wraper.getGame().getGardeList()) {
