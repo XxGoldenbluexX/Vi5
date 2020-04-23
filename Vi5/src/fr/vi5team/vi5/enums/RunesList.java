@@ -16,6 +16,7 @@ import fr.vi5team.vi5.runes.BaseRune;
 import fr.vi5team.vi5.runes.Rune_builder;
 import fr.vi5team.vi5.runes.Rune_crocheteur;
 import fr.vi5team.vi5.runes.Rune_doubleJump;
+import fr.vi5team.vi5.runes.Rune_fisherman;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
 import fr.vi5team.vi5.runes.Rune_speed;
@@ -70,8 +71,8 @@ public enum RunesList {
 			makeDisplayItem(Material.STONE_BRICK_WALL, ChatColor.GOLD+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map")
 			),
 	PECHEUR("Fisherman",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.FISHING_ROD, ChatColor.GOLD+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those thieves"),
-			makeDisplayItem(Material.FISHING_ROD, ChatColor.GOLD+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those thieves")
+			makeDisplayItem(Material.FISHING_ROD, ChatColor.GOLD+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves"),
+			makeDisplayItem(Material.FISHING_ROD, ChatColor.GOLD+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves")
 			),
 	CROCHETEUR("Trickster",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls"),
@@ -155,6 +156,8 @@ public enum RunesList {
 			return new Rune_builder(main, w, p, r);
 		case CROCHETEUR:
 			return new Rune_crocheteur(main, w, p, r);
+		case PECHEUR:
+			return new Rune_fisherman(main, w, p, r);
 		default:
 			return null;
 		}
