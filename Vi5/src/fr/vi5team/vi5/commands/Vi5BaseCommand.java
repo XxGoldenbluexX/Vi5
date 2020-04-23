@@ -815,7 +815,6 @@ public class Vi5BaseCommand implements CommandExecutor {
 				}
 			}else {
 				sender.sendMessage("");
-				sender.sendMessage("usage: /vi5 map setObjLoc <MapName> <ObjectName>");
 				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map setObjLoc "+ChatColor.GOLD+"<MapName> <ObjectName>");
 				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"Location will be set on the block you are looking at "+ChatColor.RED+"!");
 				sender.sendMessage(ChatColor.RED+"! "+ChatColor.BLUE+"This location is the center of the capture zone "+ChatColor.RED+"!");
