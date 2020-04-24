@@ -204,7 +204,6 @@ public class Rune_builder extends BaseRune{
 			}
 		}
 	}
-//
 	@Override
 	public void gameStart() {
 		Activate();
