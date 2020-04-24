@@ -178,7 +178,7 @@ public abstract class BaseRune implements Listener {
 	protected ItemStack makeSpamItem(Material mat) {
 		ItemStack itm = new ItemStack(mat);
 		ItemMeta meta = itm.getItemMeta();
-		meta.getAttributeModifiers(Attribute.GENERIC_ATTACK_SPEED).add(new AttributeModifier("pvp_1.8",1000,Operation.ADD_NUMBER));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,new AttributeModifier("pvp_1.8",1000,Operation.ADD_NUMBER));
 		itm.setItemMeta(meta);
 		return itm;
 	}
