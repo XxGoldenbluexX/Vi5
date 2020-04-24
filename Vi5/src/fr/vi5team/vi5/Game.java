@@ -267,16 +267,18 @@ public class Game implements Listener {
 		YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(mapname);
 		for(String wallName : wallList) {
 			ArrayList<Location> bothCorner = new ArrayList<Location>();
-			Location loc1 = (Location) cfg.get("mapWalls.firstCorner");
-			Location loc2 = (Location) cfg.get("mapWalls.secondCorner");
-			bothCorner.add(loc1);
-			bothCorner.add(loc2);
-			wallsInMapLocationsList.put(wallName, bothCorner);
-			ArrayList<Double> centerLoc = new ArrayList<Double>();
-			centerLoc.add(loc1.getX()+(loc2.getX()-loc1.getX())/2);
-			centerLoc.add(loc1.getY()+(loc2.getY()-loc1.getY())/2);
-			centerLoc.add(loc1.getZ()+(loc2.getZ()-loc1.getZ())/2);
-			wallsInMapCenterList.put(wallName, centerLoc);
+			Location loc1 = (Location) cfg.get("mapWalls."+wallName+".firstCorner");
+			Location loc2 = (Location) cfg.get("mapWalls."+wallName+".secondCorner");
+			if(loc1!=null&&loc2!=null) {
+				bothCorner.add(loc1);
+				bothCorner.add(loc2);
+				wallsInMapLocationsList.put(wallName, bothCorner);
+				ArrayList<Double> centerLoc = new ArrayList<Double>();
+				centerLoc.add(loc1.getX()+(loc2.getX()-loc1.getX())/2);
+				centerLoc.add(loc1.getY()+(loc2.getY()-loc1.getY())/2);
+				centerLoc.add(loc1.getZ()+(loc2.getZ()-loc1.getZ())/2);
+				wallsInMapCenterList.put(wallName, centerLoc);
+			}
 		}
 	}
 	public void start(boolean forced,CommandSender sender) {
