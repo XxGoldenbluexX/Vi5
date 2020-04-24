@@ -38,12 +38,16 @@ public class Rune_ombre extends BaseRune {
 		case POSED:
 			break;
 		case READY:
+			
 			break;
 		case WASTED:
-			break;
+			if (ombreRef.isOnGround()) {};
+			player.sendMessage("Your shadow has disapeared");
+			return;
 		default:
-			break;
+			return;
 		}
+		setCooldown(2);
 	}
 
 	@Override
