@@ -36,12 +36,15 @@ public class Rune_builder extends BaseRune{
 			Double minDistance = Double.MAX_VALUE;
 			String nearestWall=null;
 			for(String wallName : wallsInMapCenterList.keySet()) {
+				player.sendMessage("WallName is "+wallName);
+				
 				if(!wallsInGameList.contains(wallName)) {
 					ArrayList<Double> loc = wallsInMapCenterList.get(wallName);
 					Double coordX = loc.get(0);
 					Double coordY = loc.get(1);
 					Double coordZ = loc.get(2);
 					Double distance = Math.sqrt((Math.pow(coordX-ploc.getX(), 2))+(Math.pow(coordY-ploc.getY(), 2))+(Math.pow(coordZ-ploc.getZ(), 2)));
+					player.sendMessage("Distance for "+wallName+" is: "+distance);
 					if(distance<minDistance) {
 						minDistance=distance;
 						nearestWall=wallName;
@@ -53,26 +56,25 @@ public class Rune_builder extends BaseRune{
 			}else {
 				wallsInGameList.add(nearestWall);
 				NB_WALLS++;
-			}
-			if(NB_WALLS==MAX_WALLS) {
-				player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GREEN+"You have placed your last wall: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall));		
-				return;
-			}
-			player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GREEN+"You have placed the wall: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall));	
-			showAdaptedHotbarItem();
+				if(NB_WALLS==MAX_WALLS) {
+					player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GREEN+"You have placed your last wall: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall));		
+					return;
+				}
+				player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GREEN+"You have placed the wall: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall));	
+				showAdaptedHotbarItem();
+				}
 		}else {
 			player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.RED+"All your walls have already been placed!"));	
 			
 		}
-		// TODO Auto-generated method stub
 		
 	}
 	private void showAdaptedHotbarItem() {
 		ItemStack item;
 		ItemMeta meta;
-		item=new ItemStack(Material.BRICK_WALL);
+		item=new ItemStack(Material.BRICK_WALL, MAX_WALLS-NB_WALLS);
 		meta=item.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"You can place "+ChatColor.AQUA+(MAX_WALLS-NB_WALLS)+ChatColor.GOLD+"more walls");
+		meta.setDisplayName(ChatColor.GOLD+"You can place "+ChatColor.AQUA+(MAX_WALLS-NB_WALLS)+ChatColor.GOLD+" more walls");
 		item.setItemMeta(meta);
 		setCastItem(item);
 		showCastItem();
