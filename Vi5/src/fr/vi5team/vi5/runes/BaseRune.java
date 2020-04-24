@@ -2,6 +2,9 @@ package fr.vi5team.vi5.runes;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -171,5 +174,12 @@ public abstract class BaseRune implements Listener {
 
 	public void setHotbarItem(ItemStack hotbarItem) {
 		this.hotbarItem = hotbarItem;
+	}
+	protected ItemStack makeSpamItem(Material mat) {
+		ItemStack itm = new ItemStack(mat);
+		ItemMeta meta = itm.getItemMeta();
+		meta.getAttributeModifiers(Attribute.GENERIC_ATTACK_SPEED).add(new AttributeModifier("pvp_1.8",1000,Operation.ADD_NUMBER));
+		itm.setItemMeta(meta);
+		return itm;
 	}
 }

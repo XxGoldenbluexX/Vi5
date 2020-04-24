@@ -145,6 +145,7 @@ public class Rune_omniCapteur extends BaseRune {
 		Activate();
 		showAdaptedHotbarItem();
 		nbOmni=MAX_OMNI;
+		player.getInventory().setItem(0, makeSpamItem(Material.DIAMOND_SWORD));
 	}
 
 	@Override
