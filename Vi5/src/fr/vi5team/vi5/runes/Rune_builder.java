@@ -36,18 +36,16 @@ public class Rune_builder extends BaseRune{
 			Double minDistance = Double.MAX_VALUE;
 			String nearestWall=null;
 			for(String wallName : wallsInMapCenterList.keySet()) {
-				player.sendMessage("WallName is "+wallName);
-				
 				if(!wallsInGameList.contains(wallName)) {
 					ArrayList<Double> loc = wallsInMapCenterList.get(wallName);
 					Double coordX = loc.get(0);
 					Double coordY = loc.get(1);
 					Double coordZ = loc.get(2);
 					Double distance = Math.sqrt((Math.pow(coordX-ploc.getX(), 2))+(Math.pow(coordY-ploc.getY(), 2))+(Math.pow(coordZ-ploc.getZ(), 2)));
-					player.sendMessage("Distance for "+wallName+" is: "+distance);
 					if(distance<minDistance) {
 						minDistance=distance;
 						nearestWall=wallName;
+						//ca marche pas
 					}
 				}
 			}

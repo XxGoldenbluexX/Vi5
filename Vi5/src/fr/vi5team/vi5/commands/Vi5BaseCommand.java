@@ -353,7 +353,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 		case "stop":
 			if(args.length>2) {
 				Game game = mainref.getGame(args[2]);
-				if (!game.is_Started()) {
+				if (game.is_Started()) {
 					for(Player p:Bukkit.getOnlinePlayers()) {
 						if (game.hasPlayer(p)) {
 							sender.sendMessage(ChatColor.GREEN+"Game has been stopped");

@@ -13,14 +13,11 @@ import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.runes.BaseRune;
-import fr.vi5team.vi5.runes.Rune_builder;
 import fr.vi5team.vi5.runes.Rune_bush;
-import fr.vi5team.vi5.runes.Rune_crocheteur;
 import fr.vi5team.vi5.runes.Rune_doubleJump;
 import fr.vi5team.vi5.runes.Rune_fisherman;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
-import fr.vi5team.vi5.runes.Rune_scanner;
 import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
 import fr.vi5team.vi5.runes.Rune_tough;
@@ -44,10 +41,10 @@ public enum RunesList {
 			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
 			makeDisplayItem(Material.FEATHER, ChatColor.GOLD+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed is increased by 20%")
 			),
-	COP("Cop",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
+	/*COP("Cop",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves"),
 			makeDisplayItem(Material.END_ROD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
-			),
+			),*/
 	TOUGH("Tough",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GOLD+"Tough", ChatColor.LIGHT_PURPLE+"All damage get reduced by 20%"),
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GOLD+"Tough", ChatColor.LIGHT_PURPLE+"All damage are reduced by 20%")
@@ -60,30 +57,30 @@ public enum RunesList {
 			makeDisplayItem(Material.COAL, ChatColor.GOLD+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!"),
 			makeDisplayItem(Material.COAL, ChatColor.GOLD+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!")
 			),
-	LANTERN("Lantern",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
+	/*LANTERN("Lantern",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.LANTERN, ChatColor.GOLD+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you"),
 			makeDisplayItem(Material.LANTERN, ChatColor.GOLD+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you")
-			),
+			),*/
 	BUSH("Bush",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible"),
 			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible")
 			),
-	BUILDER("Builder",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
+	/*BUILDER("Builder",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.STONE_BRICK_WALL, ChatColor.GOLD+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map"),
 			makeDisplayItem(Material.STONE_BRICK_WALL, ChatColor.GOLD+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map")
-			),
+			),*/
 	PECHEUR("Fisherman",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.FISHING_ROD, ChatColor.GOLD+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves"),
 			makeDisplayItem(Material.FISHING_ROD, ChatColor.GOLD+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves")
-			),
+			)/*,
 	CROCHETEUR("Trickster",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls"),
 			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls")
-			),
-	SCANNER("Scanner",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
+			),*/
+	/*SCANNER("Scanner",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in a large ray every x seconds"),
 			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in a large ray every x seconds")
-			);
+			)*/;
 	//////////////////////////////////
 	private final String DisplayName;
 	private final RunesType Type;
@@ -154,22 +151,14 @@ public enum RunesList {
 			return new Rune_tough(main, w, p, r);
 		case OMNI:
 			return new Rune_omniCapteur(main, w, p, r);
-		case BUILDER:
-			return new Rune_builder(main, w, p, r);
-		case CROCHETEUR:
-			return new Rune_crocheteur(main, w, p, r);
+		/*case BUILDER:
+			return new Rune_builder(main, w, p, r);*/
+		/*case CROCHETEUR:
+			return new Rune_crocheteur(main, w, p, r);*/
 		case PECHEUR:
 			return new Rune_fisherman(main, w, p, r);
 		case BUSH:
 			return new Rune_bush(main, w, p, r);
-		case SCANNER:
-			return new Rune_scanner(main, w, p, r);
-		case COP:
-			break;
-		case LANTERN:
-			break;
-		case SHADOW:
-			break;
 		default:
 			break;
 		}
