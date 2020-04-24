@@ -513,13 +513,34 @@ public class Vi5BaseCommand implements CommandExecutor {
 					return true;
 				}else {
 					wallsList.add(args[3]);
-					mainref.getCfgmanager().setMapEscapesList(args[2], wallsList);
+					mainref.getCfgmanager().setMapWallsList(args[2], wallsList);
 					sender.sendMessage(ChatColor.GREEN+"Map wall ("+ChatColor.GOLD+args[3]+ChatColor.GREEN+") has been created on map: "+ChatColor.GOLD+args[2]+ChatColor.GREEN+" !");
 					return true;
 				}
 			} else {
 				sender.sendMessage("");
 				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map addWall "+ChatColor.GOLD+"<MapName> <WallName>");
+				sender.sendMessage("");
+				return true;
+			}
+		case "objectList":
+			if(args.length>2) {
+				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
+				if (cfg==null) {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"This map does not exist!");
+					sender.sendMessage(ChatColor.GREEN+"Try: "+ChatColor.WHITE+"/vi5 map create "+ChatColor.GOLD+"<MapName>");
+					sender.sendMessage("");
+					return true;
+				}
+				sender.sendMessage(ChatColor.DARK_GREEN+"Objects for map "+args[2]+" :");
+				for (String s : mainref.getCfgmanager().getObjectNamesList(args[2])) {
+					sender.sendMessage(ChatColor.AQUA+"- "+s);
+				}
+				return true;
+			}else {
+				sender.sendMessage("");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map objectList "+ChatColor.GOLD+"<MapName>");
 				sender.sendMessage("");
 				return true;
 			}
