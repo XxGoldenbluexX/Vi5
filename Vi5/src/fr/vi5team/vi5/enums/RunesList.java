@@ -14,6 +14,7 @@ import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.runes.BaseRune;
 import fr.vi5team.vi5.runes.Rune_bush;
+import fr.vi5team.vi5.runes.Rune_crocheteur;
 import fr.vi5team.vi5.runes.Rune_doubleJump;
 import fr.vi5team.vi5.runes.Rune_fisherman;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
@@ -72,11 +73,11 @@ public enum RunesList {
 	PECHEUR("Fisherman",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.FISHING_ROD, ChatColor.GOLD+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves"),
 			makeDisplayItem(Material.FISHING_ROD, ChatColor.GOLD+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves")
-			)/*,
+			),
 	CROCHETEUR("Trickster",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls"),
 			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.GOLD+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls")
-			),*/
+			),
 	/*SCANNER("Scanner",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in a large ray every x seconds"),
 			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in a large ray every x seconds")
@@ -153,8 +154,8 @@ public enum RunesList {
 			return new Rune_omniCapteur(main, w, p, r);
 		/*case BUILDER:
 			return new Rune_builder(main, w, p, r);*/
-		/*case CROCHETEUR:
-			return new Rune_crocheteur(main, w, p, r);*/
+		case CROCHETEUR:
+			return new Rune_crocheteur(main, w, p, r);
 		case PECHEUR:
 			return new Rune_fisherman(main, w, p, r);
 		case BUSH:
