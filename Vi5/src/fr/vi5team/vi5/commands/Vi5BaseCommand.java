@@ -523,7 +523,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 				sender.sendMessage("");
 				return true;
 			}
-		case "objectList":
+		case "wallList":
 			if(args.length>2) {
 				YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(args[2]);
 				if (cfg==null) {
@@ -533,14 +533,14 @@ public class Vi5BaseCommand implements CommandExecutor {
 					sender.sendMessage("");
 					return true;
 				}
-				sender.sendMessage(ChatColor.DARK_GREEN+"Objects for map "+args[2]+" :");
-				for (String s : mainref.getCfgmanager().getObjectNamesList(args[2])) {
+				sender.sendMessage(ChatColor.DARK_GREEN+"Walls for map "+args[2]+" :");
+				for (String s : mainref.getCfgmanager().getMapWallsList(args[2])) {
 					sender.sendMessage(ChatColor.AQUA+"- "+s);
 				}
 				return true;
 			}else {
 				sender.sendMessage("");
-				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map objectList "+ChatColor.GOLD+"<MapName>");
+				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map wallList "+ChatColor.GOLD+"<MapName>");
 				sender.sendMessage("");
 				return true;
 			}
