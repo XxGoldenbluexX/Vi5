@@ -1,7 +1,6 @@
 package fr.vi5team.vi5.commands;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -94,7 +93,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			return true;
 		}
 	}
-	public List<String> onTabComplete(CommandSender sender, Command command, String arg2, String[] args){
+	/*public List<String> onTabComplete(CommandSender sender, Command command, String arg2, String[] args){
 		if(args.length<1) {
 			return null;
 		}
@@ -129,7 +128,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 		}
 		Collections.sort(afterCMD);
 		return afterCMD;
-	}
+	}*/
 	public boolean gameCommand(CommandSender sender,String[] args) {
 		if (args.length<2) {
 			sender.sendMessage("");
@@ -331,6 +330,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			if(args.length>2) {
 				Game g = mainref.getGame(args[2]);
 				if (g!=null) {
+					g.endGame();
 					g.start(true,sender);
 					for(Player p:Bukkit.getOnlinePlayers()) {
 						if (g.hasPlayer(p)) {
@@ -354,14 +354,10 @@ public class Vi5BaseCommand implements CommandExecutor {
 			if(args.length>2) {
 				Game game = mainref.getGame(args[2]);
 				if (game.is_Started()) {
-					for(Player p:Bukkit.getOnlinePlayers()) {
-						if (game.hasPlayer(p)) {
-							sender.sendMessage(ChatColor.GREEN+"Game has been stopped");
-							p.sendMessage(ChatColor.RED+"Game has been forcefully stopped by: "+sender.getName());
-							PlayerWrapper wrap = mainref.getPlayerWrapper(p);
-							wrap.resetItemStealed();
-						}
+					for(Player p : game.playersInGame().keySet()) {
+						p.sendMessage(ChatColor.RED+"Game has been forcefully stopped by: "+sender.getName());
 					}
+					sender.sendMessage(ChatColor.GREEN+"Game has been stopped");
 					game.endGame();
 					return true;
 				}
