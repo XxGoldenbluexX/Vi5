@@ -83,7 +83,7 @@ public class MapObject implements Listener{
 			if (captureState==CaptureState.STEALABLE && !captureCooldown) {
 				PlayerWrapper wrap = gameref.getPlayerWrapper(p);
 				if (wrap!=null) {
-					if (wrap.getTeam()==Vi5Team.VOLEUR && wrap.getCurrentStatus()==VoleurStatus.INSIDE) {
+					if (wrap.getTeam()==Vi5Team.VOLEUR && wrap.getCurrentStatus()==VoleurStatus.INSIDE && !wrap.isEnterStealCooldown()) {
 						if (captureLevel<MAX_CAPTURE_LEVEL) {
 							if (isGuardOnPoint()) {
 								p.sendTitle("", ChatColor.RED+"Capture paused (a guard is near)", 0, 2, 0);

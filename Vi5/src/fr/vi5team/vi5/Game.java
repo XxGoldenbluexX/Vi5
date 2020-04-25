@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerChangedMainHandEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -129,6 +130,7 @@ public class Game implements Listener {
 				showPlayer(player);
 				wrap.setUnSpottable(true);
 				wrap.setLeaveCooldown(true);
+				wrap.setEnterStealCooldown(true);
 				new BukkitRunnable() {
 
 					@Override
@@ -141,9 +143,26 @@ public class Game implements Listener {
 					}
 					
 				}.runTaskLater(mainref, 200);
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						player.sendMessage(ChatColor.GREEN+"You can now capture an object");
+						wrap.setEnterStealCooldown(false);
+					}
+				}.runTaskLater(mainref, 600);
 			}
 		}
 	}
+	@EventHandler
+	public void onPlayerChangeSlot(PlayerChangedMainHandEvent event) {
+        Player p = event.getPlayer();
+        Game g = mainref.getPlayerWrapper(p).getGame();
+        if(g!=null&&!g.is_Started()) {
+            if(!(p.getInventory().getItem(1).getType()==Material.ANVIL)) {
+                mainref.getPlayerWrapper(p).showMenuHotbar();
+            }
+        }
+    }
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player player = event.getEntity();
@@ -389,6 +408,7 @@ public class Game implements Listener {
 				for (MapObject o : mapObjects) {
 					o.setCaptureCooldown(false);
 				}
+				messageTeam(Vi5Team.VOLEUR, ChatColor.GREEN+""+ChatColor.UNDERLINE+"Thiefs can now steal an object!");
 			}
 		}.runTaskLater(mainref, 600);
 	}
