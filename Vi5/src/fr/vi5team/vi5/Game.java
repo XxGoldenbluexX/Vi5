@@ -78,6 +78,7 @@ public class Game implements Listener {
 			p.setAllowFlight(true);
 			wrap.setReady(false);
 			wrap.showMenuHotbar();
+			p.getActivePotionEffects().clear();
 		}
 		messagePlayersInGame(ChatColor.GOLD+"La partie est terminée!");
 		messagePlayersInGame(ChatColor.GOLD+"Les voleurs se sont enfuit avec "+ChatColor.AQUA+totalObjVolés+ChatColor.GOLD+" objects!");
@@ -318,6 +319,7 @@ public class Game implements Listener {
 				for (AttributeModifier m : p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getModifiers()) {
 					p.getAttribute(Attribute.GENERIC_MAX_HEALTH).removeModifier(m);
 				}
+				p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40, 10, false, false, true));
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, Integer.MAX_VALUE, 10, false, false, false));
 				if (wrap.getTeam()==Vi5Team.GARDE) {
 					p.teleport(gardeSpawn);
