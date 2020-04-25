@@ -492,7 +492,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 		case "Walls":
 			sender.sendMessage("");
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 map "+ChatColor.GOLD+"...");
-			sender.sendMessage("["+ChatColor.GOLD+"addWall"+ChatColor.WHITE+"/"+ChatColor.WHITE+"/"+ChatColor.GOLD+"removeWall"+ChatColor.GOLD+"setWallCorner1"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setWallCorner2"+ChatColor.WHITE+"]");
+			sender.sendMessage("["+ChatColor.GOLD+"addWall"+ChatColor.WHITE+"/"+ChatColor.GOLD+"wallList"+ChatColor.WHITE+"/"+ChatColor.GOLD+"removeWall"+ChatColor.GOLD+"setWallCorner1"+ChatColor.WHITE+"/"+ChatColor.GOLD+"setWallCorner2"+ChatColor.WHITE+"]");
 			sender.sendMessage(ChatColor.RED+"WARNING: Those are the walls used for guards' second ability "+ChatColor.LIGHT_PURPLE+ChatColor.UNDERLINE+"BUILDER"+ChatColor.RED+" which allow them to place additionnal walls on the map!");
 			sender.sendMessage(ChatColor.ITALIC+""+ChatColor.BLUE+"Consider placing obvious blocks under the walls to clarify their locations");
 			sender.sendMessage("");
