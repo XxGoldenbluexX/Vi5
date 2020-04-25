@@ -1,9 +1,12 @@
 package fr.vi5team.vi5.runes;
 
+import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
@@ -38,10 +41,14 @@ public class Rune_ombre extends BaseRune {
 		case POSED:
 			break;
 		case READY:
-			
+			ombreRef = (ArmorStand) player.getWorld().spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
+			if (ombreRef!=null) {
+				ombreRef.setHelmet(new ItemStack(Material.COAL_BLOCK));
+				ombreRef.setMarker(true);
+				//TODO
+			}
 			break;
 		case WASTED:
-			if (ombreRef.isOnGround()) {};
 			player.sendMessage("Your shadow has disapeared");
 			return;
 		default:

@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.vi5team.vi5.PlayerWrapper;
@@ -12,7 +13,7 @@ import fr.vi5team.vi5.enums.RunesList;
 
 public class Rune_bush extends BaseRune{
 	private static final Material[] BUSHMATERIALS = {Material.PEONY,Material.TALL_GRASS,Material.LARGE_FERN,Material.LILAC,Material.ROSE_BUSH};
-	private double SQUARED_SPOT_RANGE = 1;
+	private double SQUARED_SPOT_RANGE = 4;
 	private boolean isInBush=false;
 	public Rune_bush(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
@@ -29,8 +30,9 @@ public class Rune_bush extends BaseRune{
 		}
 		return false;
 	}
+	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event) {
-		if(event.getPlayer()==player) {
+		if(event.getPlayer().equals(player)) {
 			if(Arrays.asList(BUSHMATERIALS).contains(player.getLocation().getBlock().getType())){
 				isInBush=true;
 			}else {
@@ -49,6 +51,10 @@ public class Rune_bush extends BaseRune{
 				if (!wraper.isInvisible()) {
 					wraper.setInvisible(true);
 				}
+			}
+		}else {
+			if (wraper.isInvisible()) {
+				wraper.setInvisible(false);
 			}
 		}
 	}
