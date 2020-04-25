@@ -415,10 +415,12 @@ public class Vi5BaseCommand implements CommandExecutor {
 					if(!game.is_Started()) {
 						mainref.deleteGame(game);
 						sender.sendMessage(ChatColor.GREEN+"This game has been succesfully deleted!");
+						return true;
 					}else {
 						sender.sendMessage("");
 						sender.sendMessage(ChatColor.RED+"This game is in progress. Use: "+ChatColor.WHITE+"/vi5 game stop "+ChatColor.GOLD+"<GameName>");
 						sender.sendMessage("");
+						return true;
 					}
 				}else {
 					sender.sendMessage("");
