@@ -18,6 +18,7 @@ import fr.vi5team.vi5.runes.Rune_crocheteur;
 import fr.vi5team.vi5.runes.Rune_doubleJump;
 import fr.vi5team.vi5.runes.Rune_fisherman;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
+import fr.vi5team.vi5.runes.Rune_ombre;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
 import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
@@ -54,10 +55,10 @@ public enum RunesList {
 			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.GOLD+"DoubleJump", ChatColor.LIGHT_PURPLE+"Get a second jump after the first one"),
 			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.GOLD+"DoubleJump", ChatColor.LIGHT_PURPLE+"Press jump twice to perform another jump")
 			),
-	/*SHADOW("Shadow",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
+	SHADOW("Shadow",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.COAL, ChatColor.GOLD+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!"),
 			makeDisplayItem(Material.COAL, ChatColor.GOLD+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!")
-			),*/
+			),
 	/*LANTERN("Lantern",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.LANTERN, ChatColor.GOLD+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you"),
 			makeDisplayItem(Material.LANTERN, ChatColor.GOLD+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you")
@@ -152,6 +153,8 @@ public enum RunesList {
 			return new Rune_tough(main, w, p, r);
 		case OMNI:
 			return new Rune_omniCapteur(main, w, p, r);
+		case SHADOW:
+			return new Rune_ombre(main, w, p, r);
 		/*case BUILDER:
 			return new Rune_builder(main, w, p, r);*/
 		case CROCHETEUR:
