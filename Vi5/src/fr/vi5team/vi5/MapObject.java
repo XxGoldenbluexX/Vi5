@@ -17,6 +17,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 
 
 public class MapObject implements Listener{
@@ -30,7 +32,7 @@ public class MapObject implements Listener{
 	private Game gameref;
 	public CaptureState captureState=CaptureState.STEALABLE;
 	public short captureLevel=0;//variable représentant le niveau de capture de l'objet (captureLevel/MAX_CAPTURE_LEVEL)*100 = pourcentage de capture
-	public final short MAX_CAPTURE_LEVEL=100;//constante représentant le niveau maximum de la jauge de capture
+	public final short MAX_CAPTURE_LEVEL=200;//constante représentant le niveau maximum de la jauge de capture
 	public boolean captureCooldown=false;//dit si oui ou non l'objet est incapturable a cause du délais de capture
 	private final String objectName;
 	private final Location position;
@@ -90,8 +92,8 @@ public class MapObject implements Listener{
 								return;
 							}
 							captureLevel+=2;
-							int percent = Math.floorDiv(captureLevel*100,MAX_CAPTURE_LEVEL);
-							p.sendTitle("", ChatColor.DARK_GREEN+"Capturing "+ChatColor.RED+ChatColor.UNDERLINE+objectName+" : "+percent+"%", 0, 2, 0);
+							int percent = Math.min(Math.floorDiv(captureLevel*100,MAX_CAPTURE_LEVEL),100);
+							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.DARK_GREEN+"Capturing:"+ChatColor.RED+ChatColor.UNDERLINE+objectName+ChatColor.GOLD+percent+"%"));
 						}else {
 							capture(p,wrap);
 						}
