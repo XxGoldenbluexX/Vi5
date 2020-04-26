@@ -31,7 +31,9 @@ public class Rune_tough extends BaseRune {
 
 	@Override
 	public void gameEnd() {
-		player.getAttribute(Attribute.GENERIC_MAX_HEALTH).removeModifier(modifier);
+		if (modifier!=null) {
+			player.getAttribute(Attribute.GENERIC_MAX_HEALTH).removeModifier(modifier);
+		}
 		player.setHealth(20);
 		// TODO Auto-generated method stub
 		
