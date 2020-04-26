@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.vi5team.vi5.Game;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.RunesList;
@@ -82,6 +83,22 @@ public class Rune_ombre extends BaseRune {
 
 	@Override
 	public void tick() {
+		if (status==OmbreStatus.POSED) {
+			if (ombreRef!=null) {
+				Game g = wraper.getGame();
+				for (Player p : g.getGardeList()) {
+					if (p.getLocation().distanceSquared(ombreRef.getLocation())<=1) {
+						ombreRef.remove();
+						for (Player w : g.getPlayerList()) {
+							w.playSound(w.getLocation(), Sound.ENTITY_WITHER_SPAWN, SoundCategory.MASTER, 1, 1);
+							w.playSound(w.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, SoundCategory.MASTER, 1, 1);
+						}
+						g.messagePlayersInGame(ChatColor.BLUE+p.getName()+ChatColor.GOLD+" killed "+ChatColor.RED+player.getName()+ChatColor.GOLD+" with his shadow");
+						player.damage(player.getHealth(), p);
+					}
+				}
+			}
+		}
 	}
 
 	@Override
