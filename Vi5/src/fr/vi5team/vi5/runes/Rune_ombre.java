@@ -48,6 +48,12 @@ public class Rune_ombre extends BaseRune {
 				player.teleport(ombreRef);
 				ombreRef.remove();
 				ombreRef=null;
+				ItemStack itm=new ItemStack(Material.COAL);
+				ItemMeta meta = itm.getItemMeta();
+				meta.setDisplayName(ChatColor.GRAY+"Shadow (Used)");
+				itm.setItemMeta(meta);
+				setCastItem(itm);
+				setCooldown(2);
 				status=OmbreStatus.WASTED;
 			}
 			break;
