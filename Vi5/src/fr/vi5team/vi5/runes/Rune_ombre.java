@@ -24,7 +24,7 @@ public class Rune_ombre extends BaseRune {
 		WASTED
 	}
 	
-	private OmbreStatus status;
+	private OmbreStatus status=OmbreStatus.READY;
 	private ArmorStand ombreRef;
 
 	public Rune_ombre(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
