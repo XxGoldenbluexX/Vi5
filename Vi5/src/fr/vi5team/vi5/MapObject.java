@@ -37,9 +37,9 @@ public class MapObject implements Listener{
 	private final Location blockPosition;
 	private final BlockData blockData;
 	private final Material blockType;
-	private final int xsize;
-	private final int ysize;
-	private final int zsize;
+	private final double xsize;
+	private final double ysize;
+	private final double zsize;
 	private ArrayList<Player> playersOnObject=new ArrayList<Player>();
 	
 	
@@ -125,7 +125,7 @@ public class MapObject implements Listener{
 		HandlerList.unregisterAll(this);
 	}
 		
-	public MapObject(Game game, String _objectName, Location _position, Location _blockPosition,BlockData bdata,Material _blockType,int sizex,int sizey,int sizez) {
+	public MapObject(Game game, String _objectName, Location _position, Location _blockPosition,BlockData bdata,Material _blockType,double sizex,double sizey,double sizez) {
 		blockPosition = _blockPosition;
 		blockData=bdata;
 		blockType = _blockType;
@@ -157,13 +157,13 @@ public class MapObject implements Listener{
 	public Location getPosition() {
 		return position;
 	}
-	public int getXsize() {
+	public double getXsize() {
 		return xsize;
 	}
-	public int getYsize() {
+	public double getYsize() {
 		return ysize;
 	}
-	public int getZsize() {
+	public double getZsize() {
 		return zsize;
 	}
 	public BlockData getBlockData() {

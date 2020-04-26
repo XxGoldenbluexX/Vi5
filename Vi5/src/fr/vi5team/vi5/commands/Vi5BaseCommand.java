@@ -1017,9 +1017,9 @@ public class Vi5BaseCommand implements CommandExecutor {
 					return true;
 				}
 				if (mainref.getCfgmanager().getMapEscapesList(args[2]).contains(args[3])) {
-					cfg.set("mapEscapes."+args[3]+".sizex", Float.parseFloat(args[4]));
-					cfg.set("mapEscapes."+args[3]+".sizey", Float.parseFloat(args[5]));
-					cfg.set("mapEscapes."+args[3]+".sizez", Float.parseFloat(args[6]));
+					cfg.set("mapEscapes."+args[3]+".sizex", Double.parseDouble(args[4]));
+					cfg.set("mapEscapes."+args[3]+".sizey", Double.parseDouble(args[5]));
+					cfg.set("mapEscapes."+args[3]+".sizez", Double.parseDouble(args[6]));
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
 					sender.sendMessage(ChatColor.GREEN+"Map escape's size set!");
 					return true;
@@ -1113,9 +1113,9 @@ public class Vi5BaseCommand implements CommandExecutor {
 					return true;
 				}
 				if (mainref.getCfgmanager().getMapEntrancesList(args[2]).contains(args[3])) {
-					cfg.set("mapEntrances."+args[3]+".sizex", Float.parseFloat(args[4]));
-					cfg.set("mapEntrances."+args[3]+".sizey", Float.parseFloat(args[5]));
-					cfg.set("mapEntrances."+args[3]+".sizez", Float.parseFloat(args[6]));
+					cfg.set("mapEntrances."+args[3]+".sizex", Double.parseDouble(args[4]));
+					cfg.set("mapEntrances."+args[3]+".sizey", Double.parseDouble(args[5]));
+					cfg.set("mapEntrances."+args[3]+".sizez", Double.parseDouble(args[6]));
 					mainref.getCfgmanager().saveMapConfig(args[2], cfg);
 					sender.sendMessage(ChatColor.GREEN+"Entrance's size location set!");
 					return true;

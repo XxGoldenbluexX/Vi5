@@ -441,9 +441,9 @@ public class Game implements Listener {
 			Location _blockPosition = mapcfg.getLocation("mapObjects."+objname+".blockLocation");
 			BlockData _blockData = Bukkit.createBlockData(mapcfg.getString("mapObjects."+objname+".blockData","")); //le blockdata est enregistré sous forme de string dans le config puis transformé en blockdata ici
 			Material _blockType = Material.valueOf(mapcfg.getString("mapObjects."+objname+".blockType"));
-			int sizex = mapcfg.getInt("mapObjects."+objname+".sizex",-1);
-			int sizey = mapcfg.getInt("mapObjects."+objname+".sizey",-1);
-			int sizez = mapcfg.getInt("mapObjects."+objname+".sizez",-1);
+			double sizex = mapcfg.getDouble("mapObjects."+objname+".sizex",-1);
+			double sizey = mapcfg.getDouble("mapObjects."+objname+".sizey",-1);
+			double sizez = mapcfg.getDouble("mapObjects."+objname+".sizez",-1);
 			if (_position==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapObjects."+objname+".centerLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				valid=false;
@@ -485,9 +485,9 @@ public class Game implements Listener {
 		for (String objname : objList) {
 			boolean valid=true;
 			Location loc = mapcfg.getLocation("mapEscapes."+objname+".centerLocation");
-			int sizex = mapcfg.getInt("mapEscapes."+objname+".sizex",-1);
-			int sizey = mapcfg.getInt("mapEscapes."+objname+".sizey",-1);
-			int sizez = mapcfg.getInt("mapEscapes."+objname+".sizez",-1);
+			double sizex = mapcfg.getDouble("mapEscapes."+objname+".sizex",-1);
+			double sizey = mapcfg.getDouble("mapEscapes."+objname+".sizey",-1);
+			double sizez = mapcfg.getDouble("mapEscapes."+objname+".sizez",-1);
 			if (loc==null) {
 				Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEscapes."+objname+".centerLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 				valid=false;
@@ -517,9 +517,9 @@ public class Game implements Listener {
 			for (String objname : objList) {
 				boolean valid=true;
 				Location loc = mapcfg.getLocation("mapEntrances."+objname+".centerLocation");
-				int sizex = mapcfg.getInt("mapEntrances."+objname+".sizex",-1);
-				int sizey = mapcfg.getInt("mapEntrances."+objname+".sizey",-1);
-				int sizez = mapcfg.getInt("mapEntrances."+objname+".sizez",-1);
+				double sizex = mapcfg.getDouble("mapEntrances."+objname+".sizex",-1);
+				double sizey = mapcfg.getDouble("mapEntrances."+objname+".sizey",-1);
+				double sizez = mapcfg.getDouble("mapEntrances."+objname+".sizez",-1);
 				if (loc==null) {
 					Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"mapEntrances."+objname+".centerLocation n'a pas de valeur valide pour la map "+ChatColor.ITALIC+map_name);
 					valid=false;
