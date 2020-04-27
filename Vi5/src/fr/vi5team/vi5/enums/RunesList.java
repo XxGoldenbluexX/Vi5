@@ -20,6 +20,7 @@ import fr.vi5team.vi5.runes.Rune_fisherman;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
 import fr.vi5team.vi5.runes.Rune_ombre;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
+import fr.vi5team.vi5.runes.Rune_scanner;
 import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
 import fr.vi5team.vi5.runes.Rune_tough;
@@ -79,10 +80,10 @@ public enum RunesList {
 			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls"),
 			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls")
 			),
-	/*SCANNER("Scanner",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
+	SCANNER("Scanner",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in a large ray every x seconds"),
 			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in a large ray every x seconds")
-			)*/;
+			);
 	//////////////////////////////////
 	private final String DisplayName;
 	private final RunesType Type;
@@ -163,6 +164,8 @@ public enum RunesList {
 			return new Rune_fisherman(main, w, p, r);
 		case BUSH:
 			return new Rune_bush(main, w, p, r);
+		case SCANNER:
+			return new Rune_scanner(main, w, p, r);
 		default:
 			break;
 		}

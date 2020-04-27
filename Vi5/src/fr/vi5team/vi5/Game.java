@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerChangedMainHandEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -154,7 +154,7 @@ public class Game implements Listener {
 		}
 	}
 	@EventHandler
-	public void onPlayerChangeSlot(PlayerChangedMainHandEvent event) {
+	public void onPlayerChangeSlot(PlayerItemHeldEvent event) {
         Player p = event.getPlayer();
         Game g = mainref.getPlayerWrapper(p).getGame();
         if(g!=null&&!g.is_Started()) {
