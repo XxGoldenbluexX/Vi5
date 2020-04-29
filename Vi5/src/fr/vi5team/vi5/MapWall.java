@@ -70,46 +70,44 @@ public class MapWall implements Listener{
 			wallsInGame.remove(wall);
 		}
 	}
-	public String isPlayerOnWall(Player p) {
-		Location ploc = p.getLocation();
+	public String isPlayerOnWall(Location ploc) {
 		for(String wallName : wallsInGame) {
 			ArrayList<Location> cornersLoc = wallsInMapLocations.get(wallName);
 			Location loc1=cornersLoc.get(0);
 			Location loc2=cornersLoc.get(1);
-			boolean xCheck=false;
-			boolean yCheck=false;
+			boolean xx=false;
+			boolean yy=false;
+			boolean zz=false;
 			if(loc1.getX()>loc2.getX()) {
 				if(ploc.getX()<=loc1.getX()+1&&ploc.getX()>=loc2.getX()-1) {
-					xCheck=true;
+					xx=true;
 				}
 			}else {
 				if(ploc.getX()<=loc2.getX()+1&&ploc.getX()>=loc1.getX()-1) {
-					xCheck=true;
+					xx=true;
 				}
 			}
-			if(xCheck) {
-				if(loc1.getY()>loc2.getY()) {
-					if(ploc.getY()<=loc1.getY()+1&&ploc.getY()>=loc2.getY()-1) {
-						yCheck=true;
-					}
-				}else {
-					if(ploc.getY()<=loc2.getY()+1&&ploc.getY()>=loc1.getY()-1) {
-						yCheck=true;
+			if(loc1.getY()>loc2.getY()) {
+				if(ploc.getY()<=loc1.getY()+1&&ploc.getY()>=loc2.getY()-1) {
+					yy=true;
+				}
+			}else {
+				if(ploc.getY()<=loc2.getY()+1&&ploc.getY()>=loc1.getY()-1) {
+					yy=true;
 					}
 				}
-			}
-			if(yCheck) {
-				if(loc1.getZ()>loc2.getZ()) {
-					if(ploc.getZ()<=loc1.getZ()+1&&ploc.getZ()>=loc2.getZ()-1) {
-						return wallName;
-					}
-				}else {
-					if(ploc.getZ()<=loc2.getZ()+1&&ploc.getZ()>=loc1.getZ()-1) {
-						return wallName;
+			if(loc1.getZ()>loc2.getZ()) {
+				if(ploc.getZ()<=loc1.getZ()+1&&ploc.getZ()>=loc2.getZ()-1) {
+					zz=true;
+				}
+			}else {
+				if(ploc.getZ()<=loc2.getZ()+1&&ploc.getZ()>=loc1.getZ()-1) {
+					zz=true;
 					}
 				}
+			if(xx&&yy&&zz) {
+				return wallName;
 			}
-			
 		}
 		return null;
 	}
@@ -118,7 +116,7 @@ public class MapWall implements Listener{
 		Player p = event.getPlayer();
 		PlayerWrapper wrap = mainref.getPlayerWrapper(p);
 		if(wrap.getTeam()==Vi5Team.GARDE||wrap.getRuneSecondaire().getRune()==RunesList.CROCHETEUR) {
-			String wallName=isPlayerOnWall(p);
+			String wallName=isPlayerOnWall(event.getTo());
 			if(!playerOnWall.keySet().contains(p)&&wallName!=null) {
 				if(!playerOnWall.values().contains(wallName)) {
 					setBlocks(true,wallName);

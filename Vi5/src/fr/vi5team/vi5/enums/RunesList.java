@@ -71,8 +71,8 @@ public enum RunesList {
 			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible")
 			),
 	BUILDER("Builder",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.STONE_BRICK_WALL, ChatColor.LIGHT_PURPLE+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map"),
-			makeDisplayItem(Material.STONE_BRICK_WALL, ChatColor.LIGHT_PURPLE+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map")
+			makeDisplayItem(Material.BRICK_WALL, ChatColor.LIGHT_PURPLE+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map"),
+			makeDisplayItem(Material.BRICK_WALL, ChatColor.LIGHT_PURPLE+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map")
 			),
 	PECHEUR("Fisherman",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.FISHING_ROD, ChatColor.GREEN+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves"),
