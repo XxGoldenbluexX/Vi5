@@ -400,7 +400,7 @@ public class Game implements Listener {
 				for (MapObject o : mapObjects) {
 					o.setCaptureCooldown(false);
 				}
-				messageTeam(Vi5Team.VOLEUR, ChatColor.GREEN+""+ChatColor.UNDERLINE+"Thiefs can now steal an object!");
+				messageTeam(Vi5Team.VOLEUR, ChatColor.GREEN+""+ChatColor.UNDERLINE+"Thieves can now steal an object!");
 			}
 		}.runTaskLater(mainref, 600);
 	}
