@@ -39,8 +39,8 @@ public class Rune_cop extends BaseRune {
 		ItemMeta meta = itm.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD+"Thief Slayer");
 		ArrayList<String> l = new ArrayList<String>();
-		l.add(ChatColor.LIGHT_PURPLE+"This sword is able to one-shot thiefs");
-		l.add(ChatColor.GRAY+"\"La matraque de théo\"");
+		l.add(ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves");
+		l.add(ChatColor.GRAY+"\"La Matraque de Théo\"");
 		meta.setLore(l);
 		meta.addEnchant(Enchantment.MENDING, 1,true);
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

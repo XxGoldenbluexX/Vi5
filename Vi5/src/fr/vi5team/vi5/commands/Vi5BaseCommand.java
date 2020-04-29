@@ -360,16 +360,22 @@ public class Vi5BaseCommand implements CommandExecutor {
 		case "stop":
 			if(args.length>2) {
 				Game game = mainref.getGame(args[2]);
-				if (game.is_Started()) {
-					for(Player p : game.playersInGame().keySet()) {
-						p.sendMessage(ChatColor.RED+"Game has been forcefully stopped by: "+sender.getName());
+				if(game!=null) {
+					if (game.is_Started()) {
+						for(Player p : game.playersInGame().keySet()) {
+							p.sendMessage(ChatColor.RED+"Game has been forcefully stopped by: "+sender.getName());
+						}
+						sender.sendMessage(ChatColor.GREEN+"Game has been stopped");
+						game.endGame();
+						return true;
 					}
-					sender.sendMessage(ChatColor.GREEN+"Game has been stopped");
-					game.endGame();
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"Game haven't started!");
+					sender.sendMessage("");
 					return true;
 				}
 				sender.sendMessage("");
-				sender.sendMessage(ChatColor.RED+"Game does not exist or haven't started!");
+				sender.sendMessage(ChatColor.RED+"Game does not exist!");
 				sender.sendMessage("");
 				return true;
 			}

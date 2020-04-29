@@ -18,7 +18,6 @@ public class Rune_bush extends BaseRune{
 	public Rune_bush(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
 	}
-
 	@Override
 	public void cast() {
 	}
