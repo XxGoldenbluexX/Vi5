@@ -200,7 +200,7 @@ public class MapWall implements Listener{
 						toAddZ=-z;
 					}else {
 						toAddZ=z;
-					}
+					}//
 					Location loc = new Location(world,cornerLoc2.getX()+toAddX,cornerLoc2.getY()+toAddY,cornerLoc2.getZ()+toAddZ);
 					if(remove) {
 						loc.getBlock().setType(Material.AIR);
