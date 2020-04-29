@@ -35,11 +35,15 @@ public class Rune_scanner extends BaseRune{
 	@Override
 	public void tick() {
 		if(!armorList.isEmpty()) {
+			ArrayList<ArmorStand> toRemove = new ArrayList<ArmorStand>();
 			for(ArmorStand stand : armorList) {
 				if(!stand.hasPotionEffect(PotionEffectType.GLOWING)) {
 					stand.remove();
-					armorList.remove(stand);
+					toRemove.add(stand);
 				}
+			}
+			for (ArmorStand a : toRemove) {
+				armorList.remove(a);
 			}
 		}
 	}
