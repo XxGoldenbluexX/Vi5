@@ -31,8 +31,8 @@ public class Rune_builder extends BaseRune{
 					player.sendMessage(ChatColor.GREEN+"You have placed your last wall: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall);		
 				}else {
 					player.sendMessage(ChatColor.GREEN+"You have placed the wall: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall);	
-					showAdaptedHotbarItem();
 					}
+				showAdaptedHotbarItem();
 				}
 		}else {
 			player.sendMessage(ChatColor.RED+"All your walls have already been placed!");	

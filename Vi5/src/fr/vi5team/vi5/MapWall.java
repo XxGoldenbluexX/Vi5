@@ -160,24 +160,25 @@ public class MapWall implements Listener{
 		return nearestWall;
 	}
 	public void setBlocks(boolean remove, String wallName) {
-		Location cornerLoc = wallsInMapLocations.get(wallName).get(0);
-		Double xDiff=wallsInMapLocations.get(wallName).get(0).getX()-wallsInMapLocations.get(wallName).get(1).getX();
+		Location cornerLoc1 = wallsInMapLocations.get(wallName).get(0);
+		Location cornerLoc2 = wallsInMapLocations.get(wallName).get(1);
 		boolean xInvert=false;
 		boolean yInvert=false;
 		boolean zInvert=false;
 		double toAddX;
 		double toAddY;
 		double toAddZ;
+		Double xDiff=cornerLoc1.getX()-cornerLoc2.getX();
 		if(xDiff<0) {
 			xInvert=true;
 			xDiff=xDiff*-1;
 		}
-		Double yDiff=wallsInMapLocations.get(wallName).get(0).getY()-wallsInMapLocations.get(wallName).get(1).getY();
+		Double yDiff=cornerLoc1.getY()-cornerLoc2.getY();
 		if(yDiff<0) {
 			yInvert=true;
 			yDiff=yDiff*-1;
 		}
-		Double zDiff=wallsInMapLocations.get(wallName).get(0).getZ()-wallsInMapLocations.get(wallName).get(1).getZ();
+		Double zDiff=cornerLoc1.getZ()-cornerLoc2.getZ();
 		if(zDiff<0) {
 			zInvert=true;
 			zDiff=zDiff*-1;
@@ -200,7 +201,7 @@ public class MapWall implements Listener{
 					}else {
 						toAddZ=z;
 					}
-					Location loc = new Location(world,cornerLoc.getX()+toAddX,cornerLoc.getY()+toAddY,cornerLoc.getZ()+toAddZ);
+					Location loc = new Location(world,cornerLoc2.getX()+toAddX,cornerLoc2.getY()+toAddY,cornerLoc2.getZ()+toAddZ);
 					if(remove) {
 						loc.getBlock().setType(Material.AIR);
 					}else {
