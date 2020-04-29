@@ -20,7 +20,6 @@ public class Rune_scanner extends BaseRune{
 	public void summonArmorStand() {
 		for(Player p : wraper.getGame().getGardeList()) {
 			ArmorStand armorStand = (ArmorStand) p.getWorld().spawnEntity(p.getLocation(), EntityType.ARMOR_STAND);
-			armorStand.setMarker(true);
 			armorStand.setInvulnerable(true);
 			armorStand.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 140, 1, false, false, false));
 			armorStand.setVisible(false);
