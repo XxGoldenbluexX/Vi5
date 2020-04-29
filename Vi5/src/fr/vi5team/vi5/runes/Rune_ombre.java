@@ -49,7 +49,7 @@ public class Rune_ombre extends BaseRune {
 				player.teleport(ombreRef);
 				ombreRef.remove();
 				ombreRef=null;
-				ItemStack itm=new ItemStack(Material.COAL);
+				ItemStack itm=new ItemStack(Material.CHARCOAL);
 				ItemMeta meta = itm.getItemMeta();
 				meta.setDisplayName(ChatColor.GRAY+"Shadow (Used)");
 				itm.setItemMeta(meta);

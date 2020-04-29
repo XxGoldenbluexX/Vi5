@@ -48,6 +48,8 @@ public class Rune_lantern extends BaseRune {
 				showAdaptedItem();
 				setCooldown(2);
 			}
+		}else {
+			showAdaptedItem();
 		}
 	}
 
