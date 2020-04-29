@@ -18,6 +18,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -60,7 +61,11 @@ public class Game implements Listener {
 		return mapWall;
 	}
 	public void endGame() {
-		mapWall.removeAllWalls();
+		if (mapWall!=null) {
+			mapWall.removeAllWalls();
+			HandlerList.unregisterAll(mapWall);
+			mapWall=null;
+		}
 		started=false;
 		gameTick.cancel();
 		for (MapObject o : mapObjects) {

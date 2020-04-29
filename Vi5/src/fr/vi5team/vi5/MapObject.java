@@ -28,7 +28,7 @@ public class MapObject implements Listener{
 		CARRIED,//l'objet est porté par un voleur
 		STEALED//un voleur c'est enfuit avec cet objet
 	}
-	
+
 	private Game gameref;
 	public CaptureState captureState=CaptureState.STEALABLE;
 	public short captureLevel=0;//variable représentant le niveau de capture de l'objet (captureLevel/MAX_CAPTURE_LEVEL)*100 = pourcentage de capture
