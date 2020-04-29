@@ -133,7 +133,7 @@ public class MapWall implements Listener{
 		}
 	}
 	public String getNearestWall(Player p) {
-		Location ploc = p.getLocation();//
+		Location ploc = p.getLocation();
 		Double minDistance = Double.MAX_VALUE;
 		String nearestWall=null;
 		for(String wallName : wallsInMap) {

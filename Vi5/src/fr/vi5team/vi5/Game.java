@@ -22,13 +22,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
 
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.enums.VoleurStatus;
@@ -46,7 +43,6 @@ public class Game implements Listener {
 	private short totalObjVolés=0;
 	private Location gardeSpawn;
 	private Location voleurMinimapSpawn;
-	private PluginManager pmanager;
 	private ArrayList<MapObject> mapObjects=new ArrayList<MapObject>();
 	private ArrayList<MapEnterZone> mapEnterZones=new ArrayList<MapEnterZone>();
 	private ArrayList<MapLeaveZone> mapLeaveZones=new ArrayList<MapLeaveZone>();
@@ -59,7 +55,6 @@ public class Game implements Listener {
 		cfgManager=cfgm;
 		name=_name;
 		world=_world;
-		pmanager=Bukkit.getPluginManager();
 	}
 	public MapWall getMapWall() {
 		return mapWall;
