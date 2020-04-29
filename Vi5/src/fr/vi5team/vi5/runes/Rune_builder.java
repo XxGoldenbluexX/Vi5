@@ -43,7 +43,11 @@ public class Rune_builder extends BaseRune{
 	private void showAdaptedHotbarItem() {
 		ItemStack item;
 		ItemMeta meta;
-		item=new ItemStack(Material.BRICK_WALL, MAX_WALLS-NB_WALLS);
+		if(MAX_WALLS-NB_WALLS!=2) {
+			item=new ItemStack(Material.BRICK_WALL, 1);
+		}else {
+			item=new ItemStack(Material.BRICK_WALL, 2);
+		}
 		meta=item.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD+"You can place "+ChatColor.AQUA+(MAX_WALLS-NB_WALLS)+ChatColor.GOLD+" more walls");
 		item.setItemMeta(meta);
