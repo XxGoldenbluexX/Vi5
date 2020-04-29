@@ -15,6 +15,7 @@ import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.runes.BaseRune;
 import fr.vi5team.vi5.runes.Rune_builder;
 import fr.vi5team.vi5.runes.Rune_bush;
+import fr.vi5team.vi5.runes.Rune_cop;
 import fr.vi5team.vi5.runes.Rune_crocheteur;
 import fr.vi5team.vi5.runes.Rune_doubleJump;
 import fr.vi5team.vi5.runes.Rune_fisherman;
@@ -46,10 +47,10 @@ public enum RunesList {
 			makeDisplayItem(Material.FEATHER, ChatColor.GREEN+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
 			makeDisplayItem(Material.FEATHER, ChatColor.GREEN+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed is increased by 20%")
 			),
-	/*COP("Cop",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
+	COP("Cop",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves"),
 			makeDisplayItem(Material.END_ROD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
-			),*/
+			),
 	TOUGH("Tough",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Tough", ChatColor.LIGHT_PURPLE+"All damage get reduced by 20%"),
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Tough", ChatColor.LIGHT_PURPLE+"All damage are reduced by 20%")
@@ -170,6 +171,8 @@ public enum RunesList {
 			return new Rune_scanner(main, w, p, r);
 		case LANTERN:
 			return new Rune_lantern(main, w, p, r);
+		case COP:
+			return new Rune_cop(main, w, p, r);
 		default:
 			break;
 		}
