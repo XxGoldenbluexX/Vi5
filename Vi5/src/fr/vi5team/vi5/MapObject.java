@@ -93,7 +93,7 @@ public class MapObject implements Listener{
 							}
 							captureLevel+=2;
 							int percent = Math.min(Math.floorDiv(captureLevel*100,MAX_CAPTURE_LEVEL),100);
-							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.DARK_GREEN+"Capturing:"+ChatColor.RED+ChatColor.UNDERLINE+objectName+ChatColor.GOLD+percent+"%"));
+							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.DARK_GREEN+"Capturing: "+ChatColor.RED+ChatColor.UNDERLINE+objectName+" "+ChatColor.GOLD+percent+"%"));
 						}else {
 							capture(p,wrap);
 						}

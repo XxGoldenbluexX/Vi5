@@ -509,22 +509,22 @@ public class Vi5Interfaces implements Listener{
 					case TEAM:
 						switch (itemClicked.getType()) {
 						case RED_BANNER:
-							wrap.setTeam(Vi5Team.VOLEUR);
+							wrap.setTeam(Vi5Team.VOLEUR,true);
 							break;
 						case RED_STAINED_GLASS_PANE:
-							wrap.setTeam(Vi5Team.VOLEUR);
+							wrap.setTeam(Vi5Team.VOLEUR,true);
 							break;
 						case GREEN_BANNER:
-							wrap.setTeam(Vi5Team.SPECTATEUR);
+							wrap.setTeam(Vi5Team.SPECTATEUR,true);
 							break;
 						case LIME_STAINED_GLASS_PANE:
-							wrap.setTeam(Vi5Team.SPECTATEUR);
+							wrap.setTeam(Vi5Team.SPECTATEUR,true);
 							break;
 						case BLUE_BANNER:
-							wrap.setTeam(Vi5Team.GARDE);
+							wrap.setTeam(Vi5Team.GARDE,true);
 							break;
 						case BLUE_STAINED_GLASS_PANE:
-							wrap.setTeam(Vi5Team.GARDE);
+							wrap.setTeam(Vi5Team.GARDE,true);
 							break;
 						default:
 							break;
