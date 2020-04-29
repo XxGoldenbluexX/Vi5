@@ -83,8 +83,8 @@ public class Rune_lantern extends BaseRune {
 	public void gameEnd() {
 		for (FallingBlock s : lanterns) {
 			s.remove();
-			lanterns.clear();
 		}
+		lanterns.clear();
 	}
 
 	@Override
