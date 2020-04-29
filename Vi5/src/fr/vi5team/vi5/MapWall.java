@@ -52,22 +52,9 @@ public class MapWall implements Listener{
 			}
 		}
 	}
-	public void addPlayerOnWall(Player p, String wallName) {
-		if(!wallsInGame.contains(wallName)) {
-			wallsInGame.add(wallName);
-		}
-		playerOnWall.put(p, wallName);
-	}
 	public void removeAllWalls() {
 		for(String wallName : wallsInGame) {
 			setBlocks(true,wallName);
-		}
-	}
-	public void removePlayerOnWall(Player p) {
-		String wall = playerOnWall.get(p);
-		playerOnWall.remove(p);
-		if(!playerOnWall.values().contains(wall)) {
-			wallsInGame.remove(wall);
 		}
 	}
 	public String isPlayerOnWall(Location ploc) {
@@ -124,11 +111,11 @@ public class MapWall implements Listener{
 				if(!playerOnWall.values().contains(wallName)) {
 					setBlocks(true,wallName);
 				}
-				addPlayerOnWall(p,wallName);
+				playerOnWall.put(p, wallName);
 			}else {
 				if(playerOnWall.keySet().contains(p)&&wallName==null) {
 					wallName=playerOnWall.get(p);
-					removePlayerOnWall(p);
+					playerOnWall.remove(p);
 					if(!playerOnWall.values().contains(wallName)) {
 						setBlocks(false,wallName);
 					}
