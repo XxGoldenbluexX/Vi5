@@ -1275,7 +1275,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 								return true;
 							}else {
 								if (mainref.isPlayerIngame(p)) {
-									mainref.getPlayerWrapper(p).setTeam(Vi5Team.GARDE);
+									mainref.getPlayerWrapper(p).setTeam(Vi5Team.GARDE,true);
 									sender.sendMessage(ChatColor.GREEN+"This player is now a guard");
 									return true;
 								}else {
@@ -1286,7 +1286,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 								}
 							}
 						}else {
-							mainref.getPlayerWrapper(player).setTeam(Vi5Team.GARDE);
+							mainref.getPlayerWrapper(player).setTeam(Vi5Team.GARDE,true);
 							return true;
 						}
 					case "thief":
@@ -1299,7 +1299,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 								return true;
 							}else {
 								if (mainref.isPlayerIngame(p)) {
-									mainref.getPlayerWrapper(p).setTeam(Vi5Team.VOLEUR);
+									mainref.getPlayerWrapper(p).setTeam(Vi5Team.VOLEUR,true);
 									sender.sendMessage(ChatColor.GREEN+"This player is now a thief");
 									return true;
 								}else {
@@ -1310,7 +1310,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 								}
 							}
 						}else {
-							mainref.getPlayerWrapper(player).setTeam(Vi5Team.VOLEUR);
+							mainref.getPlayerWrapper(player).setTeam(Vi5Team.VOLEUR,true);
 							return true;
 						}
 					case "spectator":
@@ -1323,7 +1323,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 								return true;
 							}else {
 								if (mainref.isPlayerIngame(p)) {
-									mainref.getPlayerWrapper(p).setTeam(Vi5Team.SPECTATEUR);
+									mainref.getPlayerWrapper(p).setTeam(Vi5Team.SPECTATEUR,true);
 									sender.sendMessage(ChatColor.GREEN+"This player is now a spectator");
 									return true;
 								}else {
@@ -1334,7 +1334,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 								}
 							}
 						}else {
-							mainref.getPlayerWrapper(player).setTeam(Vi5Team.SPECTATEUR);
+							mainref.getPlayerWrapper(player).setTeam(Vi5Team.SPECTATEUR,true);
 							return true;
 						}
 					default:
