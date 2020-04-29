@@ -89,6 +89,7 @@ public class Rune_ombre extends BaseRune {
 				for (Player p : g.getGardeList()) {
 					if (p.getLocation().distanceSquared(ombreRef.getLocation())<=1) {
 						ombreRef.remove();
+						ombreRef=null;
 						for (Player w : g.getPlayerList()) {
 							w.playSound(w.getLocation(), Sound.ENTITY_WITHER_SPAWN, SoundCategory.MASTER, 1, 1);
 							w.playSound(w.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, SoundCategory.MASTER, 1, 1);
