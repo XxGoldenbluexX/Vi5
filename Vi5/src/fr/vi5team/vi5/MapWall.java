@@ -66,29 +66,29 @@ public class MapWall implements Listener{
 			boolean yy=false;
 			boolean zz=false;
 			if(loc1.getX()>loc2.getX()) {
-				if(ploc.getX()<=loc1.getX()+1&&ploc.getX()>=loc2.getX()-1) {
+				if(ploc.getX()<=loc1.getX()+1.5&&ploc.getX()>=loc2.getX()-1.5) {
 					xx=true;
 				}
 			}else {
-				if(ploc.getX()<=loc2.getX()+1&&ploc.getX()>=loc1.getX()-1) {
+				if(ploc.getX()<=loc2.getX()+1.5&&ploc.getX()>=loc1.getX()-1.5) {
 					xx=true;
 				}
 			}
 			if(loc1.getY()>loc2.getY()) {
-				if(ploc.getY()<=loc1.getY()+1&&ploc.getY()>=loc2.getY()-1) {
+				if(ploc.getY()<=loc1.getY()+1.5&&ploc.getY()>=loc2.getY()-1.5) {
 					yy=true;
 				}
 			}else {
-				if(ploc.getY()<=loc2.getY()+1&&ploc.getY()>=loc1.getY()-1) {
+				if(ploc.getY()<=loc2.getY()+1.5&&ploc.getY()>=loc1.getY()-1.5) {
 					yy=true;
 					}
 				}
 			if(loc1.getZ()>loc2.getZ()) {
-				if(ploc.getZ()<=loc1.getZ()+1&&ploc.getZ()>=loc2.getZ()-1) {
+				if(ploc.getZ()<=loc1.getZ()+1.5&&ploc.getZ()>=loc2.getZ()-1.5) {
 					zz=true;
 				}
 			}else {
-				if(ploc.getZ()<=loc2.getZ()+1&&ploc.getZ()>=loc1.getZ()-1) {
+				if(ploc.getZ()<=loc2.getZ()+1.5&&ploc.getZ()>=loc1.getZ()-1.5) {
 					zz=true;
 					}
 				}
