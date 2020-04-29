@@ -32,12 +32,12 @@ public class Rune_builder extends BaseRune{
 				}else {
 					player.sendMessage(ChatColor.GREEN+"You have placed the wall: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall);	
 					}
-				showAdaptedHotbarItem();
 				}
 		}else {
 			player.sendMessage(ChatColor.RED+"All your walls have already been placed!");	
 			
 		}
+		showAdaptedHotbarItem();
 		
 	}
 	private void showAdaptedHotbarItem() {
