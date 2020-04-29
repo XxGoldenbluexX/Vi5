@@ -195,7 +195,7 @@ public class Game implements Listener {
 	
 	public boolean removePlayer(Player player) {
 		if (playersInGame.containsKey(player)) {
-			if (started && playersInGame.get(player).getTeam()==Vi5Team.VOLEUR) {
+			if (started && playersInGame.get(player).getTeam()==Vi5Team.VOLEUR && playersInGame.get(player).getCurrentStatus()!=VoleurStatus.ESCAPED) {
 				nbVoleurAlive--;
 				if (nbVoleurAlive<=0) {
 					endGame();
