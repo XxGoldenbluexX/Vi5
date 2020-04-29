@@ -120,14 +120,12 @@ public class MapWall implements Listener{
 		if(wrap.getTeam()==Vi5Team.GARDE||wrap.getRuneSecondaire().getRune()==RunesList.CROCHETEUR) {
 			String wallName=isPlayerOnWall(p);
 			if(!playerOnWall.keySet().contains(p)&&wallName!=null) {
-					//IL RENTRE
 				if(!playerOnWall.values().contains(wallName)) {
 					setBlocks(true,wallName);
 				}
 				addPlayerOnWall(p,wallName);
 			}else {
 				if(playerOnWall.keySet().contains(p)&&wallName==null) {
-						//IL SORT
 					removePlayerOnWall(p);
 					if(!playerOnWall.values().contains(wallName)) {
 						setBlocks(false,wallName);
@@ -168,17 +166,17 @@ public class MapWall implements Listener{
 		double toAddX;
 		double toAddY;
 		double toAddZ;
-		Double xDiff=cornerLoc1.getX()-cornerLoc2.getX();
+		Double xDiff=cornerLoc2.getX()-cornerLoc1.getX();
 		if(xDiff<0) {
 			xInvert=true;
 			xDiff=xDiff*-1;
 		}
-		Double yDiff=cornerLoc1.getY()-cornerLoc2.getY();
+		Double yDiff=cornerLoc2.getY()-cornerLoc1.getY();
 		if(yDiff<0) {
 			yInvert=true;
 			yDiff=yDiff*-1;
 		}
-		Double zDiff=cornerLoc1.getZ()-cornerLoc2.getZ();
+		Double zDiff=cornerLoc2.getZ()-cornerLoc1.getZ();
 		if(zDiff<0) {
 			zInvert=true;
 			zDiff=zDiff*-1;
@@ -200,8 +198,8 @@ public class MapWall implements Listener{
 						toAddZ=-z;
 					}else {
 						toAddZ=z;
-					}//
-					Location loc = new Location(world,cornerLoc2.getX()+toAddX,cornerLoc2.getY()+toAddY,cornerLoc2.getZ()+toAddZ);
+					}
+					Location loc = new Location(world,cornerLoc1.getX()+toAddX,cornerLoc1.getY()+toAddY,cornerLoc1.getZ()+toAddZ);
 					if(remove) {
 						loc.getBlock().setType(Material.AIR);
 					}else {
