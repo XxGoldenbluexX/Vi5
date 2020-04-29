@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -32,6 +34,7 @@ public class Rune_cop extends BaseRune {
 
 	@Override
 	public void gameStart() {
+		Activate();
 		ItemStack itm = makeSpamSword(Material.DIAMOND_SWORD, 1000);
 		ItemMeta meta = itm.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD+"Thief Slayer");
@@ -39,6 +42,9 @@ public class Rune_cop extends BaseRune {
 		l.add(ChatColor.LIGHT_PURPLE+"This sword is able to one-shot thiefs");
 		l.add(ChatColor.GRAY+"\"La matraque de théo\"");
 		meta.setLore(l);
+		meta.addEnchant(Enchantment.MENDING, 1,true);
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		itm.setItemMeta(meta);
 		player.getInventory().setItem(0, itm);
 	}
