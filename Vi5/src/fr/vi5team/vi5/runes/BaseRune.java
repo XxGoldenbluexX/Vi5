@@ -177,11 +177,12 @@ public abstract class BaseRune implements Listener {
 	public void setHotbarItem(ItemStack hotbarItem) {
 		this.hotbarItem = hotbarItem;
 	}
-	protected ItemStack makeSpamSword(Material mat) {
+	protected ItemStack makeSpamSword(Material mat, int damage) {
 		ItemStack itm = new ItemStack(mat);
 		ItemMeta meta = itm.getItemMeta();
+		int realDamages = Math.max(0, damage-1);
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,new AttributeModifier("pvp_1.8",1000,Operation.ADD_NUMBER));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,new AttributeModifier("diamondSwordDamages",6,Operation.ADD_NUMBER));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,new AttributeModifier("diamondSwordDamages",realDamages,Operation.ADD_NUMBER));
 		itm.setItemMeta(meta);
 		return itm;
 	}
