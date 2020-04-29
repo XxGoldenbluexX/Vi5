@@ -69,8 +69,8 @@ public class Vi5Main extends JavaPlugin implements Listener {
 		}
 		return a;
 	}
-	public Game createGame(String name) {
-		Game g=new Game(this,cfgmanager,name);
+	public Game createGame(String name,Player p) {
+		Game g=new Game(this,cfgmanager,name,p.getWorld());
 		gamesList.add(g);
 		pmanager.registerEvents(g, this);
 		return g;

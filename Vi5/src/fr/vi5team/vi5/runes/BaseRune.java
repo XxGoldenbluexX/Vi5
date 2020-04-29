@@ -171,7 +171,9 @@ public abstract class BaseRune implements Listener {
 	public ItemStack getHotbarItem() {
 		return hotbarItem;
 	}
-
+	public RunesList getRune() {
+		return Rune;
+	}
 	public void setHotbarItem(ItemStack hotbarItem) {
 		this.hotbarItem = hotbarItem;
 	}

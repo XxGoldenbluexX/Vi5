@@ -164,17 +164,24 @@ public class Vi5BaseCommand implements CommandExecutor {
 			}
 		case "create":
 			if (args.length>2) {
-				Game g = mainref.createGame(args[2]);
-				sender.sendMessage(ChatColor.GREEN+"The game ("+args[2]+ChatColor.GREEN+") has been created!");
 				if (sender instanceof Player) {
-					Player p = (Player)sender;
-					if (!mainref.isPlayerIngame(p)) {
-						g.addPlayer((Player)sender);
+					Game g = mainref.createGame(args[2],(Player)sender);
+					sender.sendMessage(ChatColor.GREEN+"The game ("+args[2]+ChatColor.GREEN+") has been created!");
+					if (sender instanceof Player) {
+						Player p = (Player)sender;
+						if (!mainref.isPlayerIngame(p)) {
+							g.addPlayer((Player)sender);
+							return true;
+						}
 						return true;
 					}
 					return true;
+				}else {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"You need to be a player in order to use this command!");
+					sender.sendMessage("");
+					return true;
 				}
-				return true;
 			}
 			sender.sendMessage("");
 			sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game create "+ChatColor.GOLD+"<GameName>");

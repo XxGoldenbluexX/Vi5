@@ -13,6 +13,7 @@ import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
 import fr.vi5team.vi5.runes.BaseRune;
+import fr.vi5team.vi5.runes.Rune_builder;
 import fr.vi5team.vi5.runes.Rune_bush;
 import fr.vi5team.vi5.runes.Rune_crocheteur;
 import fr.vi5team.vi5.runes.Rune_doubleJump;
@@ -69,10 +70,10 @@ public enum RunesList {
 			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible"),
 			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible")
 			),
-	/*BUILDER("Builder",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
+	BUILDER("Builder",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.STONE_BRICK_WALL, ChatColor.LIGHT_PURPLE+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map"),
 			makeDisplayItem(Material.STONE_BRICK_WALL, ChatColor.LIGHT_PURPLE+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map")
-			),*/
+			),
 	PECHEUR("Fisherman",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.FISHING_ROD, ChatColor.GREEN+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves"),
 			makeDisplayItem(Material.FISHING_ROD, ChatColor.GREEN+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves")
@@ -157,8 +158,8 @@ public enum RunesList {
 			return new Rune_omniCapteur(main, w, p, r);
 		case SHADOW:
 			return new Rune_ombre(main, w, p, r);
-		/*case BUILDER:
-			return new Rune_builder(main, w, p, r);*/
+		case BUILDER:
+			return new Rune_builder(main, w, p, r);
 		case CROCHETEUR:
 			return new Rune_crocheteur(main, w, p, r);
 		case PECHEUR:

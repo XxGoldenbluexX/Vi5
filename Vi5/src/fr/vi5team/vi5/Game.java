@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.data.BlockData;
@@ -31,7 +32,9 @@ import fr.vi5team.vi5.enums.VoleurStatus;
 
 public class Game implements Listener {
 	
+	private MapWall mapWall;
 	private Vi5Main mainref;
+	private World world;
 	private String name="Vi5Game";
 	private String mapname="SolarIndustries";
 	private ConfigManager cfgManager;
@@ -47,12 +50,17 @@ public class Game implements Listener {
 	private final WeakHashMap<Player,PlayerWrapper> playersInGame = new WeakHashMap<Player,PlayerWrapper>();
 	public WeakHashMap<String,ArrayList<Location>> wallsInMapLocationsList = new WeakHashMap<String,ArrayList<Location>>();
 	public WeakHashMap<String,ArrayList<Double>> wallsInMapCenterList = new WeakHashMap<String,ArrayList<Double>>();
-	public Game(Vi5Main main,ConfigManager cfgm,String _name) {
+	public Game(Vi5Main main,ConfigManager cfgm,String _name, World _world) {
 		mainref=main;
 		cfgManager=cfgm;
 		name=_name;
+		world=_world;
+	}
+	public MapWall getMapWall() {
+		return mapWall;
 	}
 	public void endGame() {
+		mapWall.removeAllWalls();
 		started=false;
 		gameTick.cancel();
 		for (MapObject o : mapObjects) {
@@ -279,25 +287,6 @@ public class Game implements Listener {
 			obj.Tick();
 		}
 	}
-	public void loadMapWalls() {
-		List<String> wallList = mainref.getCfgmanager().getMapWallsList(mapname);
-		YamlConfiguration cfg = mainref.getCfgmanager().getMapConfig(mapname);
-		for(String wallName : wallList) {
-			ArrayList<Location> bothCorner = new ArrayList<Location>();
-			Location loc1 = (Location) cfg.get("mapWalls."+wallName+".firstCorner");
-			Location loc2 = (Location) cfg.get("mapWalls."+wallName+".secondCorner");
-			if(loc1!=null&&loc2!=null) {
-				bothCorner.add(loc1);
-				bothCorner.add(loc2);
-				wallsInMapLocationsList.put(wallName, bothCorner);
-				ArrayList<Double> centerLoc = new ArrayList<Double>();
-				centerLoc.add(loc1.getX()+(loc2.getX()-loc1.getX())/2);
-				centerLoc.add(loc1.getY()+(loc2.getY()-loc1.getY())/2);
-				centerLoc.add(loc1.getZ()+(loc2.getZ()-loc1.getZ())/2);
-				wallsInMapCenterList.put(wallName, centerLoc);
-			}
-		}
-	}
 	public void start(boolean forced,CommandSender sender) {
 		//lancement de la partie, que les joueurs soient prêts ou non;
 		if (!forced) {
@@ -316,7 +305,7 @@ public class Game implements Listener {
 			totalObjVolés=0;
 			nbVoleurAlive=0;
 			started=true;
-			loadMapWalls();
+			mapWall = new MapWall(mainref,world, this.getMapName());
 			for (Player p : playersInGame.keySet()) {
 				PlayerWrapper wrap = playersInGame.get(p);
 				wrap.setReady(false);
