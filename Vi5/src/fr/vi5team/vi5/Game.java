@@ -156,11 +156,8 @@ public class Game implements Listener {
 	@EventHandler
 	public void onPlayerChangeSlot(PlayerItemHeldEvent event) {
         Player p = event.getPlayer();
-        Game g = mainref.getPlayerWrapper(p).getGame();
-        if(g!=null&&!g.is_Started()) {
-            if(!(p.getInventory().getItem(1).getType()==Material.ANVIL)) {
+        if(!is_Started() && hasPlayer(p)) {
                 mainref.getPlayerWrapper(p).showMenuHotbar();
-            }
         }
     }
 	@EventHandler
