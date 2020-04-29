@@ -23,6 +23,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -336,6 +337,7 @@ public class Game implements Listener {
 					p.teleport(gardeSpawn);
 					p.setGameMode(GameMode.ADVENTURE);
 					wrap.setCurrentStatus(VoleurStatus.INSIDE);
+					p.getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
 				}else if (wrap.getTeam()==Vi5Team.VOLEUR) {
 					wrap.setNbItemStealed((short) 0);
 					p.teleport(voleurMinimapSpawn);
