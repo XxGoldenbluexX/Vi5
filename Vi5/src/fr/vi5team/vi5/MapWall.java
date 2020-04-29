@@ -127,6 +127,7 @@ public class MapWall implements Listener{
 				addPlayerOnWall(p,wallName);
 			}else {
 				if(playerOnWall.keySet().contains(p)&&wallName==null) {
+					wallName=playerOnWall.get(p);
 					removePlayerOnWall(p);
 					if(!playerOnWall.values().contains(wallName)) {
 						setBlocks(false,wallName);
