@@ -54,24 +54,27 @@ public class Rune_lantern extends BaseRune {
 	@Override
 	public void tick() {
 		for (Player p : wraper.getGame().getVoleurInsideList()) {
-			FallingBlock l=null;
-			for (FallingBlock b : lanterns) {
-				if (p.getLocation().distanceSquared(b.getLocation())<=1) {
-					p.getWorld().playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, SoundCategory.MASTER, 1, 1.6f);
-					p.teleport(player);
-					p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, SoundCategory.MASTER, 1, 1.6f);
-					player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, SoundCategory.MASTER, 1, 1.6f);
-					p.playSound(p.getLocation(), Sound.ENTITY_SHULKER_SHOOT, SoundCategory.MASTER, 2, 0.1f);
-					player.playSound(player.getLocation(), Sound.ENTITY_SHULKER_SHOOT, SoundCategory.MASTER, 2, 0.1f);
-					p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1, 1.5f);
-					player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1, 1.5f);
-					nb_lantern++;
-					showAdaptedItem();
-					l=b;
+			if (!p.equals(player)) {
+				FallingBlock l=null;
+				for (FallingBlock b : lanterns) {
+					if (p.getLocation().distanceSquared(b.getLocation())<=1) {
+						p.getWorld().playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, SoundCategory.MASTER, 1, 1.6f);
+						p.teleport(player);
+						p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, SoundCategory.MASTER, 1, 1.6f);
+						player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, SoundCategory.MASTER, 1, 1.6f);
+						p.playSound(p.getLocation(), Sound.ENTITY_SHULKER_SHOOT, SoundCategory.MASTER, 2, 0.1f);
+						player.playSound(player.getLocation(), Sound.ENTITY_SHULKER_SHOOT, SoundCategory.MASTER, 2, 0.1f);
+						p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1, 1.5f);
+						player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1, 1.5f);
+						nb_lantern++;
+						b.remove();
+						showAdaptedItem();
+						l=b;
+					}
 				}
-			}
-			if (l!=null) {
-				lanterns.remove(l);
+				if (l!=null) {
+					lanterns.remove(l);
+				}
 			}
 		}
 	}
