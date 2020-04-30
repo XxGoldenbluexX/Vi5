@@ -27,15 +27,15 @@ public class Rune_sonar extends BaseRune{
 			}
 		}
 		if(playerScanned.size()>0) {
-			player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER, 1, 2);
-			player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER, 2, 1);
+			player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.RECORDS, 1, 2);
+			player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.RECORDS, 2, 1);
 			for(Player pScanned : playerScanned) {
 				pScanned.playSound(pScanned.getLocation(),Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER, 1, 2);
 				pScanned.playSound(pScanned.getLocation(),Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER, 2, 1);
 			}
 		}else {
-			player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER, 1, 0.5f);
-			player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.MASTER, 2, 0);
+			player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.RECORDS, 1, 0.5f);
+			player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BIT, SoundCategory.RECORDS, 2, 0);
 		}
 	}
 	@Override
