@@ -17,6 +17,7 @@ public class Rune_bush extends BaseRune{
 	private static final Material[] BUSHMATERIALS = {Material.PEONY,Material.TALL_GRASS,Material.LARGE_FERN,Material.LILAC,Material.ROSE_BUSH};
 	private double SQUARED_SPOT_RANGE = 4;
 	private boolean isInBush=false;
+	private boolean effect=false;
 	public Rune_bush(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
 	}
@@ -45,13 +46,17 @@ public class Rune_bush extends BaseRune{
 	public void tick() {	
 		if (isInBush) {
 			if (guardNear() || wraper.isJammed()) {
-				if (wraper.isInvisible()) {
-					wraper.setInvisible(false);
-				}
-				if (wraper.isInsondable()) {
-					wraper.setInsondable(false);
+				if (effect) {
+					if (wraper.isInvisible()) {
+						wraper.setInvisible(false);
+					}
+					if (wraper.isInsondable()) {
+						wraper.setInsondable(false);
+					}
+					effect=false;
 				}
 			}else {
+				effect=true;
 				if (!wraper.isInvisible()) {
 					wraper.setInvisible(true);
 					player.playSound(player.getLocation(), Sound.BLOCK_GRASS_HIT, SoundCategory.MASTER, 1, 1);
@@ -61,11 +66,14 @@ public class Rune_bush extends BaseRune{
 				}
 			}
 		}else {
-			if (wraper.isInvisible()) {
-				wraper.setInvisible(false);
-			}
-			if (wraper.isInsondable()) {
-				wraper.setInsondable(false);
+			if (effect) {
+				if (wraper.isInvisible()) {
+					wraper.setInvisible(false);
+				}
+				if (wraper.isInsondable()) {
+					wraper.setInsondable(false);
+				}
+				effect=false;
 			}
 		}
 	}
