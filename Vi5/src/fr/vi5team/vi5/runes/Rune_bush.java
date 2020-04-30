@@ -48,15 +48,24 @@ public class Rune_bush extends BaseRune{
 				if (wraper.isInvisible()) {
 					wraper.setInvisible(false);
 				}
+				if (wraper.isInsondable()) {
+					wraper.setInsondable(false);
+				}
 			}else {
 				if (!wraper.isInvisible()) {
 					wraper.setInvisible(true);
 					player.playSound(player.getLocation(), Sound.BLOCK_GRASS_HIT, SoundCategory.MASTER, 1, 1);
 				}
+				if (!wraper.isInsondable()) {
+					wraper.setInsondable(true);
+				}
 			}
 		}else {
 			if (wraper.isInvisible()) {
 				wraper.setInvisible(false);
+			}
+			if (wraper.isInsondable()) {
+				wraper.setInsondable(false);
 			}
 		}
 	}
