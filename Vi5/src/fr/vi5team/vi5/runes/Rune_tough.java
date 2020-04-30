@@ -25,7 +25,6 @@ public class Rune_tough extends BaseRune {
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
 		
 	}
 
