@@ -6,6 +6,8 @@ import java.util.WeakHashMap;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -110,6 +112,7 @@ public class MapWall implements Listener{
 			if(!playerOnWall.keySet().contains(p)&&wallName!=null) {
 				if(!playerOnWall.values().contains(wallName)) {
 					setBlocks(true,wallName);
+					p.getWorld().playSound(p.getLocation(),Sound.BLOCK_WOODEN_DOOR_OPEN, SoundCategory.MASTER, 1, 0);
 				}
 				playerOnWall.put(p, wallName);
 			}else {

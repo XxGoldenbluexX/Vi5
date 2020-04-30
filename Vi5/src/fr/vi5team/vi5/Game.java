@@ -85,9 +85,7 @@ public class Game implements Listener {
 			PlayerWrapper damagerWrap = mainref.getPlayerWrapper(pDamager);
 			PlayerWrapper receiverWrap = mainref.getPlayerWrapper(pReceiver);
 			if(damagerWrap.getTeam()==receiverWrap.getTeam()) {
-				event.setCancelled(true);
-				pReceiver.setHealth(pReceiver.getHealth()-0.5);
-				pReceiver.setHealth(pReceiver.getHealth()+0.5);
+				event.setDamage(0);
 			}
 		}
 	}
