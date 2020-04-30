@@ -2,6 +2,7 @@ package fr.vi5team.vi5.runes;
 
 import java.util.ArrayList;
 
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
@@ -59,7 +60,8 @@ public class Rune_sonar extends BaseRune{
 	}
 	@Override
 	public void gameStart() {
-		Activate();	
+		Activate();
+		player.getInventory().setItem(0, makeSpamSword(Material.DIAMOND_SWORD,7));
 	}
 
 	@Override
