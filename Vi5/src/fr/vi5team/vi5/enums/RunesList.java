@@ -24,6 +24,7 @@ import fr.vi5team.vi5.runes.Rune_lantern;
 import fr.vi5team.vi5.runes.Rune_ombre;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
 import fr.vi5team.vi5.runes.Rune_scanner;
+import fr.vi5team.vi5.runes.Rune_smokePool;
 import fr.vi5team.vi5.runes.Rune_sonar;
 import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
@@ -43,6 +44,10 @@ public enum RunesList {
 	SURCHARGE("Overcharge",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.LIGHT_PURPLE+"Overcharge", ChatColor.LIGHT_PURPLE+"Give an insane amount of movement speed and strength","20"+ChatColor.LIGHT_PURPLE+"s cooldown"),
 			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.LIGHT_PURPLE+"Overcharge", ChatColor.LIGHT_PURPLE+"Drop it to have an insane amount of movement speed and strength")
+			),
+	SMOKE_POOL("Smoke pool",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.GUNPOWDER, ChatColor.LIGHT_PURPLE+"Smoke pool", ChatColor.LIGHT_PURPLE+"Spawn a smoke pool where you are invisible and unsondable"),
+			makeDisplayItem(Material.GUNPOWDER, ChatColor.LIGHT_PURPLE+"Smoke pool", ChatColor.LIGHT_PURPLE+"Spawn a smoke pool where you are invisible and unsondable")
 			),
 	SPEED("Sprinter",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.FEATHER, ChatColor.GREEN+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
@@ -180,6 +185,8 @@ public enum RunesList {
 			return new Rune_cop(main, w, p, r);
 		case SONAR:
 			return new Rune_sonar(main, w, p, r);
+		case SMOKE_POOL:
+			return new Rune_smokePool(main,w,p,r);
 		default:
 			break;
 		}
