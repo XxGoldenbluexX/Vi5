@@ -16,13 +16,18 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -57,6 +62,34 @@ public class Game implements Listener {
 		cfgManager=cfgm;
 		name=_name;
 		world=_world;
+	}
+	@EventHandler
+	public void onPlayerMoveItem(InventoryMoveItemEvent event) {
+		if(is_Started()) {
+			Inventory source = event.getSource();
+			Inventory dest = event.getDestination();
+			if(source!=null&&dest!=null) {
+				if(source.getHolder()!=dest.getHolder()) {
+					event.setCancelled(true);
+				}
+			}
+		}
+	}
+	@EventHandler
+	public void onPlayerDamage(EntityDamageByEntityEvent event) {
+		Entity damager = event.getDamager();
+		Entity receiver = event.getEntity();
+		if(damager.getType()==EntityType.PLAYER&&receiver.getType()==EntityType.PLAYER){
+			Player pDamager=(Player)damager;
+			Player pReceiver = (Player)receiver;
+			PlayerWrapper damagerWrap = mainref.getPlayerWrapper(pDamager);
+			PlayerWrapper receiverWrap = mainref.getPlayerWrapper(pReceiver);
+			if(damagerWrap.getTeam()==receiverWrap.getTeam()) {
+				event.setCancelled(true);
+				pReceiver.setHealth(pReceiver.getHealth()-0.5);
+				pReceiver.setHealth(pReceiver.getHealth()+0.5);
+			}
+		}
 	}
 	public MapWall getMapWall() {
 		return mapWall;

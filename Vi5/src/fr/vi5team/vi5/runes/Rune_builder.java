@@ -2,6 +2,8 @@ package fr.vi5team.vi5.runes;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -27,6 +29,8 @@ public class Rune_builder extends BaseRune{
 				player.sendMessage(ChatColor.RED+"There is no more possible walls on the map. Consider adding more later");
 			}else {
 				NB_WALLS++;
+				player.playSound(player.getLocation(), Sound.BLOCK_BARREL_CLOSE, SoundCategory.MASTER, 1, 0);
+				player.playSound(player.getLocation(), Sound.ITEM_SHIELD_BLOCK, SoundCategory.MASTER, 1, 0);
 				if(NB_WALLS==MAX_WALLS) {
 					player.sendMessage(ChatColor.GREEN+"You have placed your last wall: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall);		
 				}else {

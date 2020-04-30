@@ -52,8 +52,8 @@ public enum RunesList {
 			makeDisplayItem(Material.END_ROD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
 			),
 	TOUGH("Tough",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Tough", ChatColor.LIGHT_PURPLE+"All damage get reduced by 20%"),
-			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Tough", ChatColor.LIGHT_PURPLE+"All damage are reduced by 20%")
+			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Tough", ChatColor.LIGHT_PURPLE+"Get two more hearts for the game"),
+			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Tough", ChatColor.LIGHT_PURPLE+"Get two more hearts for the game")
 			),
 	DOUBLE_JUMP("DoubleJump",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.LIGHT_PURPLE+"DoubleJump", ChatColor.LIGHT_PURPLE+"Get a second jump after the first one"),

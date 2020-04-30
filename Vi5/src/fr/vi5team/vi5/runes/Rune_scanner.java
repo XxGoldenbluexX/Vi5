@@ -2,6 +2,8 @@ package fr.vi5team.vi5.runes;
 
 import java.util.ArrayList;
 
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -29,6 +31,9 @@ public class Rune_scanner extends BaseRune{
 	@Override
 	public void cast() {
 		summonArmorStand();
+		for (Player p : wraper.getGame().getPlayerList()) {
+			p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, SoundCategory.MASTER, 1, 1);
+		}
 		setCooldown(25);
 	}
 

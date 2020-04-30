@@ -3,6 +3,8 @@ package fr.vi5team.vi5.runes;
 import java.util.Arrays;
 
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -49,6 +51,7 @@ public class Rune_bush extends BaseRune{
 			}else {
 				if (!wraper.isInvisible()) {
 					wraper.setInvisible(true);
+					player.playSound(player.getLocation(), Sound.BLOCK_GRASS_HIT, SoundCategory.MASTER, 1, 1);
 				}
 			}
 		}else {
