@@ -63,5 +63,4 @@ public class Rune_sonar extends BaseRune{
 	@Override
 	public void enterZone() {
 	}
-
 }
