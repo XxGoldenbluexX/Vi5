@@ -24,6 +24,7 @@ import fr.vi5team.vi5.runes.Rune_lantern;
 import fr.vi5team.vi5.runes.Rune_ombre;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
 import fr.vi5team.vi5.runes.Rune_scanner;
+import fr.vi5team.vi5.runes.Rune_sonar;
 import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
 import fr.vi5team.vi5.runes.Rune_tough;
@@ -84,8 +85,12 @@ public enum RunesList {
 			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls")
 			),
 	SCANNER("Scanner",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in a large ray every x seconds"),
-			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in a large ray every x seconds")
+			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in the map every 25 seconds"),
+			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in the map every 25 seconds")
+			),
+	SONAR("Sonar",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.COMPASS, ChatColor.GOLD+"Sonar", ChatColor.LIGHT_PURPLE+"Every x seconds, you get to know if a thief is near you"),
+			makeDisplayItem(Material.COMPASS, ChatColor.GOLD+"Sonar", ChatColor.LIGHT_PURPLE+"Every x seconds, you get to know if a thief is near you")
 			);
 	//////////////////////////////////
 	private final String DisplayName;
@@ -173,6 +178,8 @@ public enum RunesList {
 			return new Rune_lantern(main, w, p, r);
 		case COP:
 			return new Rune_cop(main, w, p, r);
+		case SONAR:
+			return new Rune_sonar(main, w, p, r);
 		default:
 			break;
 		}
