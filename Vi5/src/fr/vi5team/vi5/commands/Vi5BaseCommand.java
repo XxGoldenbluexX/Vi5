@@ -185,7 +185,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 					msg_fin.setColor(net.md_5.bungee.api.ChatColor.GREEN);
 					message.addExtra(msg_fin);
 					for (Player p : Bukkit.getOnlinePlayers()) {
-						if (!mainref.isPlayerIngame(p)) {
+						if (!mainref.isPlayerIngame(p) && !p.equals(sender)) {
 							p.spigot().sendMessage(message);
 						}
 					}
