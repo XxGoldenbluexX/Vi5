@@ -178,7 +178,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 					TextComponent msg_gamename = new TextComponent(g.getName());
 					msg_gamename.setColor(net.md_5.bungee.api.ChatColor.GOLD);
 					msg_gamename.setBold(true);
-					msg_gamename.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "vi5 game join "+g.getName()));
+					msg_gamename.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/vi5 game join "+g.getName()));
 					msg_gamename.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to join").color(net.md_5.bungee.api.ChatColor.RED).create()));
 					message.addExtra(msg_gamename);
 					TextComponent msg_fin = new TextComponent(" has been created!");
