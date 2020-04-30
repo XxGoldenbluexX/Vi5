@@ -16,6 +16,10 @@ import fr.vi5team.vi5.Game;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.Vi5Team;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class Vi5BaseCommand implements CommandExecutor {
 
@@ -166,7 +170,25 @@ public class Vi5BaseCommand implements CommandExecutor {
 			if (args.length>2) {
 				if (sender instanceof Player) {
 					Game g = mainref.createGame(args[2],(Player)sender);
-					sender.sendMessage(ChatColor.GREEN+"The game ("+args[2]+ChatColor.GREEN+") has been created!");
+					sender.sendMessage(ChatColor.GREEN+"The game "+ChatColor.GOLD+args[2]+ChatColor.GREEN+" has been created!");
+					TextComponent message = new TextComponent();
+					TextComponent msg_debut = new TextComponent("The game ");
+					msg_debut.setColor(net.md_5.bungee.api.ChatColor.GREEN);
+					message.addExtra(msg_debut);
+					TextComponent msg_gamename = new TextComponent(g.getName());
+					msg_gamename.setColor(net.md_5.bungee.api.ChatColor.GOLD);
+					msg_gamename.setBold(true);
+					msg_gamename.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "vi5 game join "+g.getName()));
+					msg_gamename.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click here to join").color(net.md_5.bungee.api.ChatColor.RED).create()));
+					message.addExtra(msg_gamename);
+					TextComponent msg_fin = new TextComponent(" has been created!");
+					msg_fin.setColor(net.md_5.bungee.api.ChatColor.GREEN);
+					message.addExtra(msg_fin);
+					for (Player p : Bukkit.getOnlinePlayers()) {
+						if (!mainref.isPlayerIngame(p)) {
+							p.spigot().sendMessage(message);
+						}
+					}
 					if (sender instanceof Player) {
 						Player p = (Player)sender;
 						if (!mainref.isPlayerIngame(p)) {
