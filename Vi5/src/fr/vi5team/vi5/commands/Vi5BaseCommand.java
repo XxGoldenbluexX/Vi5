@@ -147,21 +147,28 @@ public class Vi5BaseCommand implements CommandExecutor {
 		case "playerList":
 			if(args.length>2) {
 				Game g = mainref.getGame(args[2]);
-				sender.sendMessage(ChatColor.GOLD+"Player(s)"+ChatColor.BLUE+ChatColor.UNDERLINE+"list for "+args[2]+ChatColor.BLUE+":");
-				for(Player p : g.getPlayerList()) {
-					String playerName=p.getName();
-					if(g.is_Started()) {
-						sender.sendMessage(playerName+ChatColor.BLUE+", Status: "+ChatColor.GOLD+"[IN_GAME]");
-					}else {
-						PlayerWrapper wrap = mainref.getPlayerWrapper(p);
-						if(wrap.is_ready()) {
-							sender.sendMessage(ChatColor.GOLD+playerName+ChatColor.WHITE+", Status: "+ChatColor.GREEN+"[READY]");	
+				if(g!=null) {
+					sender.sendMessage(ChatColor.GOLD+"Player(s)"+ChatColor.BLUE+ChatColor.UNDERLINE+"list for "+args[2]+ChatColor.BLUE+":");
+					for(Player p : g.getPlayerList()) {
+						String playerName=p.getName();
+						if(g.is_Started()) {
+							sender.sendMessage(playerName+ChatColor.BLUE+", Status: "+ChatColor.GOLD+"[IN_GAME]");
 						}else {
-							sender.sendMessage(ChatColor.GOLD+playerName+ChatColor.WHITE+", Status: "+ChatColor.RED+"[NOT READY]");
+							PlayerWrapper wrap = mainref.getPlayerWrapper(p);
+							if(wrap.is_ready()) {
+								sender.sendMessage(ChatColor.GOLD+playerName+ChatColor.WHITE+", Status: "+ChatColor.GREEN+"[READY]");	
+							}else {
+								sender.sendMessage(ChatColor.GOLD+playerName+ChatColor.WHITE+", Status: "+ChatColor.RED+"[NOT READY]");
+							}
 						}
 					}
+					return true;
+				}else {
+					sender.sendMessage("");
+					sender.sendMessage(ChatColor.RED+"Game does not exist!");
+					sender.sendMessage("");
+					return true;
 				}
-				return true;
 			}else {
 				sender.sendMessage(ChatColor.BLUE+"Usage: "+ChatColor.WHITE+"/vi5 game playerList "+ChatColor.GOLD+"<GameName>");
 				return true;
