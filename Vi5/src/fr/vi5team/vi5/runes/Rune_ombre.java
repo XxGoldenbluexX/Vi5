@@ -91,8 +91,8 @@ public class Rune_ombre extends BaseRune {
 						ombreRef.remove();
 						ombreRef=null;
 						for (Player w : g.getPlayerList()) {
-							w.playSound(w.getLocation(), Sound.ENTITY_WITHER_SPAWN, SoundCategory.MASTER, 1, 1);
-							w.playSound(w.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, SoundCategory.MASTER, 1, 1);
+							w.playSound(w.getLocation(), Sound.ENTITY_WITHER_SPAWN, SoundCategory.MASTER, 0.5f, 1);
+							w.playSound(w.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, SoundCategory.MASTER, 0.5f, 1);
 						}
 						g.messagePlayersInGame(ChatColor.BLUE+p.getName()+ChatColor.GOLD+" killed "+ChatColor.RED+player.getName()+ChatColor.GOLD+" with his shadow");
 						player.damage(player.getHealth(), p);
