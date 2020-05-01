@@ -63,7 +63,7 @@ public class Game implements Listener {
 		name=_name;
 		world=_world;
 	}
-	@EventHandler
+	/*@EventHandler
 	public void onPlayerMoveItem(InventoryMoveItemEvent event) {
 		if(is_Started()) {
 			Inventory source = event.getSource();
@@ -74,7 +74,7 @@ public class Game implements Listener {
 				}
 			}
 		}
-	}
+	}*/
 	@EventHandler
 	public void onPlayerDamage(EntityDamageByEntityEvent event) {
 		Entity damager = event.getDamager();

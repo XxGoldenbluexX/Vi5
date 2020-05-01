@@ -183,6 +183,7 @@ public abstract class BaseRune implements Listener {
 		int realDamages = Math.max(0, damage-1);
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,new AttributeModifier("pvp_1.8",1000,Operation.ADD_NUMBER));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,new AttributeModifier("diamondSwordDamages",realDamages,Operation.ADD_NUMBER));
+		meta.setUnbreakable(true);
 		itm.setItemMeta(meta);
 		return itm;
 	}
