@@ -27,6 +27,7 @@ import fr.vi5team.vi5.runes.Rune_smokePool;
 import fr.vi5team.vi5.runes.Rune_sonar;
 import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
+import fr.vi5team.vi5.runes.Rune_thorns;
 import fr.vi5team.vi5.runes.Rune_tough;
 
 public enum RunesList {
@@ -95,6 +96,10 @@ public enum RunesList {
 	SONAR("Sonar",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.COMPASS, ChatColor.GOLD+"Sonar", ChatColor.LIGHT_PURPLE+"Every x seconds, you get to know if a thief is near you"),
 			makeDisplayItem(Material.COMPASS, ChatColor.GOLD+"Sonar", ChatColor.LIGHT_PURPLE+"Every x seconds, you get to know if a thief is near you")
+			),
+	THORNS("Thorns",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.CACTUS, ChatColor.GOLD+"Thorns", ChatColor.LIGHT_PURPLE+"Damage all thieves for a small amount when you hit one"),
+			makeDisplayItem(Material.CACTUS, ChatColor.GOLD+"Thorns", ChatColor.LIGHT_PURPLE+"Damage all thieves for a small amount when you hit one")
 			);
 	//////////////////////////////////
 	private final String DisplayName;
@@ -186,6 +191,8 @@ public enum RunesList {
 			return new Rune_sonar(main, w, p, r);
 		case SMOKE_POOL:
 			return new Rune_smokePool(main,w,p,r);
+		case THORNS:
+			return new Rune_thorns(main,w,p,r);
 		default:
 			break;
 		}
