@@ -54,6 +54,11 @@ public class Game implements Listener {
 	private ArrayList<MapLeaveZone> mapLeaveZones=new ArrayList<MapLeaveZone>();
 	private BukkitRunnable gameTick;
 	private final WeakHashMap<Player,PlayerWrapper> playersInGame = new WeakHashMap<Player,PlayerWrapper>();
+	//Game point system
+	private Player gameRot_lastPlayerDoubleGuard=null;
+	private short gameRot_round=1;
+	private boolean gameRot_revanche=false;
+	//gameRot -> Game Rotation (system de points et de rotation de manche)
 	public WeakHashMap<String,ArrayList<Location>> wallsInMapLocationsList = new WeakHashMap<String,ArrayList<Location>>();
 	public WeakHashMap<String,ArrayList<Double>> wallsInMapCenterList = new WeakHashMap<String,ArrayList<Double>>();
 	public Game(Vi5Main main,ConfigManager cfgm,String _name, World _world) {
@@ -61,6 +66,77 @@ public class Game implements Listener {
 		cfgManager=cfgm;
 		name=_name;
 		world=_world;
+	}
+	private void gameRot_swapTeam(){
+		ArrayList<PlayerWrapper> guards = new ArrayList<PlayerWrapper>();
+		ArrayList<PlayerWrapper> thiefs = new ArrayList<PlayerWrapper>();
+		ArrayList<PlayerWrapper> players = new ArrayList<PlayerWrapper>();
+		for (PlayerWrapper w : playersInGame.values()) {
+			if (w.getTeam()==Vi5Team.GARDE) {
+				players.add(w);
+				guards.add(w);
+			}else if (w.getTeam()==Vi5Team.VOLEUR) {
+				players.add(w);
+				thiefs.add(w);
+			}
+		}
+		//équilibrage du nombre dans chaque team
+		int dif = guards.size()-thiefs.size();
+		if (players.size()%2!=0) {//impaire
+			PlayerWrapper playerRekt = null;
+			if (guards.size()>0) {
+				playerRekt=guards.get(0);
+				guards.remove(0);
+				dif = guards.size()-thiefs.size();
+			}else if (thiefs.size()>0) {
+				playerRekt=thiefs.get(0);
+				thiefs.remove(0);
+				dif = guards.size()-thiefs.size();
+			}else {
+				gameRot_revanche=false;
+				gameRot_round++;
+				return;
+			}
+			guards.add(playerRekt);
+		}
+		int midDif = dif/2;
+		if (dif<0) {
+			for (int i = midDif;i<0;i++) {
+				guards.add(thiefs.get(0));
+				thiefs.remove(0);
+			}
+		}else if (dif>1) {
+			for (int i = midDif;i>0;i--) {
+				thiefs.add(guards.get(0));
+				guards.remove(0);
+			}
+		}
+		if (thiefs.size()>guards.size()) {
+			System.out.println("team balancing about nb of players failed");
+			gameRot_revanche=false;
+			gameRot_round++;
+			return;
+		}
+		//swaping
+		int nbPlayerDoubleGarde=players.size();
+		for (PlayerWrapper w : players) {
+			if (w.isPhaseDoubleGuard()) {
+				nbPlayerDoubleGarde--;
+			}
+		}
+		if (nbPlayerDoubleGarde==1) {
+			for (PlayerWrapper w : players) {
+				w.setPhaseDoubleGuard(false);
+			}
+		}
+		ArrayList<PlayerWrapper> guardsWhoCanBeThief = new ArrayList<PlayerWrapper>();
+		//
+		if (gameRot_revanche) {
+			gameRot_round++;
+			gameRot_revanche=false;
+		}else {
+			gameRot_revanche=true;
+		}
 	}
 	/*@EventHandler
 	public void onPlayerMoveItem(InventoryMoveItemEvent event) {
@@ -127,6 +203,7 @@ public class Game implements Listener {
 		}
 		messagePlayersInGame(ChatColor.GOLD+"La partie est terminée!");
 		messagePlayersInGame(ChatColor.GOLD+"Les voleurs se sont enfuit avec "+ChatColor.AQUA+totalObjVolés+ChatColor.GOLD+" objects!");
+		gameRot_swapTeam();
 	}
 	
 	public boolean addPlayer(Player player) {
@@ -646,5 +723,8 @@ public class Game implements Listener {
 	}
 	public Vi5Main getMainRef() {
 		return mainref;
+	}
+	public void setGameRot_lastPlayerDoubleGuard(Player gameRot_lastPlayerDoubleGuard) {
+		this.gameRot_lastPlayerDoubleGuard = gameRot_lastPlayerDoubleGuard;
 	}
 }
