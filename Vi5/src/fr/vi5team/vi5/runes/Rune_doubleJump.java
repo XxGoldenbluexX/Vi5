@@ -1,5 +1,6 @@
 package fr.vi5team.vi5.runes;
 
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ public class Rune_doubleJump extends BaseRune {
 
 	@EventHandler
 	public void onToogleFly(PlayerToggleFlightEvent event) {
-		if (event.getPlayer().equals(player) && canDoubleJump) {
+		if (event.getPlayer().equals(player) && canDoubleJump && (player.getGameMode()==GameMode.ADVENTURE || player.getGameMode()==GameMode.SURVIVAL)) {
 			event.setCancelled(true);
 			player.setVelocity(player.getVelocity().setY(0.5));
 			player.playSound(player.getLocation(),Sound.ITEM_FIRECHARGE_USE, SoundCategory.AMBIENT, 0.3f, 1.5f);
