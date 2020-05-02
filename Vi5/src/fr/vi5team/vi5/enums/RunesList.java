@@ -32,74 +32,74 @@ import fr.vi5team.vi5.runes.Rune_tough;
 
 public enum RunesList {
 	
-	
-	INVI("Invisible",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Makes you invisible while sneaking"),//Item dans le menu
-			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Makes you invisible while sneaking")//Item dans la hotbar en jeu
+	COP("CRS",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"CRS", ChatColor.LIGHT_PURPLE+"Un bâton légendaire pouvant tuer en un coup!"),
+			makeDisplayItem(Material.END_ROD, ChatColor.GOLD+"CRS", ChatColor.LIGHT_PURPLE+"Un bâton légendaire pouvant tuer en un coup!")
 			),
 	OMNI("Omnicapteur",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Omnicapteur", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it"),
-			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Omnicapteur", ChatColor.LIGHT_PURPLE+"Drop to use, it spot thieves 3 blocks around it")
-			),
-	SURCHARGE("Overcharge",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.LIGHT_PURPLE+"Overcharge", ChatColor.LIGHT_PURPLE+"Give an insane amount of movement speed and strength","20"+ChatColor.LIGHT_PURPLE+"s cooldown"),
-			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.LIGHT_PURPLE+"Overcharge", ChatColor.LIGHT_PURPLE+"Drop it to have an insane amount of movement speed and strength")
-			),
-	SMOKE_POOL("Smoke pool",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.GUNPOWDER, ChatColor.LIGHT_PURPLE+"Smoke pool", ChatColor.LIGHT_PURPLE+"Spawn a smoke pool where you are invisible and unsondable"),
-			makeDisplayItem(Material.GUNPOWDER, ChatColor.LIGHT_PURPLE+"Smoke pool", ChatColor.LIGHT_PURPLE+"Spawn a smoke pool where you are invisible and unsondable")
-			),
-	SPEED("Sprinter",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.FEATHER, ChatColor.GREEN+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed get increased by 20%"),
-			makeDisplayItem(Material.FEATHER, ChatColor.GREEN+"Sprinter", ChatColor.LIGHT_PURPLE+"Movement speed is increased by 20%")
-			),
-	COP("Cop",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.DIAMOND_SWORD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves"),
-			makeDisplayItem(Material.END_ROD, ChatColor.GOLD+"Cop", ChatColor.LIGHT_PURPLE+"A special weapon to one-hit-kill thieves")
-			),
-	TOUGH("Tough",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Tough", ChatColor.LIGHT_PURPLE+"Get two more hearts for the game"),
-			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Tough", ChatColor.LIGHT_PURPLE+"Get two more hearts for the game")
-			),
-	DOUBLE_JUMP("DoubleJump",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.LIGHT_PURPLE+"DoubleJump", ChatColor.LIGHT_PURPLE+"Get a second jump after the first one"),
-			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.LIGHT_PURPLE+"DoubleJump", ChatColor.LIGHT_PURPLE+"Press jump twice to perform another jump")
-			),
-	SHADOW("Shadow",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.COAL, ChatColor.LIGHT_PURPLE+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!"),
-			makeDisplayItem(Material.COAL, ChatColor.LIGHT_PURPLE+"Shadow", ChatColor.LIGHT_PURPLE+"Place a show to recall later on it, and you die if a guard find it!")
-			),
-	LANTERN("Lantern",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.LANTERN, ChatColor.LIGHT_PURPLE+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you"),
-			makeDisplayItem(Material.LANTERN, ChatColor.LIGHT_PURPLE+"Lantern", ChatColor.LIGHT_PURPLE+"Place a lantern for a friend to pick it and so teleport to you")
-			),
-	BUSH("Bush",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible"),
-			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Bush", ChatColor.LIGHT_PURPLE+"Standing in 2 blocks bushes makes you invisible")
-			),
-	BUILDER("Builder",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.BRICK_WALL, ChatColor.LIGHT_PURPLE+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map"),
-			makeDisplayItem(Material.BRICK_WALL, ChatColor.LIGHT_PURPLE+"Builder", ChatColor.LIGHT_PURPLE+"Allow you to add 2 additionnals walls in the map")
-			),
-	PECHEUR("Fisherman",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.FISHING_ROD, ChatColor.GREEN+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves"),
-			makeDisplayItem(Material.FISHING_ROD, ChatColor.GREEN+"Fisherman", ChatColor.LIGHT_PURPLE+"Get an extra-fishing rod to grab those nasty thieves")
-			),
-	CROCHETEUR("Trickster",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls"),
-			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Trickster", ChatColor.LIGHT_PURPLE+"Allow to pass through guards' walls")
-			),
-	SCANNER("Scanner",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in the map every 25 seconds"),
-			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Allow you to detect all guards in the map every 25 seconds")
+			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Omnicapteur", ChatColor.LIGHT_PURPLE+"Repérez les voleurs à 3 blocks autour de la balise"),
+			makeDisplayItem(Material.REDSTONE_TORCH, ChatColor.GOLD+"Omnicapteur", ChatColor.LIGHT_PURPLE+"Repérez les voleurs à 3 blocks autour de la balise")
 			),
 	SONAR("Sonar",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.COMPASS, ChatColor.GOLD+"Sonar", ChatColor.LIGHT_PURPLE+"Every x seconds, you get to know if a thief is near you"),
-			makeDisplayItem(Material.COMPASS, ChatColor.GOLD+"Sonar", ChatColor.LIGHT_PURPLE+"Every x seconds, you get to know if a thief is near you")
+			makeDisplayItem(Material.COMPASS, ChatColor.GOLD+"Sonar", ChatColor.LIGHT_PURPLE+"Toutes les 5 secondes, permet de savoir si un voleur est prêt de vous"),
+			makeDisplayItem(Material.COMPASS, ChatColor.GOLD+"Sonar", ChatColor.LIGHT_PURPLE+"Toutes les 5 secondes, permet de savoir si un voleur est prêt de vous")
 			),
-	THORNS("Thorns",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.CACTUS, ChatColor.GOLD+"Thorns", ChatColor.LIGHT_PURPLE+"Damage all thieves for a small amount when you hit one"),
-			makeDisplayItem(Material.CACTUS, ChatColor.GOLD+"Thorns", ChatColor.LIGHT_PURPLE+"Damage all thieves for a small amount when you hit one")
+	SURCHARGE("Surcharge",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.LIGHT_PURPLE+"Surcharge", ChatColor.LIGHT_PURPLE+"Grand bonus en vitesse et force sur utilisation"),
+			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.LIGHT_PURPLE+"Surcharge", ChatColor.LIGHT_PURPLE+"Grand bonus en vitesse et force sur utilisation")
+			),
+	BUILDER("Mur",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.BRICK_WALL, ChatColor.LIGHT_PURPLE+"Mur", ChatColor.LIGHT_PURPLE+"Posez 2 murs en plus dans la carte"),
+			makeDisplayItem(Material.BRICK_WALL, ChatColor.LIGHT_PURPLE+"Mur", ChatColor.LIGHT_PURPLE+"Posez 2 murs en plus dans la carte")
+			),
+	SPEED("Le Fast",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.FEATHER, ChatColor.GREEN+"Le Fast", ChatColor.LIGHT_PURPLE+"Vitesse accrue de 20%"),
+			makeDisplayItem(Material.FEATHER, ChatColor.GREEN+"Le Fast", ChatColor.LIGHT_PURPLE+"Vitesse accrue de 20%")
+			),
+	THORNS("Cactus",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.CACTUS, ChatColor.GOLD+"Cactus", ChatColor.LIGHT_PURPLE+"Endommagez de 0 tous les voleurs quand vous en tapez un"),
+			makeDisplayItem(Material.CACTUS, ChatColor.GOLD+"Cactus", ChatColor.LIGHT_PURPLE+"Endommagez de 0 tous les voleurs quand vous en tapez un")
+			),
+	PECHEUR("Pêcheur",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.FISHING_ROD, ChatColor.GREEN+"Pêcheur", ChatColor.LIGHT_PURPLE+"Obtenez une canne à pêche pour attraper les voleurs"),
+			makeDisplayItem(Material.FISHING_ROD, ChatColor.GREEN+"Pêcheur", ChatColor.LIGHT_PURPLE+"Obtenez une canne à pêche pour attraper les voleurs")
+			),
+	//RUNE VOLEUR MTN
+	INVI("Invisible",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Devenez invisible en vous accroupissant"),//Item dans le menu
+			makeDisplayItem(Material.GLASS_PANE,ChatColor.GOLD+"Invisible",ChatColor.LIGHT_PURPLE+"Devenez invisible en vous accroupissant")//Item dans la hotbar en jeu
+			),
+	BUSH("Buisson",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Buisson", ChatColor.LIGHT_PURPLE+"Les buissons de 2 de haut vous rendent invisible"),
+			makeDisplayItem(Material.GRASS, ChatColor.GOLD+"Buisson", ChatColor.LIGHT_PURPLE+"Les buissons de 2 de haut vous rendent invisible")
+			),
+	SCANNER("Scanner",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Vous permet de détecter tous les gardes toutes les 25 secondes"),
+			makeDisplayItem(Material.CLOCK, ChatColor.GOLD+"Scanner", ChatColor.LIGHT_PURPLE+"Vous permet de détecter tous les gardes toutes les 25 secondes")
+			),
+	DOUBLE_JUMP("Double Saut",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.LIGHT_PURPLE+"Double Saut", ChatColor.LIGHT_PURPLE+"Sautez une seconde fois après le premier"),
+			makeDisplayItem(Material.RABBIT_FOOT, ChatColor.LIGHT_PURPLE+"Double Saut", ChatColor.LIGHT_PURPLE+"Sautez une seconde fois après le premier")
+			),
+	SHADOW("Ombre",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.COAL, ChatColor.LIGHT_PURPLE+"Ombre", ChatColor.LIGHT_PURPLE+"Placez une ombre pour revenir dessus plus tard, et mourrez si un garde la trouve!"),
+			makeDisplayItem(Material.COAL, ChatColor.LIGHT_PURPLE+"Ombre", ChatColor.LIGHT_PURPLE+"Placez une ombre pour revenir dessus plus tard, et mourrez si un garde la trouve!")
+			),
+	LANTERN("Lanterne",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.LANTERN, ChatColor.LIGHT_PURPLE+"Lanterne", ChatColor.LIGHT_PURPLE+"Placez une lanterne pour qu'un voleur la trouve et se téléporte à vous"),
+			makeDisplayItem(Material.LANTERN, ChatColor.LIGHT_PURPLE+"Lanterne", ChatColor.LIGHT_PURPLE+"Placez une lanterne pour qu'un voleur la trouve et se téléporte à vous")
+			),
+	SMOKE_POOL("Bain de fumée",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.GUNPOWDER, ChatColor.LIGHT_PURPLE+"Bain de fumée", ChatColor.LIGHT_PURPLE+"Faites apparaître un cercle de fumée où vous êtes invisible et insondable"),
+			makeDisplayItem(Material.GUNPOWDER, ChatColor.LIGHT_PURPLE+"Bain de fumée", ChatColor.LIGHT_PURPLE+"Faites apparaître un cercle de fumée où vous êtes invisible et insondable")
+			),
+	CROCHETEUR("Crocheteur",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Crocheteur", ChatColor.LIGHT_PURPLE+"Vous permet de passer les murs des gardes"),
+			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Crocheteur", ChatColor.LIGHT_PURPLE+"Vous permet de passer les murs des gardes")
+			),
+	TOUGH("Solide",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Solide", ChatColor.LIGHT_PURPLE+"Obtenez 2 coeurs de plus"),
+			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Solide", ChatColor.LIGHT_PURPLE+"Obtenez 2 coeurs de plus")
 			);
 	//////////////////////////////////
 	private final String DisplayName;

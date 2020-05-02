@@ -51,7 +51,7 @@ public class Rune_ombre extends BaseRune {
 				ombreRef=null;
 				ItemStack itm=new ItemStack(Material.CHARCOAL);
 				ItemMeta meta = itm.getItemMeta();
-				meta.setDisplayName(ChatColor.GRAY+"Shadow (Used)");
+				meta.setDisplayName(ChatColor.GRAY+"Ombre (Utilisée)");
 				itm.setItemMeta(meta);
 				setCastItem(itm);
 				setCooldown(2);
@@ -65,7 +65,7 @@ public class Rune_ombre extends BaseRune {
 				ombreRef.setMarker(true);
 				ItemStack itm=new ItemStack(Material.CHARCOAL);
 				ItemMeta meta = itm.getItemMeta();
-				meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Shadow (Dropped)");
+				meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Ombre (Posée)");
 				itm.setItemMeta(meta);
 				setCastItem(itm);
 				setCooldown(2);
@@ -73,7 +73,7 @@ public class Rune_ombre extends BaseRune {
 			}
 			break;
 		case WASTED:
-			player.sendMessage("Your shadow has disapeared");
+			player.sendMessage(ChatColor.RED+"Votre ombre a été complètement utilisée!");
 			return;
 		default:
 			return;
@@ -94,7 +94,7 @@ public class Rune_ombre extends BaseRune {
 							w.playSound(w.getLocation(), Sound.ENTITY_WITHER_SPAWN, SoundCategory.MASTER, 0.5f, 1);
 							w.playSound(w.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, SoundCategory.MASTER, 0.5f, 1);
 						}
-						g.messagePlayersInGame(ChatColor.BLUE+p.getName()+ChatColor.GOLD+" killed "+ChatColor.RED+player.getName()+ChatColor.GOLD+" with his shadow");
+						g.messagePlayersInGame(ChatColor.BLUE+p.getName()+ChatColor.GOLD+" a tué "+ChatColor.RED+player.getName()+ChatColor.GOLD+" avec sa propre ombre!");
 						player.damage(player.getHealth(), p);
 					}
 				}

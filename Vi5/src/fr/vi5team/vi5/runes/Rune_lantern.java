@@ -29,7 +29,7 @@ public class Rune_lantern extends BaseRune {
 	private void showAdaptedItem() {
 		ItemStack itm = new ItemStack(Material.LANTERN);
 		ItemMeta meta = itm.getItemMeta();
-		meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Lantern: "+ChatColor.AQUA+nb_lantern);
+		meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Lanterne(s) restante(s): "+ChatColor.AQUA+nb_lantern+"/"+MAX_LANTERN);
 		itm.setItemMeta(meta);
 		setCastItem(itm);
 		showCastItem();
@@ -96,6 +96,7 @@ public class Rune_lantern extends BaseRune {
 	@Override
 	public void enterZone() {
 		Activate();
+		showAdaptedItem();
 	}
 
 }
