@@ -712,7 +712,4 @@ public class Game implements Listener {
 	public Vi5Main getMainRef() {
 		return mainref;
 	}
-	public void setGameRot_lastPlayerDoubleGuard(Player gameRot_lastPlayerDoubleGuard) {
-		this.gameRot_lastPlayerDoubleGuard = gameRot_lastPlayerDoubleGuard;
-	}
 }

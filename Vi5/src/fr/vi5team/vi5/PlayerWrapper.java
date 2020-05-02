@@ -135,18 +135,6 @@ public class PlayerWrapper implements Listener {
 	}
 	
 	public void gameStart() {
-		//gameRot
-		if (lastTeam!=null) {
-			if (lastTeam==team) {
-				phaseDoubleGuard=true;
-				game.setGameRot_lastPlayerDoubleGuard(player);
-			}
-		}
-		if (team==Vi5Team.VOLEUR) {
-			game.getVoleurList();
-		}
-		lastTeam=team;
-		//
 		player.setWalkSpeed(0.2f);
 		player.setAllowFlight(false);
 		switch (team) {
@@ -494,17 +482,5 @@ public class PlayerWrapper implements Listener {
 
 	public void setLeaveCooldown(boolean leaveCooldown) {
 		this.leaveCooldown = leaveCooldown;
-	}
-
-	public ArrayList<Player> getPlayedWith() {
-		return playedWith;
-	}
-
-	public boolean isPhaseDoubleGuard() {
-		return phaseDoubleGuard;
-	}
-
-	public void setPhaseDoubleGuard(boolean phaseDoubleGuard) {
-		this.phaseDoubleGuard = phaseDoubleGuard;
 	}
 }
