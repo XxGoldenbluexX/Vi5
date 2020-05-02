@@ -55,7 +55,6 @@ public class Game implements Listener {
 	private BukkitRunnable gameTick;
 	private final WeakHashMap<Player,PlayerWrapper> playersInGame = new WeakHashMap<Player,PlayerWrapper>();
 	//Game point system
-	private Player gameRot_lastPlayerDoubleGuard=null;
 	private short gameRot_round=1;
 	private boolean gameRot_revanche=false;
 	//gameRot -> Game Rotation (system de points et de rotation de manche)
@@ -118,18 +117,7 @@ public class Game implements Listener {
 			return;
 		}
 		//swaping
-		int nbPlayerDoubleGarde=players.size();
-		for (PlayerWrapper w : players) {
-			if (w.isPhaseDoubleGuard()) {
-				nbPlayerDoubleGarde--;
-			}
-		}
-		if (nbPlayerDoubleGarde==1) {
-			for (PlayerWrapper w : players) {
-				w.setPhaseDoubleGuard(false);
-			}
-		}
-		ArrayList<PlayerWrapper> guardsWhoCanBeThief = new ArrayList<PlayerWrapper>();
+		//HERE TODO
 		//
 		if (gameRot_revanche) {
 			gameRot_round++;

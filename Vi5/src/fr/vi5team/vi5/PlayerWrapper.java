@@ -44,10 +44,6 @@ public class PlayerWrapper implements Listener {
 	private RunesList gardePrimaire=RunesList.OMNI;
 	private RunesList gardeSecondaire=RunesList.SURCHARGE;
 	private RunesList gardeTertiaire=RunesList.SPEED;
-	private final ArrayList<Player> playedWith = new ArrayList<Player>();
-	//gameRot
-	private boolean phaseDoubleGuard=false;
-	private Vi5Team lastTeam=null;
 	
 	//Status variables
 	private boolean omnispotted=false;
@@ -145,6 +141,9 @@ public class PlayerWrapper implements Listener {
 				phaseDoubleGuard=true;
 				game.setGameRot_lastPlayerDoubleGuard(player);
 			}
+		}
+		if (team==Vi5Team.VOLEUR) {
+			game.getVoleurList();
 		}
 		lastTeam=team;
 		//
