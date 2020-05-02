@@ -68,12 +68,12 @@ public class Rune_omniCapteur extends BaseRune {
 		if (nbOmni>=1) {
 			item=new ItemStack(Material.REDSTONE_TORCH,nbOmni);
 			meta=item.getItemMeta();
-			meta.setDisplayName(ChatColor.GOLD+"Omnicapteurs: "+ChatColor.AQUA+nbOmni);
+			meta.setDisplayName(ChatColor.GOLD+"Omnicapteurs: "+ChatColor.AQUA+nbOmni+"/"+MAX_OMNI);
 			item.setItemMeta(meta);
 		}else {
 			item=new ItemStack(Material.LEVER);
 			meta=item.getItemMeta();
-			meta.setDisplayName(ChatColor.RED+"No more Omnicapteurs");
+			meta.setDisplayName(ChatColor.RED+"Omnicapteurs posés!");
 			item.setItemMeta(meta);
 		}
 		setCastItem(item);
@@ -117,8 +117,8 @@ public class Rune_omniCapteur extends BaseRune {
 							player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BELL, SoundCategory.MASTER, 0.3f, 0.1f);
 							player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_COW_BELL, SoundCategory.MASTER, 2f, 0.5f);
 							player.playSound(player.getLocation(),Sound.BLOCK_NOTE_BLOCK_BASS, SoundCategory.MASTER, 2f, 0.1f);
-							player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GOLD+"A thief has been spotted!"));
-							p.sendMessage(ChatColor.AQUA+""+ChatColor.UNDERLINE+"A ward spotted you!");
+							player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ChatColor.GOLD+"Voleur repéré!"));
+							p.sendMessage(ChatColor.AQUA+""+ChatColor.UNDERLINE+"Une balise vous a repéré!");
 						}
 					}else if (omniSpotList.get(omni).contains(p) && p.getLocation().distanceSquared(omni.getLocation())>OMNI_SQUARED_RANGE){
 						PlayerWrapper wrap = wraper.getGame().getPlayerWrapper(p);

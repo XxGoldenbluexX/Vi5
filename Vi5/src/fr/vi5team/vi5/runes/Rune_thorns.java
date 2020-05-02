@@ -29,7 +29,7 @@ public class Rune_thorns extends BaseRune{
 				if(pDamager==player&&receiverWrap.getTeam()==Vi5Team.VOLEUR) {
 					for(Player thief : wraper.getGame().getVoleurInsideList()) {
 						if(thief!=pReceiver) {
-							thief.damage(1);
+							thief.damage(0);
 						}
 					}
 				}

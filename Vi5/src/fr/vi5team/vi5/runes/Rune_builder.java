@@ -26,23 +26,15 @@ public class Rune_builder extends BaseRune{
 		if(NB_WALLS<MAX_WALLS) {
 			String nearestWall = mapWall.getNearestWall(player);
 			if(nearestWall==null) {
-				player.sendMessage(ChatColor.RED+"There is no more possible walls on the map. Consider adding more later");
+				player.sendMessage(ChatColor.RED+"Aucun mur disponible. Pensez à en ajouter plus tard!");
 			}else {
 				NB_WALLS++;
 				player.playSound(player.getLocation(), Sound.BLOCK_BARREL_CLOSE, SoundCategory.MASTER, 1, 0);
 				player.playSound(player.getLocation(), Sound.ITEM_SHIELD_BLOCK, SoundCategory.MASTER, 1, 0);
-				if(NB_WALLS==MAX_WALLS) {
-					player.sendMessage(ChatColor.GREEN+"You have placed your last wall: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall);		
-				}else {
-					player.sendMessage(ChatColor.GREEN+"You have placed the wall: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall);	
-					}
-				}
-		}else {
-			player.sendMessage(ChatColor.RED+"All your walls have already been placed!");	
-			
+				player.sendMessage(ChatColor.GREEN+"Mur placé: "+ChatColor.GOLD+ChatColor.UNDERLINE+nearestWall);
+				showAdaptedHotbarItem();
+			}
 		}
-		showAdaptedHotbarItem();
-		
 	}
 	private void showAdaptedHotbarItem() {
 		ItemStack item;
@@ -53,7 +45,7 @@ public class Rune_builder extends BaseRune{
 			item=new ItemStack(Material.BRICK_WALL, 2);
 		}
 		meta=item.getItemMeta();
-		meta.setDisplayName(ChatColor.GOLD+"You can place "+ChatColor.AQUA+(MAX_WALLS-NB_WALLS)+ChatColor.GOLD+" more walls");
+		meta.setDisplayName(ChatColor.LIGHT_PURPLE+"Mur(s) restant(s): "+ChatColor.AQUA+(MAX_WALLS-NB_WALLS)+"/"+MAX_WALLS);
 		item.setItemMeta(meta);
 		setCastItem(item);
 		showCastItem();
