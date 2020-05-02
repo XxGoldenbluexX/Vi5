@@ -388,13 +388,14 @@ public class Vi5Interfaces implements Listener{
 			ItemMeta metaInfLol = itmx.getItemMeta();
 			metaInfLol.setDisplayName(ChatColor.DARK_RED+"RETOUR");
 			itmx.setItemMeta(metaInfLol);
-			inter.setItem(1, itmx);
+			inter.setItem(0, itmx);
 			for (byte i=0;i<mapList.size();i++) {
 				ItemStack itmm = new ItemStack(Material.PAPER);
 				ItemMeta metax = itmm.getItemMeta();
 				metax.setDisplayName(mapList.get(i));
-				if (wrap.getGame().getMapName()==mapList.get(i)) {
+				if (wrap.getGame().getMapName().equals(mapList.get(i))) {
 					metax.addEnchant(Enchantment.MENDING, 1, true);
+					metax.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 				}
 				itmm.setItemMeta(metax);
 				inter.setItem(i+1, itmm);
