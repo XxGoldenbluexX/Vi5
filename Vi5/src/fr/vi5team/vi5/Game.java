@@ -97,7 +97,7 @@ public class Game implements Listener {
 	private void swapTeamInHashMap(){
 		if(getGardeList().size()-getVoleurList().size()!=0) { //SI YA UN NOMBRE IMPAIRE DE PELO
 			if(getGardeList().size()+getVoleurList().size()==5) {
-				swap5PplGame(); //LE TRI POURU UNE GAME DE 5 PELO
+				swap5PplGame(); //LE TRI POUR UNE GAME DE 5 PELO
 			}else {
 				//Je sais pas pour le tri quand ya 7 joueurs :/
 			}
