@@ -93,9 +93,16 @@ public class Vi5Interfaces implements Listener{
 		case MAIN:
 			/////
 			inter.clear();
+			itm = new ItemStack(Material.PAPER);
+			ItemMeta metaa = itm.getItemMeta();
+			metaa.setDisplayName(ChatColor.GOLD+"Maps");
+			itm.setItemMeta(metaa);
+			inter.setItem(0, itm);
 			itm = new ItemStack(teamglass);
 			for (short i=0;i<9;i++) {
+				if (i!=0) {
 				inter.setItem(i, itm);
+				}
 				inter.setItem(i+18, itm);
 			}
 			switch (wrap.getTeam()){
@@ -374,6 +381,25 @@ public class Vi5Interfaces implements Listener{
 			}
 			break;
 		/////
+		case MAP_LIST:
+			inter.clear();
+			ArrayList<String> mapList = mainref.getCfgmanager().getMapList();
+			ItemStack itmx = new ItemStack(Material.ANVIL);
+			ItemMeta metaInfLol = itmx.getItemMeta();
+			metaInfLol.setDisplayName(ChatColor.DARK_RED+"RETOUR");
+			itmx.setItemMeta(metaInfLol);
+			inter.setItem(0, itmx);
+			for (byte i=0;i<mapList.size();i++) {
+				ItemStack itmm = new ItemStack(Material.PAPER);
+				ItemMeta metax = itmm.getItemMeta();
+				metax.setDisplayName(mapList.get(i));
+				if (wrap.getGame().getMapName().equals(mapList.get(i))) {
+					metax.addEnchant(Enchantment.MENDING, 1, true);
+					metax.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+				}
+				itmm.setItemMeta(metax);
+				inter.setItem(i+1, itmm);
+			}
 		default:
 			break;
 		}
@@ -398,6 +424,9 @@ public class Vi5Interfaces implements Listener{
 					switch (playersInterfaceType.get(player)) {
 					case MAIN:
 						switch (itemClicked.getType()) {
+						case PAPER:
+							openMenu(player, InterfaceType.MAP_LIST, inventory);
+							break;
 						case SUNFLOWER:
 							wrap.getGame().start(false, player);
 							closeInterface(player);
@@ -530,6 +559,19 @@ public class Vi5Interfaces implements Listener{
 							break;
 						}
 						openMenu(player, InterfaceType.MAIN,inventory);
+						break;
+					case MAP_LIST:
+						switch (itemClicked.getType()) {
+						case ANVIL:
+							openMenu(player, InterfaceType.MAIN, inventory);
+							break;
+						case PAPER:
+							wrap.getGame().setMapName(itemClicked.getItemMeta().getDisplayName());
+							openMenu(player, InterfaceType.MAP_LIST, inventory);
+							break;
+						default:
+							break;
+						}
 						break;
 					default:
 						break;

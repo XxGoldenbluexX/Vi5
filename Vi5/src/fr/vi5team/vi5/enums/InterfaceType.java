@@ -4,5 +4,6 @@ public enum InterfaceType {
 	MAIN,
 	TEAM,
 	RUNES_GARDE,
-	RUNES_VOLEUR
+	RUNES_VOLEUR,
+	MAP_LIST
 }
