@@ -212,6 +212,7 @@ public class Game implements Listener {
 				messagePlayersInGame(ChatColor.RED+player.getName()+" died with "+ChatColor.GREEN+wrap.getNbItemStealed()+ChatColor.GOLD+" object(s)!");
 				player.setGameMode(GameMode.SPECTATOR);
 				wrap.setCurrentStatus(VoleurStatus.ESCAPED);
+				wrap.gameEnd();
 				nbVoleurAlive--;
 				if (nbVoleurAlive<=0) {
 					endGame();

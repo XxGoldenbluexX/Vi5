@@ -131,7 +131,7 @@ public class PlayerWrapper implements Listener {
 		}
 	}
 	public boolean isSondable() {
-		return (!unSpottable && (!insondable || omnispotted));
+		return (currentStatus==VoleurStatus.INSIDE && !unSpottable && (!insondable || omnispotted));
 	}
 	
 	public void gameStart() {
@@ -184,6 +184,7 @@ public class PlayerWrapper implements Listener {
 		if (tertiaire!=null) {
 			tertiaire.preGameEnd();
 		}
+		currentStatus=VoleurStatus.ESCAPED;
 		primaire=null;
 		secondaire=null;
 		tertiaire=null;
