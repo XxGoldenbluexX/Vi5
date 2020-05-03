@@ -2,7 +2,6 @@ package fr.vi5team.vi5;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -54,107 +53,13 @@ public class Game implements Listener {
 	private ArrayList<MapObject> mapObjects=new ArrayList<MapObject>();
 	private ArrayList<MapEnterZone> mapEnterZones=new ArrayList<MapEnterZone>();
 	private ArrayList<MapLeaveZone> mapLeaveZones=new ArrayList<MapLeaveZone>();
-	private WeakHashMap<Integer,ArrayList<ArrayList<Player>>> playersByGameByClass=new  WeakHashMap<Integer,ArrayList<ArrayList<Player>>>();
 	private BukkitRunnable gameTick;
 	private final WeakHashMap<Player,PlayerWrapper> playersInGame = new WeakHashMap<Player,PlayerWrapper>();
-	//Game point system
-	private short gameRot_round=1;
-	private boolean gameRot_revanche=false;
-	//gameRot -> Game Rotation (system de points et de rotation de manche)
-	public WeakHashMap<String,ArrayList<Location>> wallsInMapLocationsList = new WeakHashMap<String,ArrayList<Location>>();
-	public WeakHashMap<String,ArrayList<Double>> wallsInMapCenterList = new WeakHashMap<String,ArrayList<Double>>();
 	public Game(Vi5Main main,ConfigManager cfgm,String _name, World _world) {
 		mainref=main;
 		cfgManager=cfgm;
 		name=_name;
 		world=_world;
-	}
-	private void firstGameHashMapFill() {
-		ArrayList<Player> Gardes=new ArrayList<Player>();
-		ArrayList<Player> Voleurs=new ArrayList<Player>();
-		ArrayList<ArrayList<Player>> Team = new ArrayList<ArrayList<Player>>();
-		for(Player player : getGardeList()) {
-			Gardes.add(player);
-		}
-		for(Player player : getVoleurList()) {
-			Voleurs.add(player);
-		}
-		Team.add(Gardes);
-		Team.add(Voleurs);
-		playersByGameByClass.put(1, Team);
-	}
-	private void swapTeamInGame() {
-		swapTeamInHashMap();
-		for(Player newGuard : playersByGameByClass.get(playersByGameByClass.keySet().size()).get(0)) {
-			PlayerWrapper wrap = getPlayerWrapper(newGuard);
-			wrap.setTeam(Vi5Team.GARDE, true);
-		}
-		for(Player newVoleur : playersByGameByClass.get(playersByGameByClass.keySet().size()).get(1)) {
-			PlayerWrapper wrap = getPlayerWrapper(newVoleur);
-			wrap.setTeam(Vi5Team.VOLEUR, true);
-		}
-	}
-	private void swapTeamInHashMap(){
-		if(getGardeList().size()-getVoleurList().size()!=0) { //SI YA UN NOMBRE IMPAIRE DE PELO
-			if(getGardeList().size()+getVoleurList().size()==5) {
-				swap5PplGame(); //LE TRI POUR UNE GAME DE 5 PELO
-			}else {
-				//Je sais pas pour le tri quand ya 7 joueurs :/
-			}
-		}else {//SI YA UN NOMBRE PAIR DE PELO
-			
-		}
-	}
-	private void swap5PplGame(){
-		int gameNumber = playersByGameByClass.keySet().size();
-		ArrayList<Player> oldGardes = playersByGameByClass.get(gameNumber).get(0);
-		ArrayList<Player> newGardes=new ArrayList<Player>();
-		ArrayList<Player> oldVoleurs = playersByGameByClass.get(gameNumber).get(1);
-		ArrayList<Player> newVoleurs=new ArrayList<Player>();
-		ArrayList<ArrayList<Player>> swappedTeam = new ArrayList<ArrayList<Player>>();
-		newGardes=oldVoleurs;//LES NOUVEAUX GARDES SONT LES ANCIENS VOLEURS
-		oldVoleurs.clear();
-		if(gameNumber>=3) { //SI c4EST AU MOINS LA 3EME GAME (1ere game -> team perso, 2eme -> garde dispachés "aléatoirement", 3eme->algo
-			for(Player player : oldGardes) { //ON CHECK QUEL MEC A 2x GARDE
-				if(playersByGameByClass.get(gameNumber-1).get(0).contains(player)) {
-					oldGardes.remove(player);
-					newVoleurs.add(player);
-					break;
-				}
-			}
-			for(Player player : oldGardes) { //SI LE PELO A DEJA JOUE AVEC LE NOUVEAU VOLEUR, IL RESTE GARDE
-				for(int gNumber : playersByGameByClass.keySet()) {
-					if(playersByGameByClass.get(gNumber).get(1).contains(player)&&playersByGameByClass.get(gNumber).get(1).contains(newVoleurs.get(0))) {
-						oldGardes.remove(player);
-						newGardes.add(player);
-					}
-				}
-			}
-			if(oldGardes.size()!=1) {//SI AUCUN DES DEUX NA JOUE AVEC LE NOUVEAU VOLEUR
-				int indexChose = new Random().nextInt(2);
-				Player nouveauVoleur = oldGardes.get(indexChose);
-				oldGardes.remove(nouveauVoleur);
-				newVoleurs.add(nouveauVoleur);
-			}
-			if(oldGardes.size()>0) { //Il reste des pelo dansd oldGarde -> le garde qui se fait boloss
-				for(Player player : oldGardes) {
-					oldGardes.remove(player);
-					newGardes.add(player);
-				}
-			}
-		}else { //FULL RANDOM DEUXIEME GAME
-			int indexChose = new Random().nextInt(3);
-			Player nouveauGarde = oldGardes.get(indexChose);
-			oldGardes.remove(nouveauGarde);
-			newGardes.add(nouveauGarde);
-			for(Player player : oldGardes) {
-				oldGardes.remove(player);
-				newVoleurs.add(player);
-			}	
-		}
-		swappedTeam.add(newGardes);
-		swappedTeam.add(newVoleurs);
-		playersByGameByClass.put(gameNumber+1, swappedTeam);
 	}
 	/*@EventHandler
 	public void onPlayerMoveItem(InventoryMoveItemEvent event) {
@@ -221,7 +126,6 @@ public class Game implements Listener {
 		}
 		messagePlayersInGame(ChatColor.GOLD+"La partie est terminée!");
 		messagePlayersInGame(ChatColor.GOLD+"Les voleurs se sont enfuit avec "+ChatColor.AQUA+totalObjVolés+ChatColor.GOLD+" objects!");
-		swapTeamInGame();
 	}
 	
 	public boolean addPlayer(Player player) {
@@ -432,10 +336,7 @@ public class Game implements Listener {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
 			sender.sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
 			return;
-		}else {
-			if(playersByGameByClass.keySet().size()==0) {
-				firstGameHashMapFill();
-			}
+		}
 			totalObjVolés=0;
 			nbVoleurAlive=0;
 			started=true;
@@ -498,7 +399,6 @@ public class Game implements Listener {
 			};
 			gameTick.runTaskTimer(mainref, 0, 1);
 		}
-	};
 	public void tickRunes() {
 		for (PlayerWrapper p : playersInGame.values()) {
 			p.tickRunes();
