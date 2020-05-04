@@ -337,7 +337,7 @@ public class Game implements Listener {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
 			sender.sendMessage(ChatColor.AQUA+"["+name+"]"+ChatColor.DARK_RED+"Impossible de charger la map, la partie ne peut se lancer");
 			return;
-		}
+		}else {
 			totalObjVolés=0;
 			nbVoleurAlive=0;
 			started=true;
@@ -400,6 +400,7 @@ public class Game implements Listener {
 			};
 			gameTick.runTaskTimer(mainref, 0, 1);
 		}
+	};
 	public void tickRunes() {
 		for (PlayerWrapper p : playersInGame.values()) {
 			p.tickRunes();
