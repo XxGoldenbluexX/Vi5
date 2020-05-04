@@ -79,9 +79,9 @@ public class Game implements Listener {
 		if(damager instanceof Player && receiver instanceof Player){
 			Player pDamager=(Player)damager;
 			Player pReceiver = (Player)receiver;
-			PlayerWrapper damagerWrap = mainref.getPlayerWrapper(pDamager);
-			PlayerWrapper receiverWrap = mainref.getPlayerWrapper(pReceiver);
-			if (damagerWrap!=null && receiverWrap!=null) {
+			if(mainref.getPlayerWrapper(pDamager).getGame()==this&&mainref.getPlayerWrapper(pReceiver).getGame()==this) {
+				PlayerWrapper damagerWrap = mainref.getPlayerWrapper(pDamager);
+				PlayerWrapper receiverWrap = mainref.getPlayerWrapper(pReceiver);
 				if(damagerWrap.getTeam()==receiverWrap.getTeam()) {
 					event.setDamage(0);
 				}
