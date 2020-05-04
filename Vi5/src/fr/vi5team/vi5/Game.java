@@ -209,18 +209,20 @@ public class Game implements Listener {
 		Player player = event.getEntity();
 		if (hasPlayer(player) && started) {
 			PlayerWrapper wrap = playersInGame.get(player);
-			if(wrap.getTeam()==Vi5Team.VOLEUR) {
-				messagePlayersInGame(ChatColor.RED+player.getName()+" died with "+ChatColor.GREEN+wrap.getNbItemStealed()+ChatColor.GOLD+" object(s)!");
-				player.setGameMode(GameMode.SPECTATOR);
-				wrap.setCurrentStatus(VoleurStatus.ESCAPED);
-				wrap.gameEnd();
-				nbVoleurAlive--;
-				if (nbVoleurAlive<=0) {
-					endGame();
+			if (wrap.getCurrentStatus()==VoleurStatus.INSIDE) {
+				if(wrap.getTeam()==Vi5Team.VOLEUR) {
+					messagePlayersInGame(ChatColor.RED+player.getName()+" died with "+ChatColor.GREEN+wrap.getNbItemStealed()+ChatColor.GOLD+" object(s)!");
+					player.setGameMode(GameMode.SPECTATOR);
+					wrap.setCurrentStatus(VoleurStatus.ESCAPED);
+					wrap.gameEnd();
+					nbVoleurAlive--;
+					if (nbVoleurAlive<=0) {
+						endGame();
+					}
+				}else if (wrap.getTeam()==Vi5Team.GARDE) {
+					player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+					player.teleport(gardeSpawn);
 				}
-			}else if (wrap.getTeam()==Vi5Team.GARDE) {
-				player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-				player.teleport(gardeSpawn);
 			}
 		}
 	}
