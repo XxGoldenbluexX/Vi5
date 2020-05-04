@@ -27,6 +27,7 @@ import fr.vi5team.vi5.runes.Rune_smokePool;
 import fr.vi5team.vi5.runes.Rune_sonar;
 import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
+import fr.vi5team.vi5.runes.Rune_tazer;
 import fr.vi5team.vi5.runes.Rune_thorns;
 import fr.vi5team.vi5.runes.Rune_tough;
 
@@ -43,6 +44,10 @@ public enum RunesList {
 	SONAR("Sonar",RunesType.PASSIF,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.COMPASS, ChatColor.GOLD+"Sonar", ChatColor.LIGHT_PURPLE+"Toutes les 5 secondes, permet de savoir si un voleur est prêt de vous"),
 			makeDisplayItem(Material.COMPASS, ChatColor.GOLD+"Sonar", ChatColor.LIGHT_PURPLE+"Toutes les 5 secondes, permet de savoir si un voleur est prêt de vous")
+			),
+	TAZER("Tazer",RunesType.SPELL,RunesTiers.PRIMAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.SHEARS, ChatColor.GOLD+"Tazer", ChatColor.LIGHT_PURPLE+"Permet d'immobiliser un voleur a distance."),
+			makeDisplayItem(Material.SHEARS, ChatColor.GOLD+"Tazer", ChatColor.LIGHT_PURPLE+"Permet d'immobiliser un voleur a distance.")
 			),
 	SURCHARGE("Surcharge",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
 			makeDisplayItem(Material.FIREWORK_ROCKET, ChatColor.LIGHT_PURPLE+"Surcharge", ChatColor.LIGHT_PURPLE+"Grand bonus en vitesse et force sur utilisation"),
@@ -193,6 +198,8 @@ public enum RunesList {
 			return new Rune_smokePool(main,w,p,r);
 		case THORNS:
 			return new Rune_thorns(main,w,p,r);
+		case TAZER:
+			return new Rune_tazer(main,w,p,r);
 		default:
 			break;
 		}

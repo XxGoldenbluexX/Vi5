@@ -17,7 +17,6 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -77,13 +76,15 @@ public class Game implements Listener {
 	public void onPlayerDamage(EntityDamageByEntityEvent event) {
 		Entity damager = event.getDamager();
 		Entity receiver = event.getEntity();
-		if(damager.getType()==EntityType.PLAYER&&receiver.getType()==EntityType.PLAYER){
+		if(damager instanceof Player && receiver instanceof Player){
 			Player pDamager=(Player)damager;
 			Player pReceiver = (Player)receiver;
 			PlayerWrapper damagerWrap = mainref.getPlayerWrapper(pDamager);
 			PlayerWrapper receiverWrap = mainref.getPlayerWrapper(pReceiver);
-			if(damagerWrap.getTeam()==receiverWrap.getTeam()) {
-				event.setDamage(0);
+			if (damagerWrap!=null && receiverWrap!=null) {
+				if(damagerWrap.getTeam()==receiverWrap.getTeam()) {
+					event.setDamage(0);
+				}
 			}
 		}
 	}
