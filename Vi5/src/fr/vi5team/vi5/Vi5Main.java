@@ -139,6 +139,23 @@ public class Vi5Main extends JavaPlugin implements Listener {
 	     }
 	     //MERCI INTERNET PUTAIN
 	}
+	public boolean packetUnGlowPlayer(Player player,Player glowed) {
+		PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.ENTITY_METADATA);
+	     packet.getIntegers().write(0, glowed.getEntityId()); //Set packet's entity id
+	     WrappedDataWatcher watcher = new WrappedDataWatcher(); //Create data watcher, the Entity Metadata packet requires this
+	     Serializer serializer = Registry.get(Byte.class); //Found this through google, needed for some stupid reason
+	     watcher.setEntity(player); //Set the new data watcher's target
+	     watcher.setObject(0, serializer, (byte) (0x00)); //Set status to glowing, found on protocol page
+	     packet.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects()); //Make the packet's datawatcher the one we created
+	     try {
+	    	 protocolManager.sendServerPacket(player, packet);
+	         return true;
+	     } catch (InvocationTargetException e) {
+	         e.printStackTrace();
+	         return false;
+	     }
+	     //MERCI INTERNET PUTAIN
+	}
 	
 	public ProtocolManager getProtocolManager() {
 		return protocolManager;

@@ -10,7 +10,7 @@ import fr.vi5team.vi5.enums.VoleurStatus;
 
 public class Rune_6emeSens extends BaseRune {
 
-	private static final float SQUARED_RANGE=25;
+	private static final float SQUARED_RANGE=36;
 	
 	public Rune_6emeSens(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
@@ -22,11 +22,13 @@ public class Rune_6emeSens extends BaseRune {
 
 	@Override
 	public void tick() {
-		if (wraper.getCurrentStatus()==VoleurStatus.INSIDE) {
+		if (wraper.getCurrentStatus()==VoleurStatus.INSIDE && !wraper.isJammed()) {
 			Location ourLoc = player.getLocation();
 			for (Player p : wraper.getGame().getGardeList()) {
 				if (ourLoc.distanceSquared(p.getLocation())<=SQUARED_RANGE) {
 					mainref.packetGlowPlayer(player, p);
+				}else {
+					mainref.packetUnGlowPlayer(player, p);
 				}
 			}
 		}
@@ -42,7 +44,7 @@ public class Rune_6emeSens extends BaseRune {
 
 	@Override
 	public void enterZone() {
-		
+		Activate();
 	}
 
 }
