@@ -23,13 +23,16 @@ public class Rune_thorns extends BaseRune{
 			Entity receiver = event.getEntity();
 			if(damager instanceof Player && receiver instanceof Player) {
 				Player pDamager = (Player)damager;
+				PlayerWrapper damagerWrap = mainref.getPlayerWrapper(pDamager);
 				Player pReceiver = (Player)receiver;
-				if(mainref.getPlayerWrapper(pDamager).is_ingame()&&mainref.getPlayerWrapper(pReceiver).is_ingame()) {
-					PlayerWrapper receiverWrap = mainref.getPlayerWrapper(pReceiver);
-					if(pDamager==player&&receiverWrap.getTeam()==Vi5Team.VOLEUR) {
-						for(Player thief : wraper.getGame().getVoleurInsideList()) {
-							if(thief!=pReceiver) {
-								thief.damage(0.01);
+				PlayerWrapper receiverWrap = mainref.getPlayerWrapper(pReceiver);
+				if(damagerWrap!=null&&receiverWrap!=null) {
+					if(damagerWrap.is_ingame()&&receiverWrap.is_ingame()) {
+						if(pDamager==player&&receiverWrap.getTeam()==Vi5Team.VOLEUR) {
+							for(Player thief : wraper.getGame().getVoleurInsideList()) {
+								if(thief!=pReceiver) {
+									thief.damage(0.01);
+								}
 							}
 						}
 					}
