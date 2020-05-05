@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.runes.BaseRune;
+import fr.vi5team.vi5.runes.Rune_6emeSens;
 import fr.vi5team.vi5.runes.Rune_builder;
 import fr.vi5team.vi5.runes.Rune_bush;
 import fr.vi5team.vi5.runes.Rune_cop;
@@ -105,6 +106,10 @@ public enum RunesList {
 	TOUGH("Solide",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Solide", ChatColor.LIGHT_PURPLE+"Obtenez 2 coeurs de plus"),
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Solide", ChatColor.LIGHT_PURPLE+"Obtenez 2 coeurs de plus")
+			),
+	SIXSENS("6ème sens",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.HEART_OF_THE_SEA, ChatColor.GREEN+"6ème sens", ChatColor.LIGHT_PURPLE+"Vous voyez les gardes proche."),
+			makeDisplayItem(Material.HEART_OF_THE_SEA, ChatColor.GREEN+"6ème sens", ChatColor.LIGHT_PURPLE+"Vous voyez les gardes proche.")
 			);
 	//////////////////////////////////
 	private final String DisplayName;
@@ -200,6 +205,8 @@ public enum RunesList {
 			return new Rune_thorns(main,w,p,r);
 		case TAZER:
 			return new Rune_tazer(main,w,p,r);
+		case SIXSENS:
+			return new Rune_6emeSens(main,w,p,r);
 		default:
 			break;
 		}
