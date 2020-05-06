@@ -23,6 +23,7 @@ import fr.vi5team.vi5.runes.Rune_inviSneak;
 import fr.vi5team.vi5.runes.Rune_lantern;
 import fr.vi5team.vi5.runes.Rune_ombre;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
+import fr.vi5team.vi5.runes.Rune_piege;
 import fr.vi5team.vi5.runes.Rune_scanner;
 import fr.vi5team.vi5.runes.Rune_smokePool;
 import fr.vi5team.vi5.runes.Rune_sonar;
@@ -108,8 +109,12 @@ public enum RunesList {
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Solide", ChatColor.LIGHT_PURPLE+"Obtenez 2 coeurs de plus")
 			),
 	SIXSENS("6ème sens",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.HEART_OF_THE_SEA, ChatColor.GREEN+"6ème sens", ChatColor.LIGHT_PURPLE+"Vous voyez les gardes proche."),
-			makeDisplayItem(Material.HEART_OF_THE_SEA, ChatColor.GREEN+"6ème sens", ChatColor.LIGHT_PURPLE+"Vous voyez les gardes proche.")
+			makeDisplayItem(Material.HEART_OF_THE_SEA, ChatColor.GREEN+"6ème sens", ChatColor.LIGHT_PURPLE+"Vous voyez les gardes proche"),
+			makeDisplayItem(Material.HEART_OF_THE_SEA, ChatColor.GREEN+"6ème sens", ChatColor.LIGHT_PURPLE+"Vous voyez les gardes proche")
+			),
+	PIEGE("Piège à Ours",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.IRON_TRAPDOOR, ChatColor.GREEN+"Piège à Ours", ChatColor.LIGHT_PURPLE+"Posez des pièges invisible ralentissant les voleurs"),
+			makeDisplayItem(Material.IRON_TRAPDOOR, ChatColor.GREEN+"Piège à Ours", ChatColor.LIGHT_PURPLE+"Posez des pièges invisible ralentissant les voleurs")
 			);
 	//////////////////////////////////
 	private final String DisplayName;
@@ -207,6 +212,8 @@ public enum RunesList {
 			return new Rune_tazer(main,w,p,r);
 		case SIXSENS:
 			return new Rune_6emeSens(main,w,p,r);
+		case PIEGE:
+			return new Rune_piege(main,w,p,r);
 		default:
 			break;
 		}
