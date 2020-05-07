@@ -48,7 +48,7 @@ public class Rune_piege extends BaseRune {
 									p.playSound(p.getLocation(), Sound.ENTITY_STRAY_DEATH, SoundCategory.MASTER, 0.5f, 0);
 									p.playSound(p.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, SoundCategory.MASTER, 1, 2);
 									p.setWalkSpeed(p.getWalkSpeed()-0.04f);
-									p.sendMessage(ChatColor.RED+"Vous êtes tombés dans un piège magique -> -"+Math.round((1-(p.getWalkSpeed()/0.2f)))*100+"% vitesse totale");
+									p.sendMessage(ChatColor.RED+"Vous êtes tombés dans un piège magique -> -"+Math.round((1-(p.getWalkSpeed()/0.2f))*100)+"% vitesse totale");
 								}
 							}
 							if(activated.size()>=1) {
