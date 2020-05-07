@@ -20,7 +20,6 @@ import fr.vi5team.vi5.runes.Rune_doubleJump;
 import fr.vi5team.vi5.runes.Rune_fisherman;
 import fr.vi5team.vi5.runes.Rune_inviSneak;
 import fr.vi5team.vi5.runes.Rune_lantern;
-import fr.vi5team.vi5.runes.Rune_magicien;
 import fr.vi5team.vi5.runes.Rune_ombre;
 import fr.vi5team.vi5.runes.Rune_omniCapteur;
 import fr.vi5team.vi5.runes.Rune_piege;
@@ -30,6 +29,7 @@ import fr.vi5team.vi5.runes.Rune_sonar;
 import fr.vi5team.vi5.runes.Rune_speed;
 import fr.vi5team.vi5.runes.Rune_surcharge;
 import fr.vi5team.vi5.runes.Rune_tazer;
+import fr.vi5team.vi5.runes.Rune_technicien;
 import fr.vi5team.vi5.runes.Rune_thorns;
 import fr.vi5team.vi5.runes.Rune_tough;
 
@@ -104,9 +104,9 @@ public enum RunesList {
 			makeDisplayItem(Material.GUNPOWDER, ChatColor.LIGHT_PURPLE+"Bain de fumée", ChatColor.LIGHT_PURPLE+"Faites apparaître un cercle de fumée où vous êtes invisible et insondable"),
 			makeDisplayItem(Material.GUNPOWDER, ChatColor.LIGHT_PURPLE+"Bain de fumée", ChatColor.LIGHT_PURPLE+"Faites apparaître un cercle de fumée où vous êtes invisible et insondable")
 			),
-	MAGICIEN("Magicien",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
-			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Magicien", ChatColor.LIGHT_PURPLE+"Vous voyez les pièges et pouvez passer à travers les murs (rune)"),
-			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Magicien", ChatColor.LIGHT_PURPLE+"Vous voyez les pièges et pouvez passer à travers les murs (rune)")
+	TECHNICIEN("Technicien",RunesType.PASSIF,RunesTiers.SECONDAIRE,Vi5Team.VOLEUR,
+			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Technicien", ChatColor.LIGHT_PURPLE+"Vous voyez les pièges et pouvez passer à travers les murs (rune)"),
+			makeDisplayItem(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE+"Technicien", ChatColor.LIGHT_PURPLE+"Vous voyez les pièges et pouvez passer à travers les murs (rune)")
 			),
 	TOUGH("Solide",RunesType.PASSIF,RunesTiers.TERTIAIRE,Vi5Team.VOLEUR,
 			makeDisplayItem(Material.IRON_CHESTPLATE, ChatColor.GREEN+"Solide", ChatColor.LIGHT_PURPLE+"Obtenez 2 coeurs de plus"),
@@ -190,8 +190,8 @@ public enum RunesList {
 			return new Rune_ombre(main, w, p, r);
 		case BUILDER:
 			return new Rune_builder(main, w, p, r);
-		case MAGICIEN:
-			return new Rune_magicien(main, w, p, r);
+		case TECHNICIEN:
+			return new Rune_technicien(main, w, p, r);
 		case PECHEUR:
 			return new Rune_fisherman(main, w, p, r);
 		case BUSH:

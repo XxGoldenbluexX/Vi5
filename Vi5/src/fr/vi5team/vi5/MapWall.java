@@ -107,12 +107,14 @@ public class MapWall implements Listener{
 		if(wrap==null) {
 			return;
 		}
-		if(wrap.getTeam()==Vi5Team.GARDE||wrap.getRuneSecondaire().getRune()==RunesList.MAGICIEN) {
+		if(wrap.getTeam()==Vi5Team.GARDE||wrap.getRuneSecondaire().getRune()==RunesList.TECHNICIEN) {
 			String wallName=isPlayerOnWall(event.getTo());
 			if(!playerOnWall.keySet().contains(p)&&wallName!=null) {
 				if(!playerOnWall.values().contains(wallName)) {
 					setBlocks(true,wallName);
-					p.getWorld().playSound(p.getLocation(),Sound.BLOCK_WOODEN_DOOR_OPEN, SoundCategory.MASTER, 1, 0);
+					if(wrap.getTeam()==Vi5Team.GARDE) {
+						p.getWorld().playSound(p.getLocation(),Sound.BLOCK_WOODEN_DOOR_OPEN, SoundCategory.MASTER, 1, 0);
+					}
 				}
 				playerOnWall.put(p, wallName);
 			}else {
