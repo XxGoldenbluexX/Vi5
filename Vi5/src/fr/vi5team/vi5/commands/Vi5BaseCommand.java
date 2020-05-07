@@ -177,7 +177,7 @@ public class Vi5BaseCommand implements CommandExecutor {
 			if (args.length>2) {
 				if (sender instanceof Player) {
 					for(Game g : mainref.getGamesList()) {
-						if(g.getName()==args[2]) {
+						if(g.getName().equals(args[2])) {
 							sender.sendMessage("");
 							sender.sendMessage(ChatColor.RED+"The game "+ChatColor.GOLD+args[2]+ChatColor.RED+" already exist!");
 							sender.sendMessage("");
