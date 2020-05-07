@@ -6,9 +6,9 @@ import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.RunesList;
 
-public class Rune_crocheteur extends BaseRune{
+public class Rune_magicien extends BaseRune{
 
-	public Rune_crocheteur(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
+	public Rune_magicien(Vi5Main _mainref, PlayerWrapper _wraper, Player _player, RunesList _rune) {
 		super(_mainref, _wraper, _player, _rune);
 	}
 
