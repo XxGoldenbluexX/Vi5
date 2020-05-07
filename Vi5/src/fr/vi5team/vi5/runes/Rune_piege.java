@@ -36,9 +36,10 @@ public class Rune_piege extends BaseRune {
 				if(pWrap.getGame()==wraper.getGame()) {
 					if(pWrap.getTeam()==Vi5Team.VOLEUR) {
 						if(!pWrap.isUnSpottable()) {
+							ArrayList<Location> activated = new ArrayList<Location>();
 							for(Location piegeLoc : piegePos) {
 								if (p.getLocation().distanceSquared(piegeLoc)<=1) {
-									piegePos.remove(piegeLoc);
+									activated.add(piegeLoc);
 									for(Player pGarde : wraper.getGame().getGardeList()) {
 										pGarde.playSound(pGarde.getLocation(), Sound.ENTITY_STRAY_DEATH, SoundCategory.MASTER, 0.5f, 0);
 										pGarde.playSound(pGarde.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, SoundCategory.MASTER, 1, 2);
@@ -47,7 +48,12 @@ public class Rune_piege extends BaseRune {
 									p.playSound(p.getLocation(), Sound.ENTITY_STRAY_DEATH, SoundCategory.MASTER, 0.5f, 0);
 									p.playSound(p.getLocation(), Sound.BLOCK_SHULKER_BOX_OPEN, SoundCategory.MASTER, 1, 2);
 									p.setWalkSpeed(p.getWalkSpeed()-0.04f);
-									p.sendMessage(ChatColor.RED+"Vous êtes tombés dans un piège à ours -> -"+(1-(p.getWalkSpeed()/0.2f))*100+"% vitesse totale");
+									p.sendMessage(ChatColor.RED+"Vous êtes tombés dans un piège magique -> -"+Math.round((1-(p.getWalkSpeed()/0.2f)))*100+"% vitesse totale");
+								}
+							}
+							if(activated.size()>=1) {
+								for(Location piegeLoc : activated) {
+									piegePos.remove(piegeLoc);
 								}
 							}
 						}

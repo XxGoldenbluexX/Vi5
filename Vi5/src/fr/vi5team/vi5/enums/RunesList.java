@@ -112,9 +112,9 @@ public enum RunesList {
 			makeDisplayItem(Material.HEART_OF_THE_SEA, ChatColor.GREEN+"6ème sens", ChatColor.LIGHT_PURPLE+"Vous voyez les gardes proche"),
 			makeDisplayItem(Material.HEART_OF_THE_SEA, ChatColor.GREEN+"6ème sens", ChatColor.LIGHT_PURPLE+"Vous voyez les gardes proche")
 			),
-	PIEGE("Piège à Ours",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
-			makeDisplayItem(Material.IRON_TRAPDOOR, ChatColor.GREEN+"Piège à Ours", ChatColor.LIGHT_PURPLE+"Posez des pièges invisible ralentissant les voleurs"),
-			makeDisplayItem(Material.IRON_TRAPDOOR, ChatColor.GREEN+"Piège à Ours", ChatColor.LIGHT_PURPLE+"Posez des pièges invisible ralentissant les voleurs")
+	PIEGE("Piège magique",RunesType.SPELL,RunesTiers.SECONDAIRE,Vi5Team.GARDE,
+			makeDisplayItem(Material.IRON_TRAPDOOR, ChatColor.GREEN+"Piège magique", ChatColor.LIGHT_PURPLE+"Posez des pièges invisible ralentissant les voleurs"),
+			makeDisplayItem(Material.IRON_TRAPDOOR, ChatColor.GREEN+"Piège magique", ChatColor.LIGHT_PURPLE+"Posez des pièges invisible ralentissant les voleurs")
 			);
 	//////////////////////////////////
 	private final String DisplayName;
