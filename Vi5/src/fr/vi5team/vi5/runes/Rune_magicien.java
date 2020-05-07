@@ -1,5 +1,9 @@
 package fr.vi5team.vi5.runes;
 
+import java.util.ArrayList;
+
+import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
 import fr.vi5team.vi5.PlayerWrapper;
@@ -19,7 +23,15 @@ public class Rune_magicien extends BaseRune{
 
 	@Override
 	public void tick() {
-		
+		for(Player garde : wraper.getGame().getGardeList()) {
+			PlayerWrapper wrap = mainref.getPlayerWrapper(garde);
+			if(wrap.getRuneSecondaire() instanceof Rune_piege) {
+				ArrayList<Location> piegesLoc = ((Rune_piege)wrap.getRuneSecondaire()).getPiegePos();
+				for(Location piegeLoc : piegesLoc) {
+					player.spawnParticle(Particle.PORTAL, piegeLoc, 1);
+				}
+			}
+		}
 	}
 
 	@Override

@@ -82,7 +82,7 @@ public class Rune_piege extends BaseRune {
 
 	@Override
 	public void tick() {	
-		if(player.getInventory().getItemInMainHand().getType()==Material.IRON_TRAPDOOR||player.getInventory().getItemInOffHand().getType()==Material.IRON_TRAPDOOR) {
+		//if(player.getInventory().getItemInMainHand().getType()==Material.IRON_TRAPDOOR||player.getInventory().getItemInOffHand().getType()==Material.IRON_TRAPDOOR) {
 			for(Player garde : wraper.getGame().getGardeList()) {
 				PlayerWrapper wrap = mainref.getPlayerWrapper(garde);
 				if(wrap.getRuneSecondaire() instanceof Rune_piege) {
@@ -92,9 +92,8 @@ public class Rune_piege extends BaseRune {
 					}
 				}
 			}
-		}
-    		
-	}
+		}	
+	//}
 
 	@Override
 	public void gameEnd() {
