@@ -107,7 +107,7 @@ public class MapWall implements Listener{
 		if(wrap==null) {
 			return;
 		}
-		if(wrap.getTeam()==Vi5Team.GARDE||wrap.getRuneSecondaire().getRune()==RunesList.CROCHETEUR) {
+		if(wrap.getTeam()==Vi5Team.GARDE||wrap.getRuneSecondaire().getRune()==RunesList.MAGICIEN) {
 			String wallName=isPlayerOnWall(event.getTo());
 			if(!playerOnWall.keySet().contains(p)&&wallName!=null) {
 				if(!playerOnWall.values().contains(wallName)) {
