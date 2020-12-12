@@ -35,7 +35,7 @@ public class Rune_fisherman extends BaseRune{
 	private void showAdaptedHotbarItem() {
 		ItemStack item;
 		ItemMeta meta;
-		item=new ItemStack(Material.FISHING_ROD);
+		item=new ItemStack(Material.TROPICAL_FISH);
 		meta=item.getItemMeta();
 		meta.setUnbreakable(true);
 		item.setItemMeta(meta);
@@ -46,8 +46,13 @@ public class Rune_fisherman extends BaseRune{
 	public void gameStart() {
 		Activate();
 		showAdaptedHotbarItem();
-		// TODO Auto-generated method stub
-		
+		ItemStack item;
+		ItemMeta meta;
+		item=new ItemStack(Material.FISHING_ROD);
+		meta=item.getItemMeta();
+		meta.setUnbreakable(true);
+		item.setItemMeta(meta);
+		player.getInventory().setItemInOffHand(item);
 	}
 
 	@Override

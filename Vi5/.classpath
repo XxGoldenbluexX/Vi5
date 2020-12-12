@@ -8,5 +8,6 @@
 			<attribute name="javadoc_location" value="https://ci.dmulloy2.net/job/ProtocolLib/javadoc/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="E:/MinecraftServer/BT/spigot-1.15.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
