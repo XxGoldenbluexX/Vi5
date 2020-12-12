@@ -2,12 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="E:/MinecraftServer/Programation/spigot-1.15.2.jar"/>
-	<classpathentry kind="lib" path="E:/MinecraftServer/Programation/plugins/ProtocolLib.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://ci.dmulloy2.net/job/ProtocolLib/javadoc/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="E:/MinecraftServer/BT/spigot-1.15.2.jar"/>
+	<classpathentry kind="lib" path="E:/MinecraftServer/Vi5_spigot/plugins/ProtocolLib.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

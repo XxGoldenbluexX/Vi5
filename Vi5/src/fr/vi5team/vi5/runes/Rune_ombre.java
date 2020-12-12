@@ -61,7 +61,7 @@ public class Rune_ombre extends BaseRune {
 		case READY:
 			ombreRef = (ArmorStand) player.getWorld().spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
 			if (ombreRef!=null) {
-				ombreRef.setHelmet(new ItemStack(Material.COAL_BLOCK));
+				ombreRef.getEquipment().setHelmet(new ItemStack(Material.COAL_BLOCK));
 				ombreRef.setMarker(true);
 				ItemStack itm=new ItemStack(Material.CHARCOAL);
 				ItemMeta meta = itm.getItemMeta();

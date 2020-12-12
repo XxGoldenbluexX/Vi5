@@ -46,7 +46,7 @@ public class Rune_omniCapteur extends BaseRune {
 			if (nbOmni>=1) {
 				ArmorStand omni = (ArmorStand) player.getWorld().spawnEntity(player.getLocation(), EntityType.ARMOR_STAND);
 				if (omni!=null) {
-					omni.setHelmet(new ItemStack(Material.REDSTONE_BLOCK));
+					omni.getEquipment().setHelmet(new ItemStack(Material.REDSTONE_BLOCK));
 					omni.setBasePlate(false);
 					omni.setArms(false);
 					omni.setMarker(true);
