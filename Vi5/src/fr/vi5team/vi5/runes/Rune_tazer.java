@@ -61,7 +61,6 @@ public class Rune_tazer extends BaseRune {
 			LivingEntity shockingStriked = (LivingEntity) victim;
 			shockingStriked.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,60,1,false,false,true));
 			shockingStriked.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,60,200,false,false,true));
-			victim.getWorld().playSound(victim.getLocation(), Sound.BLOCK_BEEHIVE_WORK, SoundCategory.MASTER, 1,0.1f);
 			new BukkitRunnable() {
 				private int nbHit=0;
 				@Override
@@ -69,6 +68,9 @@ public class Rune_tazer extends BaseRune {
 					nbHit++;
 					shockingStriked.setNoDamageTicks(0);
 					shockingStriked.damage(0.001);
+					if (nbHit<20) {
+						victim.getWorld().playSound(victim.getLocation(), Sound.BLOCK_BEEHIVE_WORK, SoundCategory.MASTER, 2,0.1f);
+					}
 					if (nbHit>30) {
 						this.cancel();
 					}
