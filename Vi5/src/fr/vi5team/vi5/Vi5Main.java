@@ -5,6 +5,10 @@ import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Openable;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
@@ -14,10 +18,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -41,6 +49,7 @@ public class Vi5Main extends JavaPlugin implements Listener {
 	private PluginManager pmanager;
 	private ProtocolManager protocolManager;
 	private final Vi5Interfaces InterfaceManager = new Vi5Interfaces(this);
+	protected final ArrayList<Majordom> majordoms = new ArrayList<Majordom>();
 	@Override
 	public void onEnable() {
 		super.onEnable();
@@ -48,6 +57,7 @@ public class Vi5Main extends JavaPlugin implements Listener {
 		protocolManager = ProtocolLibrary.getProtocolManager();
 		cfgmanager = new ConfigManager(this);
 		getCommand("vi5").setExecutor(new Vi5BaseCommand(this));
+		Majordom.setMainRef(this);
 		pmanager.registerEvents(this,this);
 		pmanager.registerEvents(InterfaceManager,this);
 	}
@@ -182,6 +192,30 @@ public class Vi5Main extends JavaPlugin implements Listener {
 			if (((Player)ent).getGameMode()==GameMode.ADVENTURE && v instanceof Minecart) {
 				event.setCancelled(true);
 				return;
+			}
+		}
+	}
+	
+	@EventHandler
+	public static void onPlayerInteract(PlayerInteractEvent evt) {
+		Block b = evt.getClickedBlock();
+		if (evt.getHand()==EquipmentSlot.HAND && b!=null) {
+			BlockData data = b.getBlockData();
+			if (data instanceof Openable && evt.getAction()==Action.RIGHT_CLICK_BLOCK) {
+				evt.setCancelled(true);
+				Openable o = (Openable)data;
+				Majordom m = Majordom.getManager(b);
+				if (m==null) {
+					ItemStack itm = evt.getItem();
+					if (evt.getPlayer().getGameMode()==GameMode.CREATIVE && itm!=null && itm.getType()==Material.DIAMOND_SWORD) {
+						o.setOpen(!o.isOpen());
+						b.setBlockData(o);
+						return;
+					}
+					Majordom.add(b,o);
+				}else {
+					m.abort();
+				}
 			}
 		}
 	}
