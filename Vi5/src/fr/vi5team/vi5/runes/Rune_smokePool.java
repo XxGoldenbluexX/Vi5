@@ -29,14 +29,14 @@ public class Rune_smokePool extends BaseRune {
 			if (e instanceof AreaEffectCloud) {
 				AreaEffectCloud cloud = (AreaEffectCloud) e;
 				cloud.clearCustomEffects();
-				cloud.setDuration(200);
+				cloud.setDuration(160);
 				cloud.setParticle(Particle.EXPLOSION_NORMAL);
 				cloud.setDurationOnUse(0);
 				cloud.setRadius(POOL_RAY);
 				cloud.setRadiusPerTick(0);
 				cloud.setSource(player);
 				flakPool.add(cloud);
-				setCooldown(20);
+				setCooldown(25);
 			}
 		}
 		showCastItem();
