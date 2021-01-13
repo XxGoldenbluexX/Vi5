@@ -21,7 +21,7 @@ public class Rune_sonar extends BaseRune{
 		ArrayList<Player> playerScanned = new ArrayList<Player>();
 		for(Player p : wraper.getGame().getVoleurInsideList()) {
 			if(mainref.getPlayerWrapper(p).isSondable()){
-				if (player.getLocation().distanceSquared(p.getLocation())<=25) {
+				if (player.getLocation().distanceSquared(p.getLocation())<=36) {
 					playerScanned.add(p);
 				}
 			}
@@ -45,7 +45,7 @@ public class Rune_sonar extends BaseRune{
 	@Override
 	public void tick() {
 		cooldown++;
-		if(cooldown>=100) {
+		if(cooldown>=80) {
 			makeSound();
 			cooldown=0;
 		}
