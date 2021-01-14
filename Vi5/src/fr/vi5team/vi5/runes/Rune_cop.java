@@ -43,8 +43,8 @@ public class Rune_cop extends BaseRune {
 		ItemMeta meta = itm.getItemMeta();
 		meta.setDisplayName(ChatColor.GOLD+"Matraque");
 		ArrayList<String> l = new ArrayList<String>();
-		l.add(ChatColor.LIGHT_PURPLE+"Un b√¢ton l√©gendaire pouvant tuer en un coup!");
-		l.add(ChatColor.GRAY+""+ChatColor.ITALIC+"Aurait appartenu √† Th√©o ;)");
+		l.add(ChatColor.LIGHT_PURPLE+"Un b‚ton lÈgendaire pouvant tuer en un coup!");
+		l.add(ChatColor.GRAY+""+ChatColor.ITALIC+"Aurait appartenu √† ThÈo ;)");
 		meta.setLore(l);
 		meta.addEnchant(Enchantment.MENDING, 1,true);
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

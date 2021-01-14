@@ -11,6 +11,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -92,7 +93,7 @@ public abstract class BaseRune implements Listener {
 	}
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
-		if (event.getItem()==null) {
+		if (event.getItem()==null || event.getHand()==EquipmentSlot.OFF_HAND) {
 			return;
 		}
 		if (event.getPlayer().equals(player)) {
