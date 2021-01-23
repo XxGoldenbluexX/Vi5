@@ -18,6 +18,7 @@ import fr.vi5team.vi5.PlayerWrapper;
 import fr.vi5team.vi5.Vi5Main;
 import fr.vi5team.vi5.enums.RunesList;
 import fr.vi5team.vi5.enums.Vi5Team;
+import fr.vi5team.vi5.enums.VoleurStatus;
 
 public class Rune_piege extends BaseRune {
 	ArrayList<Location> piegePos = new ArrayList<Location>();
@@ -34,7 +35,7 @@ public class Rune_piege extends BaseRune {
 			PlayerWrapper pWrap = mainref.getPlayerWrapper(p);
 			if(pWrap!=null) {
 				if(pWrap.getGame()==wraper.getGame()) {
-					if(pWrap.getTeam()==Vi5Team.VOLEUR) {
+					if(pWrap.getTeam()==Vi5Team.VOLEUR && wraper.getCurrentStatus()==VoleurStatus.INSIDE) {
 						if(!pWrap.isUnSpottable()) {
 							ArrayList<Location> activated = new ArrayList<Location>();
 							for(Location piegeLoc : piegePos) {
@@ -110,10 +111,7 @@ public class Rune_piege extends BaseRune {
 			thief.setWalkSpeed(0.2f);
 		}	
 	}
-
-	@Override
-	public void enterZone() {	
-	}
+	
 	private void showAdaptedHotbarItem() {
 		ItemStack item;
 		ItemMeta meta;
@@ -127,6 +125,12 @@ public class Rune_piege extends BaseRune {
 		item.setItemMeta(meta);
 		setCastItem(item);
 		showCastItem();
+	}
+
+	@Override
+	public void enterZone() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
